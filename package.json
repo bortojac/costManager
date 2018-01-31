@@ -1,0 +1,46 @@
+{
+  "name": "cost-manager",
+  "version": "1.0.0",
+  "description": "This app will allow you to log your expenses and keep track of where and how you spend your money",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack && node app",
+    "server": "node app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bortojac/costManager.git"
+  },
+  "author": "Jack Borto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bortojac/costManager/issues"
+  },
+  "homepage": "https://github.com/bortojac/costManager#readme",
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "bable-loader": "0.0.1-security",
+    "css-loader": "^0.28.9",
+    "express": "^4.16.2",
+    "file-loader": "^1.1.6",
+    "lodash": "^4.17.4",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-modal": "^3.1.11",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "style-loader": "^0.20.1",
+    "webpack": "^3.10.0"
+  },
+  "devDependencies": {
+    "express": "^4.16.2",
+    "webpack-dev-middleware": "^2.0.4",
+    "webpack-hot-middleware": "^2.21.0"
+  }
+}

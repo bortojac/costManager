@@ -1,0 +1,32 @@
+/* sidebar css */
+
+.sidebar {
+    background-color: red;
+    display: flex;
+    flex-flow: row;
+    transition: width;
+    height: 5rem;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+button {
+    margin-top: 0;
+}
+
+
+@media screen and (min-width:900px) {
+    .sidebar {
+        flex-flow: column;
+        transition: width;
+        height: 100%;
+        width: 5rem;
+        justify-content: flex-start;
+    }
+    
+    button {
+        margin-top: 1rem;
+    }
+    
+}
