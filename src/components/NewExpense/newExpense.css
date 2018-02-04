@@ -19,12 +19,60 @@
     border-bottom: .2rem solid rgb(204, 204, 204);
     width: 100%;
     background-color: #fff;
+    margin-top: 0;
+    margin-bottom: 1rem;
   }
-
-  h4 {
+  .newExpenseDiv h4 {
       margin:0;
   }
-
-  input, select {
-      margin: .2rem 0 .8rem 0;
+  
+  .form {
+      overflow-y: scroll;
+      overflow-x: hidden;
+      width: 75%;
+      margin: .2rem auto;
+      -webkit-overflow-scrolling: touch;
   }
+
+  .inputContainer {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    margin: .2rem 0 .8rem 0;
+}
+
+  .react-datepicker-wrapper, .react-datepicker_input_container {
+    width: 100%;
+}
+
+.newExpenseDiv input {
+    margin-top: .3rem;
+    font-size: 1rem;
+    text-align: center;
+    width: 25rem;
+    border-radius: 4px;
+    padding: .5rem;
+    box-sizing: border-box;
+}
+
+.categorySelect {
+    font-size: 1rem;
+    margin-top: .2rem;
+    width: 25rem;
+  }
+
+  .newExpenseDiv textarea {
+      font-size: .8rem;
+      width: 25rem;
+      border-radius: 4px;
+  }
+  
+  .saveButton {
+    width: 12rem;
+    padding: .5rem;
+    font-size: 1rem;
+    border-radius: 4px;
+}
+
+

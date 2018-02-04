@@ -10,8 +10,8 @@ class Sidebar extends React.Component {
     render() {
         return (
             <div className= 'sidebar'>
-            <button type="button" onClick={this.props.openModal}>New Expense </button>
-            <button type="button">Edit Settings </button>
+            <button type="button" className="sidebarButtons" onClick={this.props.openModal}>New Expense </button>
+            <button type="button" className="sidebarButtons">Edit Settings </button>
             </div>
         )
 }

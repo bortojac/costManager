@@ -1,13 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './newExpense.css';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment';
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 
+const formatDate = (momentObj) => {
+    let date = momentObj._d;
+    let dd = date.getDate();
+    let mm = date.getMonth()+1; // january is 0
+    let yyyy = date.getFullYear();
+    if(dd<10) {
+        dd = '0'+dd
+    }
+    if(mm<10) {
+        mm = '0'+mm
+    }
+
+   date = `${yyyy}-${mm}-${dd}`;
+   return date;
+}
 
 class NewExpense extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dateInputValue: new Date(Date.now()),
+            dateInputValue: moment(),
             categoryInputValue: 'rent',
             amountInputValue: 0,
             notesInputText: 'What was the expense on?'
@@ -19,14 +39,14 @@ class NewExpense extends React.Component {
         this.updateNotesText = this.updateNotesText.bind(this);
     }
 
-    updateDateValue(event) {
+    updateDateValue(date) {
         this.setState({
-            dateInputValue: event.target.value
+            dateInputValue: date
         });
     }
-    updateCategoryValue(event) {
+    updateCategoryValue(selectedOption) {
         this.setState({
-            categoryInputValue: event.target.value
+            categoryInputValue: selectedOption.value
         });
     }
     updateAmountValue(event) {
@@ -42,7 +62,7 @@ class NewExpense extends React.Component {
 
     handleSubmit() {
         this.props.saveExpense(
-            this.state.dateInputValue,
+            formatDate(this.state.dateInputValue), // formatting to yyyy-mm-dd for storage
              this.state.categoryInputValue,
              this.state.amountInputValue,
             this.state.notesInputText)
@@ -56,36 +76,40 @@ class NewExpense extends React.Component {
     }
 
     render() {
+        console.log(this.state.categoryInputValue);
         return (
             <div className="newExpenseDiv">
                 <h1 className="modalContentHeader">New Expense Entry</h1>
-                <form>
-                    <div>
+                <form className="form">
+                    <div className="inputContainer">
                         <h4>Date:</h4>
-                        <input
-                            type="date"
-                            name="date"
+                        <DatePicker
                             onChange={this.updateDateValue}
-                            value={this.state.dateInputValue}
-                        ></input>
+                            //className="datePicker"
+                            selected={this.state.dateInputValue}
+                        />
                     </div>
                     {//below we are doing a regular select input, but we should use props to let the user decide
                         // which categories they want
                     }
-                    <div>
+                    <div className="inputContainer">
                         <h4>Category:</h4>
-                        <select name="category"
+                        <Select
+                         name="category"
                             value={this.state.categoryInputValue}
                             onChange={this.updateCategoryValue}
-                        >
-                            <option value="rent">Rent</option>
-                            <option value="entertainment">Entertainment</option>
-                            <option value="groceries">Groceries</option>
-                            <option value="utilities">Utilities</option>
-                            <option value="personal">Personal</option>
-                        </select>
+                            className="categorySelect"
+                            options={
+                                [
+                                    { value: 'rent', label: 'Rent' },
+                                    { value: 'groceries', label: 'Groceries' },
+                                    { value: 'utilities', label: 'Utilities' },
+                                    { value: 'personal', label: 'Personal' }
+                                ]
+                            }
+                        />
                     </div>
-                    <div>
+                    <div className="inputContainer">
                         <h4>Amount:</h4>
                         <input
                             type="number"
@@ -95,7 +119,7 @@ class NewExpense extends React.Component {
                             value={this.state.amountInputValue}
                             onChange={this.updateAmountValue}></input>
                     </div>
-                    <div>
+                    <div className="inputContainer">
                         <h4>Notes:</h4>
                         <textarea
                             name="notes"
@@ -104,7 +128,7 @@ class NewExpense extends React.Component {
                             value={this.state.notesInputText}
                             onChange={this.updateNotesText}></textarea>
                     </div>
-                    <button type="button" onClick={this.handleSubmit}>Save</button>
+                    <button className="saveButton" type="button" onClick={this.handleSubmit}>Save</button>
                     {this.renderSaveMessage()}
                 </form>
             </div>
