@@ -42,7 +42,8 @@ app.get('/', function (req, res) {
     //res.sendFile(path.join(__dirname, '../public/reset.css'));
 });
 
-// test to return all expenses in the database
+// handle routes to database
+
 app.get('/expenseBase', function (req, res) {
     Expense.find(function(err, expenses) {
         if (err) res.send(err);
@@ -54,9 +55,12 @@ app.post('/expenseBase', function(req, res) {
     
     // create new expense document
     var expense = new Expense();
-    
+    var date = new Date(req.body.date);
     // body parser lets us use the req.body
-    expense.date = req.body.date;
+    expense.date = date;
+    expense.year = date.getFullYear() 
+    expense.month = date.getMonth();
+    expense.day = date.getDay();
     expense.category = req.body.category;
     expense.amount = req.body.amount;
     expense.notes = req.body.notes;
@@ -64,9 +68,25 @@ app.post('/expenseBase', function(req, res) {
     // save
     expense.save(function(err) {
         if (err) res.send(err);
-        res.json({ message: 'Expense successfully saved to the database'});
+        res.send(`$${req.body.amount} expense with date: ${req.body.date} and category: ${req.body.category} successfully saved to the database`);
     });
 });
+
+app.delete('/expenseBase', function(req, res) {
+    
+    Expense.remove(
+        {
+            date: req.body.date,
+            category: req.body.category,
+            amount: req.body.amount,
+            notes: req.body.notes
+           }, 
+           function(err) {
+               if(err) res.send(err);
+               res.send(`Entry with date: ${req.body.date} and category: ${req.body.category} has been deleted`);
+           }
+        )
+})
 
 app.listen(3000, () => console.log('Server is running'));
 

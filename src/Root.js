@@ -1,16 +1,17 @@
-//import { Provider } from 'react-redux'
-//import configureStore from './configureStore'
+import { Provider } from 'react-redux'
+import configureStore from './configureStore'
 import React from 'react';
-import App from './components/App/App';
+import App from './components/App';
 
-//const store = configureStore()
+const store = configureStore()
 
+//console.log(store);
 export default class Root extends React.Component {
   render() {
     return (
-     // <Provider store={store}>
+     <Provider store={store}>
         <App />
-      //</Provider>
+      </Provider>
     )
   }
 }

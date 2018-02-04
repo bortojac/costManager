@@ -1,7 +1,9 @@
 import React from 'react';
 import Header from '../Header/Header';
+import Table from '../Table';
 import Modal from 'react-modal';
 import Sidebar from '../Sidebar/Sidebar';
+import NewExpense from '../NewExpense';
 import './app.css';
 
 
@@ -16,6 +18,7 @@ class App extends React.Component {
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleModalOpen = this.handleModalOpen.bind(this);
         Modal.setAppElement('#root');
+        this.props.fetchTableData();
     }
 
     /*handleSidebarView() {
@@ -48,10 +51,10 @@ class App extends React.Component {
                 contentLabel="Example Modal"
                 closeTimeoutMS={300}
             >
+            <NewExpense />
             </Modal>
             <main>
-                {//graphs and other stuff
-                }
+                <Table />
                 </main>
                 </div>
             </div>

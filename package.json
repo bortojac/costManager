@@ -37,8 +37,10 @@
     "react-dom": "^16.2.0",
     "react-modal": "^3.1.11",
     "react-redux": "^5.0.6",
+    "react-table": "^6.7.6",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
+    "reselect": "^3.0.1",
     "style-loader": "^0.20.1",
     "webpack": "^3.10.0"
   },

@@ -7,6 +7,9 @@ const Schema = mongoose.Schema;
 
 const expenseSchema = new Schema ({
     date: Date,
+    year: Number,
+    month: Number,
+    day: Number,
     category: String,
     amount: Number,
     notes: String
