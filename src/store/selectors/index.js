@@ -2,7 +2,6 @@ import { createSelector } from 'reselect';
 
 // tableData selectors
 export const getTableData = (state) => state.tableData.json
-//console.log(getTableData());
 export const getTableLoadingFlag= (state) => state.tableData.loading
 
 // tableData reselect function
@@ -17,6 +16,14 @@ export const getTableDataState = createSelector(
         })
 )
 )
+
+// categoryData selectors
+export const getCategoryData = (state) => state.categoryData.json
+export const getCategoryLoadingFlag= (state) => state.categoryData.loading
+
+// monthlyData selectors
+export const getMonthlyData = (state) => state.monthlyData.json
+export const getMonthlyLoadingFlag= (state) => state.monthlyData.loading
 
 //newExpense selectors
 // since we are not manipulating state there is no need for a memoized selector

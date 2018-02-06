@@ -1,19 +1,19 @@
-const express = require('express');
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const path = require('path');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const Expense = require('./model/expenses');
+var express = require('express');
+var webpack = require('webpack');
+var webpackDevMiddleware = require('webpack-dev-middleware');
+var path = require('path');
+var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
+var Expenses = require('./model/expenses');
 //set our port to either a predetermined port number if it is set up, or 3000
-//const port = process.env.API_PORT || 3000;
+//var port = process.env.API_PORT || 3000;
 
 // db config
 mongoose.connect('mongodb://jtest:!7janlk2iah@ds221148.mlab.com:21148/costmanager');
 
-const app = express();
-const config = require('../webpack.config.js');
-const compiler = webpack(config);
+var app = express();
+var config = require('../webpack.config.js');
+var compiler = webpack(config);
 
 //app.use(express.static('public'));
 
@@ -45,7 +45,7 @@ app.get('/', function (req, res) {
 // handle routes to database
 
 app.get('/expenseBase', function (req, res) {
-    Expense.find(function(err, expenses) {
+    Expenses.find(function(err, expenses) {
         if (err) res.send(err);
         res.json(expenses)
     })
@@ -54,11 +54,11 @@ app.get('/expenseBase', function (req, res) {
 app.post('/expenseBase', function(req, res) {
     
     // create new expense document
-    var expense = new Expense();
+    var expense = new Expenses();
     var date = new Date(req.body.date);
     // body parser lets us use the req.body
     expense.date = date;
-    expense.year = date.getFullYear() 
+    expense.year = date.getFullYear();
     expense.month = date.getMonth();
     expense.day = date.getDay();
     expense.category = req.body.category;
@@ -68,13 +68,13 @@ app.post('/expenseBase', function(req, res) {
     // save
     expense.save(function(err) {
         if (err) res.send(err);
-        res.send(`$${req.body.amount} expense with date: ${req.body.date} and category: ${req.body.category} successfully saved to the database`);
+        res.send(`${req.body.amount} expense with date: ${req.body.date} and category: ${req.body.category} successfully saved to the database`);
     });
 });
 
 app.delete('/expenseBase', function(req, res) {
     
-    Expense.remove(
+    Expenses.remove(
         {
             date: req.body.date,
             category: req.body.category,
@@ -86,6 +86,30 @@ app.delete('/expenseBase', function(req, res) {
                res.send(`Entry with date: ${req.body.date} and category: ${req.body.category} has been deleted`);
            }
         )
+})
+
+// handle get requests for categoryGraph
+app.get('/expenseBase/categoryGraph', function (req, res) {
+    //console.log('in here');
+        Expenses.aggregate([
+            { $group: { _id: '$category', amount: { $sum: '$amount' }}},
+            { $project: { _id: 0, amount: 1, category: "$_id"}}],
+            function (err, _res) {
+              if (err) return handleError(err);
+              res.json(_res);
+            });
+})
+
+// handle get requests for monthlyGraph
+app.get('/expenseBase/monthlyGraph', function (req, res) {
+    Expenses.aggregate([
+        { $group: { _id: '$month', amount: { $sum: '$amount' }}},
+        { $project: { _id: 0, amount: 1, month: "$_id"}}],
+        function (err, _res) {
+          if (err) return handleError(err);
+          res.json(_res);
+        }); 
+
 })
 
 app.listen(3000, () => console.log('Server is running'));

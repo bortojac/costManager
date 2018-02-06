@@ -15,12 +15,14 @@
     /*position: fixed;
     top: 0;
     right: 0;*/
-    color: rgb(1, 12, 63);
+    color: #000;
+    width: 75%;
     border-bottom: .2rem solid rgb(204, 204, 204);
-    width: 100%;
     background-color: #fff;
-    margin-top: 0;
-    margin-bottom: 1rem;
+    border: 1px solid #ff0000;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin: 0 auto;
   }
   .newExpenseDiv h4 {
       margin:0;
@@ -30,8 +32,12 @@
       overflow-y: scroll;
       overflow-x: hidden;
       width: 75%;
-      margin: .2rem auto;
+      margin: 0 auto;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      background-color: #fff;
       -webkit-overflow-scrolling: touch;
+      border-radius: 4px;
   }
 
   .inputContainer {
@@ -50,8 +56,9 @@
     margin-top: .3rem;
     font-size: 1rem;
     text-align: center;
-    width: 25rem;
+    width: 10rem;
     border-radius: 4px;
+    border: 1px solid rgb(204, 204, 204);
     padding: .5rem;
     box-sizing: border-box;
 }
@@ -59,20 +66,51 @@
 .categorySelect {
     font-size: 1rem;
     margin-top: .2rem;
-    width: 25rem;
+    border: 1px solid rgb(204, 204, 204);
+    width: 10rem;
   }
 
   .newExpenseDiv textarea {
       font-size: .8rem;
-      width: 25rem;
+      width: 10rem;
+      border: 1px solid rgb(204, 204, 204);
       border-radius: 4px;
   }
   
   .saveButton {
-    width: 12rem;
+    width: 10rem;
     padding: .5rem;
     font-size: 1rem;
     border-radius: 4px;
+    transition: opacity;
+    background-color: #ff0000;
+    color: #fff;
+
+  }
+
+.saveButton:hover {
+    opacity: .7;
+}
+
+@media screen and (min-width: 900px) {
+    .newExpenseDiv input {
+        width: 25rem;
+    }
+    
+    .categorySelect {
+        width: 25rem;
+      }
+    
+      .newExpenseDiv textarea {
+          width: 25rem;
+      }
+      
+    .saveButton {
+        width: 12rem;
+    }
+    .saveButton:hover {
+        opacity: .7;
+    }
 }
 
 

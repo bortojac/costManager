@@ -13,9 +13,8 @@ class Table extends React.Component {
 
     render() {
        let tableDat =_.get(this.props,'tableData', [{date: [], category: [], amount: [], notes: []}]);
-       console.log(tableDat);
+       //console.log(tableDat);
         return (
-            <div >
                 <ReactTable
                     data={tableDat}
                     columns={[
@@ -42,10 +41,9 @@ class Table extends React.Component {
                             ]}
                             ]
                         }
-                    defaultPageSize={10}
+                    defaultPageSize={5}
                     className="-striped -highlight"
                 />
-            </div>
         )
     }
 }

@@ -2,7 +2,11 @@ import {
     TABLE_DATA_REQUESTED,
     TABLE_DATA_RECEIVED,
     SAVE_NEEDED,
-    SAVE_FINISHED
+    SAVE_FINISHED,
+    CATEGORY_DATA_RECEIVED,
+    CATEGORY_DATA_REQUESTED,
+    MONTHLY_DATA_RECEIVED,
+    MONTHLY_DATA_REQUESTED
 } from './types';
 
 const apiURL = 'http://localhost:3000/expenseBase';
@@ -24,7 +28,6 @@ export const tableDataReceived = (jsonResponse) => {
     };
 }
 
-// we need a fetchData action that can be called in the componentWillMount method in the Table component
 export const fetchTableData = () => {
     return dispatch => {
         dispatch(tableDataRequested());
@@ -76,7 +79,72 @@ export const saveExpense = (date, category, amount, notes) => {
         .then(textReponse => {
             dispatch(saveFinished(textReponse));
             dispatch(fetchTableData());
+            dispatch(fetchCategoryData());
+            dispatch(fetchMonthlyData());
         });
     };
 
+}
+
+export const categoryDataRequested = () => {
+    return {
+        type: CATEGORY_DATA_REQUESTED,
+        loading: true
+    };
+}
+
+export const categoryDataReceived = (jsonResponse) => {
+    console.log('categoryDataReceived');
+    return {
+        type: CATEGORY_DATA_RECEIVED,
+        loading: false,
+        json: jsonResponse
+    };
+}
+
+export const fetchCategoryData = () => {
+    return dispatch => {
+        dispatch(categoryDataRequested());
+        return fetch(apiURL+'/categoryGraph',
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+              }
+        })
+        .then(response => response.json())
+        .then(jsonResponse => dispatch(categoryDataReceived(jsonResponse)));
+    };
+}
+
+export const monthlyDataRequested = () => {
+    return {
+        type: MONTHLY_DATA_REQUESTED,
+        loading: true
+    };
+}
+
+export const monthlyDataReceived = (jsonResponse) => {
+    console.log('monthlyDataReceived');
+    console.log(jsonResponse);
+    return {
+        type: MONTHLY_DATA_RECEIVED,
+        loading: false,
+        json: jsonResponse
+    };
+}
+
+export const fetchMonthlyData = () => {
+    return dispatch => {
+        dispatch(monthlyDataRequested());
+        return fetch(apiURL+'/monthlyGraph',
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+              }
+        })
+        .then(response => response.json())
+        .then(jsonResponse => dispatch(monthlyDataReceived(jsonResponse)));
+    };
 }

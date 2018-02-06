@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import App from './App';
-import { fetchTableData } from '@@store/actions';
+import { fetchTableData, fetchCategoryData, fetchMonthlyData } from '@@store/actions';
 import { getTableLoadingFlag } from '@@store/selectors';
 
 
@@ -16,7 +16,9 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchTableData: () => {
       dispatch(fetchTableData())
-    }
+    },
+    fetchCategoryData: () => dispatch(fetchCategoryData()),
+    fetchMonthlyData: () => dispatch(fetchMonthlyData())
   }
 }
 

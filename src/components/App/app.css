@@ -21,18 +21,38 @@ main {
     flex-flow: column;
 }
 
+/* this row should not shrink, and should not grow. do we need flex: none?*/
+.row1 {
+    display: flex;
+    flex-flow: row;
+    flex: initial;
+    justify-content: center;
+    align-items: center;
+}
 
+/* this row should grow to fill as much space as it needs */
+.row2 {
+    display: flex;
+    flex-flow: row;
+    flex: 1;
+}
+
+.row3 {
+    display: flex;
+    flex-flow: row;
+    flex: initial;
+}
 /* react modal */
 
 .myModalDialog {
-    background-color: #fff;
+    background-color: #ff0000;
     position: relative;
     top: 50%;
     left: 50%;
     border: .1rem solid rgb(204, 204, 204);
     border-radius: 4px;
     outline: none;
-    padding: 1rem;
+    padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;

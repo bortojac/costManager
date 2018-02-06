@@ -4,7 +4,9 @@ import Table from '../Table';
 import Modal from 'react-modal';
 import Sidebar from '../Sidebar/Sidebar';
 import NewExpense from '../NewExpense';
+import CategoryGraph from '../CategoryGraph';
 import './app.css';
+import MonthlyGraph from '../MonthlyGraph';
 
 
 class App extends React.Component {
@@ -14,17 +16,13 @@ class App extends React.Component {
             sidebarOpen: false,
             modalIsOpen: false
         };
-        //this.handleSidebarView = this.handleSidebarView.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleModalOpen = this.handleModalOpen.bind(this);
         Modal.setAppElement('#root');
         this.props.fetchTableData();
+        this.props.fetchCategoryData();
+        this.props.fetchMonthlyData();
     }
-
-    /*handleSidebarView() {
-        console.log('worked');
-        this.setState({sidebarOpen: !this.state.sidebarOpen});
-    }*/
 
     handleCloseModal() {
         this.setState({modalIsOpen: false})
@@ -54,7 +52,16 @@ class App extends React.Component {
             <NewExpense />
             </Modal>
             <main>
+                <div className="row1">
+                    <h1>You've Spent $x,xxx this month</h1>
+                    </div>
+                <div className="row2">
+                <CategoryGraph />
+                <MonthlyGraph />
+                     </div>
+                <div className="row3">
                 <Table />
+                </div>
                 </main>
                 </div>
             </div>

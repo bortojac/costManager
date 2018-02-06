@@ -3,7 +3,11 @@ import {
     TABLE_DATA_REQUESTED,
     TABLE_DATA_RECEIVED,
     SAVE_NEEDED,
-    SAVE_FINISHED
+    SAVE_FINISHED,
+    CATEGORY_DATA_RECEIVED,
+    CATEGORY_DATA_REQUESTED,
+    MONTHLY_DATA_RECEIVED,
+    MONTHLY_DATA_REQUESTED
 }
     from '../actions/types';
 
@@ -28,6 +32,48 @@ export const tableData = (
     }
 };
 
+export const categoryData = (
+    state = {
+        json: [],
+        loading: false,
+    }, action) => {
+    switch (action.type) {
+        case CATEGORY_DATA_REQUESTED:
+            return Object.assign({}, state, {
+                loading: true
+            });
+        case CATEGORY_DATA_RECEIVED:
+            return Object.assign({}, state, {
+                json: action.json,
+                loading: false
+            });
+        default:
+            return state;
+    }
+};
+
+export const monthlyData = (
+    state = {
+        json: [],
+        loading: false,
+    }, action) => {
+    switch (action.type) {
+        case MONTHLY_DATA_REQUESTED:
+            return Object.assign({}, state, {
+                loading: true
+            });
+        case MONTHLY_DATA_RECEIVED:
+            return Object.assign({}, state, {
+                json: action.json,
+                loading: false
+            });
+        default:
+            return state;
+    }
+};
+
+
+
 export const newExpenseForm = (
     state = {
         message: '',
@@ -49,18 +95,6 @@ export const newExpenseForm = (
     };
 
 
-export const graphData = (
-    state = {
-        data: [],
-        loading: false
-    }, action) => {
-        switch(action.type) {
-            default:
-                return state;
-        }
-    }
-
-
-const rootReducer = combineReducers({tableData, newExpenseForm, graphData});
+const rootReducer = combineReducers({tableData, categoryData, monthlyData, newExpenseForm});
 
 export default rootReducer; 

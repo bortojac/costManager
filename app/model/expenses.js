@@ -1,11 +1,11 @@
 //import dependencies
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 //create new instance of the mongoose schema.
 // the schema takes an obj that shows the shape of your database entries
 
-const expenseSchema = new Schema ({
+var expenseSchema = new Schema ({
     date: Date,
     year: Number,
     month: Number,
@@ -15,4 +15,4 @@ const expenseSchema = new Schema ({
     notes: String
 })
 
-module.exports = mongoose.model('Expense', expenseSchema);
+module.exports = mongoose.model('Expenses', expenseSchema);
