@@ -23,12 +23,12 @@ class MonthlyGraph extends React.Component {
         return (
             <ResponsiveContainer width={'50%'}>
                 <BarChart data={this.props.data}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" />
+                    <CartesianGrid vertical={false} horizontal={false} fill={'#080606'} fillOpacity={.8}/>
+                    <XAxis dataKey="monthYear" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="amount" fill="#8884d8" />
+                    <Bar dataKey="amount" fill="#CC0000" fillOpacity={.8} />
                                     </BarChart>
             </ResponsiveContainer>
         )

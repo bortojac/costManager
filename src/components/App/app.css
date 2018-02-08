@@ -15,7 +15,7 @@
 }
 
 main {
-    background-color: rgb(247, 241, 241);
+    background-color: rgba(255, 255, 255, 0.815);
     display: flex;
     flex: 1;
     flex-flow: column;

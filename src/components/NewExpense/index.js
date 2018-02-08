@@ -1,11 +1,14 @@
 import { connect } from 'react-redux';
 import NewExpense from './NewExpense';
 import { saveExpense } from '@@store/actions';
-import { isExpenseSaved, getSaveMessage} from '@@store/selectors';
+import { 
+    //isExpenseSaved, 
+    getSaveMessage
+} from '@@store/selectors';
 
 // eventually we will need to pass props to NewExpense for the user-selected categories
 const mapStateToProps = state => ({
-    saved: isExpenseSaved(state),
+    //saved: isExpenseSaved(state),
     saveMessage: getSaveMessage(state)
 });
 

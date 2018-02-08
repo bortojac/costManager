@@ -30,7 +30,8 @@ class NewExpense extends React.Component {
             dateInputValue: moment(),
             categoryInputValue: 'rent',
             amountInputValue: 0,
-            notesInputText: 'What was the expense on?'
+            notesInputText: 'What was the expense on?'//,
+            //submitted: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.updateDateValue = this.updateDateValue.bind(this);
@@ -66,14 +67,16 @@ class NewExpense extends React.Component {
              this.state.categoryInputValue,
              this.state.amountInputValue,
             this.state.notesInputText)
+        this.props.closeModal()
+        //this.setState({submitted: false})
     }
 
-    renderSaveMessage() {
-        if(this.props.saveMessage && this.props.saved) {
+    /*renderSaveMessage() {
+        if(this.props.saveMessage) {
             return <p>{this.props.saveMessage}</p>
         }
         return
-    }
+    }*/
 
     render() {
         console.log(this.state.categoryInputValue);
@@ -129,7 +132,8 @@ class NewExpense extends React.Component {
                             onChange={this.updateNotesText}></textarea>
                     </div>
                     <button className="saveButton" type="button" onClick={this.handleSubmit}>Save</button>
-                    {this.renderSaveMessage()}
+                    {//this.renderSaveMessage()
+                    }
                 </form>
             </div>
         );

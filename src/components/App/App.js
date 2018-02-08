@@ -49,11 +49,11 @@ class App extends React.Component {
                 contentLabel="Example Modal"
                 closeTimeoutMS={300}
             >
-            <NewExpense />
+            <NewExpense closeModal={this.handleCloseModal}/>
             </Modal>
             <main>
                 <div className="row1">
-                    <h1>You've Spent $x,xxx this month</h1>
+                    <h1>{`You've Spent $${this.props.totalSum} this month`}</h1>
                     </div>
                 <div className="row2">
                 <CategoryGraph />

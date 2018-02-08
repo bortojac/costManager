@@ -1,13 +1,17 @@
 import { connect } from 'react-redux';
 import App from './App';
 import { fetchTableData, fetchCategoryData, fetchMonthlyData } from '@@store/actions';
-import { getTableLoadingFlag } from '@@store/selectors';
+import { getTableLoadingFlag, 
+  getTotalSumState
+ } from '@@store/selectors';
+ import _ from 'lodash';
 
 
 const mapStateToProps = state => {
     console.log(state);
+    console.log(_.sum(_.map(state.categoryData.json, item => item.amount)));
     return {
-    //tableData: getTableDataState(state),
+    totalSum: getTotalSumState(state),
     tableLoading: getTableLoadingFlag(state)
     }; 
  }

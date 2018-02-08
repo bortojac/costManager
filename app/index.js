@@ -1,6 +1,7 @@
 var express = require('express');
 var webpack = require('webpack');
 var webpackDevMiddleware = require('webpack-dev-middleware');
+var webpackHotMiddleware = require('webpack-hot-middleware');
 var path = require('path');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
@@ -21,9 +22,8 @@ var compiler = webpack(config);
 // if extended: false, we cannot post nested objects. let's allow that for now and see what we need
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(webpackDevMiddleware(compiler, {
-    publicPath: config.output.publicPath
-}))
+app.use(webpackDevMiddleware(compiler, {publicPath: config.output.publicPath}));
+app.use(webpackHotMiddleware(compiler))
 
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -102,13 +102,33 @@ app.get('/expenseBase/categoryGraph', function (req, res) {
 
 // handle get requests for monthlyGraph
 app.get('/expenseBase/monthlyGraph', function (req, res) {
-    Expenses.aggregate([
-        { $group: { _id: '$month', amount: { $sum: '$amount' }}},
-        { $project: { _id: 0, amount: 1, month: "$_id"}}],
+    Expenses.aggregate(
+        [
+            {
+                $group: {
+                    _id: { year: '$year', month: '$month' },
+                    amount: { $sum: '$amount' }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    amount: 1,
+                    month: '$_id.month',
+                    year: '$_id.year'
+                }
+            },
+            {
+                $sort: {
+                    'year': 1,
+                    'month': 1
+                }
+            }
+        ],
         function (err, _res) {
-          if (err) return handleError(err);
-          res.json(_res);
-        }); 
+            if (err) return handleError(err);
+            res.json(_res);
+        });
 
 })
 

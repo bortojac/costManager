@@ -1,7 +1,7 @@
 /* sidebar css */
 
 .sidebar {
-    background-color: red;
+    background-color: #ff0000;
     display: flex;
     flex-flow: row;
     transition: width;

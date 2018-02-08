@@ -18,17 +18,17 @@ class CategoryGraph extends React.Component {
     }
 
     render() {
-        console.log('CategoryGraphData Below')
-        console.log(this.props.data);
+        //console.log('CategoryGraphData Below')
+        //console.log(this.props.data);
         return (
             <ResponsiveContainer width={'50%'}>
-                <BarChart data={this.props.data}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="category" />
+                <BarChart data={this.props.data} >
+                <CartesianGrid horizontal={false} vertical={false} fill={'#080606'} fillOpacity={.8}/>
+                    <XAxis dataKey="category"/>
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="amount" fill="#8884d8" />
+                    <Bar dataKey="amount" fill="#CC0000" fillOpacity={.8}/>
                                     </BarChart>
             </ResponsiveContainer>
         )

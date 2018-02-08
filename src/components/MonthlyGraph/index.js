@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 import MonthlyGraph from './MonthlyGraph';
 import {  } from '@@store/actions';
-import { getMonthlyData, getMonthlyLoadingFlag} from '@@store/selectors';
+import { getMonthlyDataState, getMonthlyLoadingFlag} from '@@store/selectors';
 
 
 const mapStateToProps = state => {
+  console.log(state);
     return {
-        data: getMonthlyData(state),
+        data: getMonthlyDataState(state),
         loading: getMonthlyLoadingFlag(state)
     }; 
  }

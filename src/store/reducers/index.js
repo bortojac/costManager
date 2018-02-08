@@ -76,18 +76,15 @@ export const monthlyData = (
 
 export const newExpenseForm = (
     state = {
-        message: '',
-        saved: false
+        message: ''
     }, action) => {
         switch(action.type) {
             case SAVE_NEEDED:
             return Object.assign({}, state, {
-                saved: false
             });
         case SAVE_FINISHED:
             return Object.assign({}, state, {
-                message: action.message,
-                saved: true
+                message: action.message
             });
         default:
             return state; 
