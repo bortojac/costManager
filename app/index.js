@@ -45,7 +45,9 @@ app.get('/', function (req, res) {
 // handle routes to database
 
 app.get('/expenseBase', function (req, res) {
-    Expenses.find(function(err, expenses) {
+    Expenses.find()
+    .sort({date: -1})
+    .exec(function(err, expenses) {
         if (err) res.send(err);
         res.json(expenses)
     })
@@ -133,5 +135,3 @@ app.get('/expenseBase/monthlyGraph', function (req, res) {
 })
 
 app.listen(3000, () => console.log('Server is running'));
-
-

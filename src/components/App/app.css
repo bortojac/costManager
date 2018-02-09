@@ -4,7 +4,8 @@
 
 #container {
     /*min-height: 100%;*/
-    height: 100%;
+    display: flex;
+    flex-flow: column;
 }
 
 #mainContainer {
@@ -17,6 +18,7 @@
 main {
     background-color: rgba(255, 255, 255, 0.815);
     display: flex;
+    max-width: 100%;
     flex: 1;
     flex-flow: column;
 }
@@ -26,6 +28,9 @@ main {
     display: flex;
     flex-flow: row;
     flex: initial;
+    background-color: #fff;
+    border-bottom: 2px solid #ff0000;
+    color: #000;
     justify-content: center;
     align-items: center;
 }
@@ -33,8 +38,9 @@ main {
 /* this row should grow to fill as much space as it needs */
 .row2 {
     display: flex;
-    flex-flow: row;
+    flex-flow: column;
     flex: 1;
+    min-height: 10rem;
 }
 
 .row3 {
@@ -116,10 +122,16 @@ main {
   }
  
   
-@media screen and (min-width:900px)  {
+@media screen and (min-width:1000px)  {
     #mainContainer {
         display: flex;
         flex: auto;
         flex-flow: row;
+    }
+
+    .row2 {
+        flex-flow: row;
+        justify-content: center;
+        align-items: center;
     }
 }

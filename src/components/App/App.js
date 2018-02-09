@@ -53,7 +53,7 @@ class App extends React.Component {
             </Modal>
             <main>
                 <div className="row1">
-                    <h1>{`You've Spent $${this.props.totalSum} this month`}</h1>
+                    <h1>{`You've Spent $${this.props.totalSum.toLocaleString()} this month`}</h1>
                     </div>
                 <div className="row2">
                 <CategoryGraph />

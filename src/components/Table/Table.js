@@ -53,7 +53,7 @@ Table.propTypes = {
         PropTypes.shape({
             date: PropTypes.date,
             category: PropTypes.string,
-            amount: PropTypes.number,
+            amount: PropTypes.string, // we are formatting this to have commas
             notes: PropTypes.string
         }).isRequired
     )

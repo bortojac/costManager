@@ -1,4 +1,5 @@
-import { createSelector } from 'reselect';  
+import { createSelector } from 'reselect'; 
+import moment from 'moment'; 
 
 // tableData selectors
 export const getTableData = (state) => state.tableData.json
@@ -9,9 +10,9 @@ export const getTableDataState = createSelector(
     [ getTableData ],
     (json) => json.map(
         item => ({
-            date: item.date,
+            date: moment(item.date).format('ddd, MMM Do, YYYY'),
             category: item.category,
-            amount: item.amount,
+            amount: item.amount.toLocaleString(),
             notes: item.notes 
         })
 )

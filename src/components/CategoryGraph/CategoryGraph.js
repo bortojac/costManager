@@ -18,19 +18,19 @@ class CategoryGraph extends React.Component {
     }
 
     render() {
-        //console.log('CategoryGraphData Below')
-        //console.log(this.props.data);
+        // we set the width to 99% and a static height to help with responsiveness. issue 172 -> https://github.com/recharts/recharts/issues/172
         return (
-            <ResponsiveContainer width={'50%'}>
+            <section className="graph2">
+            <ResponsiveContainer width={'99%'} height={400}> 
                 <BarChart data={this.props.data} >
-                <CartesianGrid horizontal={false} vertical={false} fill={'#080606'} fillOpacity={.8}/>
+                <CartesianGrid horizontal={false} vertical={false} fill={'#fff'} fillOpacity={.8}/>
                     <XAxis dataKey="category"/>
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="amount" fill="#CC0000" fillOpacity={.8}/>
+                    <YAxis tickFormatter={tickItem => tickItem.toLocaleString()}/>
+                    <Tooltip formatter={value => value.toLocaleString()}/>
+                    <Bar dataKey="amount" fill="#CC0000" fillOpacity={.7}/>
                                     </BarChart>
             </ResponsiveContainer>
+            </section>
         )
     }
 }

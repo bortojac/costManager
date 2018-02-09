@@ -1,0 +1,9 @@
+.graph2 {
+    width: 100%;
+}
+
+@media screen and (min-width:1000px) {
+    .graph2 {
+        width: 50%;
+    }
+}
