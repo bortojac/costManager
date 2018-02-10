@@ -4,6 +4,7 @@
     background-color: #ff0000;
     display: flex;
     flex-flow: row;
+    flex: 1; /* we need the sidebar to grow to the full height of the sidebarContainer */
     transition: width;
     height: 5rem;
     width: 100%;
@@ -13,6 +14,10 @@
 
 .sidebarButtons {
     margin-top: 0;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 4px;
+    color: #000;
 }
 
 
@@ -20,7 +25,7 @@
     .sidebar {
         flex-flow: column;
         transition: width;
-        height: calc(100vh - 5rem);
+        height: 100%;
         width: 5rem;
         justify-content: flex-start;
     }

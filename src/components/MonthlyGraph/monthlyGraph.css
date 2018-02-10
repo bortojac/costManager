@@ -1,9 +1,12 @@
-.graph1 {
+.monthlyGraph {
     width: 100%
+}
+.monthlyGraphTitle {
+    text-align: center;
 }
 
 @media screen and (min-width:1000px) {
-    .graph1 {
+    .monthlyGraph {
         width: 50%;
     }
 }

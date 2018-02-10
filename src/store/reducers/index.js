@@ -92,6 +92,13 @@ export const newExpenseForm = (
     };
 
 
-const rootReducer = combineReducers({tableData, categoryData, monthlyData, newExpenseForm});
+const rootReducer = combineReducers(
+    {
+    tableData,
+     categoryData,
+      monthlyData,
+       newExpenseForm
+        }
+    );
 
 export default rootReducer; 

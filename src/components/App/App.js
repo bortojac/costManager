@@ -38,35 +38,37 @@ class App extends React.Component {
     render() {
         return (
             <div id="container">
-            <Header  />
-            <div id="mainContainer">
-            <Sidebar openModal={this.handleModalOpen}/>
-            <Modal
-                isOpen={this.state.modalIsOpen}
-                onRequestClose={this.handleCloseModal}
-                className="myModalDialog"
-                overlayClassName="myOverlay"
-                contentLabel="Example Modal"
-                closeTimeoutMS={300}
-            >
-            <NewExpense closeModal={this.handleCloseModal}/>
-            </Modal>
-            <main>
-                <div className="row1">
-                    <h1>{`You've Spent $${this.props.totalSum.toLocaleString()} this month`}</h1>
-                    </div>
-                <div className="row2">
-                <CategoryGraph />
-                <MonthlyGraph />
-                     </div>
-                <div className="row3">
-                <Table />
-                </div>
-                </main>
+                <Header />
+                <div id="mainContainer">
+                    <Modal
+                        isOpen={this.state.modalIsOpen}
+                        onRequestClose={this.handleCloseModal}
+                        className="myModalDialog"
+                        overlayClassName="myOverlay"
+                        contentLabel="Example Modal"
+                        closeTimeoutMS={300}
+                    >
+                        <NewExpense closeModal={this.handleCloseModal} />
+                    </Modal>
+                    <aside className="sidebarContainer">
+                        <Sidebar openModal={this.handleModalOpen} />
+                    </aside>
+                    <main>
+                        <div className="row1">
+                            <h1>{`You've Spent $${this.props.totalSum.toLocaleString()} this month`}</h1>
+                        </div>
+                        <div className="row2">
+                            <CategoryGraph />
+                            <MonthlyGraph />
+                        </div>
+                        <div className="row3">
+                            <Table />
+                        </div>
+                    </main>
                 </div>
             </div>
         )
-}
+    }
 }
 
 export default App;

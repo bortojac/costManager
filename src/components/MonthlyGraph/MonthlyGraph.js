@@ -26,7 +26,8 @@ class MonthlyGraph extends React.Component {
         //console.log(this.props.data);
         // we set the width to 99% and a static height to help with responsiveness. issue 172 -> https://github.com/recharts/recharts/issues/172
         return (
-            <section className="graph1">
+            <section className="monthlyGraph">
+            <h2 className="monthlyGraphTitle">Cost by Month</h2>
             <ResponsiveContainer width={'99%'} height={400}>
                 <BarChart data={_.takeRight(this.props.data, this.state.showMonths) }>
                     <CartesianGrid vertical={false} horizontal={false} fill={'#fff'} fillOpacity={.8}/>

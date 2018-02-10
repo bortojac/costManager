@@ -1,9 +1,13 @@
-.graph2 {
+.categoryGraph {
     width: 100%;
 }
 
+.categoryGraphTitle {
+    text-align: center;
+}
+
 @media screen and (min-width:1000px) {
-    .graph2 {
+    .categoryGraph {
         width: 50%;
     }
 }

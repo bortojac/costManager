@@ -12,7 +12,11 @@
     display: flex;
     flex: auto;
     flex-flow: column;
-    height: calc(100% - 5rem); /* second number must be equal to the height of the header */
+}
+
+.sidebarContainer {
+    display: flex;
+    flex-direction: column;
 }
 
 main {

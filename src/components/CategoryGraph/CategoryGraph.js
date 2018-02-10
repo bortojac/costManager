@@ -20,7 +20,8 @@ class CategoryGraph extends React.Component {
     render() {
         // we set the width to 99% and a static height to help with responsiveness. issue 172 -> https://github.com/recharts/recharts/issues/172
         return (
-            <section className="graph2">
+            <section className="categoryGraph">
+            <h2 className="categoryGraphTitle">Cost by Category</h2>
             <ResponsiveContainer width={'99%'} height={400}> 
                 <BarChart data={this.props.data} >
                 <CartesianGrid horizontal={false} vertical={false} fill={'#fff'} fillOpacity={.8}/>

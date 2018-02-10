@@ -26,7 +26,10 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                exclude: /(node_modules)/,
+                exclude: [
+                    /node_modules/,
+                    path.resolve(__dirname, 'public/fontawesome-all.js')
+                ],
                 use: {
                     loader: 'babel-loader',
                     options: {

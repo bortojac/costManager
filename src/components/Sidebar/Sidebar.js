@@ -1,5 +1,6 @@
 import React from 'react';
 import './sidebar.css';
+import { Link } from 'react-router-dom';
 
 
 class Sidebar extends React.Component {
@@ -10,8 +11,8 @@ class Sidebar extends React.Component {
     render() {
         return (
             <div className= 'sidebar'>
-            <button type="button" className="sidebarButtons" onClick={this.props.openModal}>New Expense </button>
-            <button type="button" className="sidebarButtons">Edit Settings </button>
+            <a className="sidebarButtons" onClick={this.props.openModal}>New Expense </a>
+            <Link to="/settings">Edit Settings</Link>
             </div>
         )
 }
