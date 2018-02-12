@@ -1,0 +1,110 @@
+.settingsContainer {
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+}
+
+.settingsRow1 {
+    display: flex;
+    flex-flow: row;
+    flex: initial;
+    background-color: #fff;
+    border-bottom: 2px solid #ff0000;
+    color: #000;
+    justify-content: center;
+    align-items: center;
+}
+
+/* this row should grow to fill as much space as it needs */
+.settingsRow2 {
+    display: flex;
+    flex-flow: column;
+    flex: 1;
+    min-height: 10rem;
+}
+
+.settingsRow2Col1 {
+    width: 100%;
+    flex: 1;
+    border-bottom: solid 2px #ff0000;
+    border-right: none;
+    display: flex;
+    flex-flow: column;
+}
+
+.settingsRow2Col1Content {
+    flex: 1;
+    position: relative;
+}
+
+.settingsRow2Col2 {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+}
+
+.settingsRow2Col2Content {
+    flex: 1;
+    position: relative;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.settingsRow2Col2Content > p {
+    font-size: 5rem;
+    flex: 1;
+    text-align: center;
+}
+
+.settingsRow2 h2 {
+    text-align: center;
+    background-color: #ff0000;
+    margin: 0;
+    padding: 1rem;
+    color: #fff;
+}
+
+.categoryList {
+    list-style: none;
+    padding: 1rem;
+}
+
+.categoryList > li {
+    border-bottom: solid 2px #000;
+    padding: .5rem;
+    text-align: center;
+}
+
+.categoryListItem {
+    display: flex;
+    flex-flow: row;
+}
+
+.categoryText {
+    flex: 1;
+}
+
+.editLink {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+@media screen and (min-width: 1000px) {
+
+.settingsRow2 {
+    flex-flow: row;
+}
+
+.settingsRow2Col1 {
+    width: 50%;
+    border-right: solid 2px #ff0000;
+
+}
+
+settingsRow2Col2 {
+    width: 50%;
+}
+
+}

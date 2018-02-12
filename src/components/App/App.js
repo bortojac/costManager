@@ -1,3 +1,4 @@
+import { Route } from 'react-router-dom';
 import React from 'react';
 import Header from '../Header/Header';
 import Table from '../Table';
@@ -5,6 +6,8 @@ import Modal from 'react-modal';
 import Sidebar from '../Sidebar/Sidebar';
 import NewExpense from '../NewExpense';
 import CategoryGraph from '../CategoryGraph';
+import Home from '../Home';
+import Settings from '../Settings/Settings';
 import './app.css';
 import MonthlyGraph from '../MonthlyGraph';
 
@@ -19,9 +22,6 @@ class App extends React.Component {
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleModalOpen = this.handleModalOpen.bind(this);
         Modal.setAppElement('#root');
-        this.props.fetchTableData();
-        this.props.fetchCategoryData();
-        this.props.fetchMonthlyData();
     }
 
     handleCloseModal() {
@@ -54,16 +54,8 @@ class App extends React.Component {
                         <Sidebar openModal={this.handleModalOpen} />
                     </aside>
                     <main>
-                        <div className="row1">
-                            <h1>{`You've Spent $${this.props.totalSum.toLocaleString()} this month`}</h1>
-                        </div>
-                        <div className="row2">
-                            <CategoryGraph />
-                            <MonthlyGraph />
-                        </div>
-                        <div className="row3">
-                            <Table />
-                        </div>
+                        <Route exact path="/" component={Home} /> 
+                        <Route path="/settings" component={Settings} />
                     </main>
                 </div>
             </div>

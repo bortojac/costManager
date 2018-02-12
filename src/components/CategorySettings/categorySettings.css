@@ -1,0 +1,17 @@
+.categoryInputsContainer {
+    display: flex;
+    flex-flow: column;
+    margin: 1rem;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.categoryInputsContainer > input {
+    text-align: center;
+    width: 15rem;
+    margin: 1rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    padding: .5rem;
+}

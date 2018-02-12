@@ -1,0 +1,25 @@
+/* this row should not shrink, and should not grow. do we need flex: none?*/
+.row1 {
+    display: flex;
+    flex-flow: row;
+    flex: initial;
+    background-color: #fff;
+    border-bottom: 2px solid #ff0000;
+    color: #000;
+    justify-content: center;
+    align-items: center;
+}
+
+/* this row should grow to fill as much space as it needs */
+.row2 {
+    display: flex;
+    flex-flow: column;
+    flex: 1;
+    min-height: 10rem;
+}
+
+.row3 {
+    display: flex;
+    flex-flow: row;
+    flex: initial;
+}

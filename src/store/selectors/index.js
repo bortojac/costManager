@@ -31,6 +31,12 @@ export const getTotalSumState = createSelector(
 export const getCategoryData = (state) => state.categoryData.json
 export const getCategoryLoadingFlag = (state) => state.categoryData.loading
 
+// get just the categories for CategorySettings
+export const getCategoriesState = createSelector(
+    [getCategoryData],
+    (json) => _.map(json, item => item.category)
+)
+
 // monthlyData selectors
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July",
     "Aug", "Sept", "Oct", "Nov", "Dec"];
@@ -50,3 +56,4 @@ export const getMonthlyDataState = createSelector(
 // since we are not manipulating state there is no need for a memoized selector
 //export const isExpenseSaved = (state) => state.newExpenseForm.saved;
 export const getSaveMessage = (state) => state.newExpenseForm.message;
+

@@ -12,6 +12,7 @@ class Sidebar extends React.Component {
         return (
             <div className= 'sidebar'>
             <a className="sidebarButtons" onClick={this.props.openModal}>New Expense </a>
+            <Link to="/">Dashboard</Link>
             <Link to="/settings">Edit Settings</Link>
             </div>
         )
