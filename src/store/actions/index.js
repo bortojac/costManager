@@ -6,7 +6,9 @@ import {
     CATEGORY_DATA_RECEIVED,
     CATEGORY_DATA_REQUESTED,
     MONTHLY_DATA_RECEIVED,
-    MONTHLY_DATA_REQUESTED
+    MONTHLY_DATA_REQUESTED,
+    UPDATE_CATEGORIES_FINISHED,
+    UPDATE_CATEGORIES_REQUESTED
 } from './types';
 
 const apiURL = 'http://localhost:3000/expenseBase';
@@ -125,8 +127,6 @@ export const monthlyDataRequested = () => {
 }
 
 export const monthlyDataReceived = (jsonResponse) => {
-    console.log('monthlyDataReceived');
-    console.log(jsonResponse);
     return {
         type: MONTHLY_DATA_RECEIVED,
         loading: false,
@@ -148,3 +148,32 @@ export const fetchMonthlyData = () => {
         .then(jsonResponse => dispatch(monthlyDataReceived(jsonResponse)));
     };
 }
+
+export const updateCategoriesRequested = (newCategories) => {
+    return {
+        type: UPDATE_CATEGORIES_REQUESTED,
+        fetching: true,
+        newCategories: newCategories
+    }
+}
+
+export const updateCategoriesFinished = () => {
+    return {
+        type: UPDATE_CATEGORIES_FINISHED,
+        fetching: false
+    }
+}
+
+export const updateCategories = (newCategories) => {
+    return dispatch => {
+        dispatch(updateCategoriesRequested(newCategories))
+        return fetch(apiURL+'/newCategories', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                newCategories: newCategories
+    })}).then(dispatch(updateCategoriesFinished()))
+        }
+    }

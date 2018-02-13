@@ -6,6 +6,7 @@ var path = require('path');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var Expenses = require('./model/expenses');
+var _ = require('lodash');
 //set our port to either a predetermined port number if it is set up, or 3000
 //var port = process.env.API_PORT || 3000;
 
@@ -133,5 +134,16 @@ app.get('/expenseBase/monthlyGraph', function (req, res) {
         });
 
 })
+
+app.put('/expenseBase/newCategories', function (req, res) {
+    // property is the old category and req[property] is the new one
+    for (var property in req.body.newCategories) {
+        console.log(property);
+        var query = { category: property };
+        console.log(query);
+        console.log(req.body.newCategories[property]);
+        Expenses.update(query, {$set: {category: req.body.newCategories[property]}}, {multi: true}).exec();
+    }
+    })
 
 app.listen(3000, () => console.log('Server is running'));

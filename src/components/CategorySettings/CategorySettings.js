@@ -8,25 +8,38 @@ class CategorySettings extends React.Component {
         super(props);
         // state needs to be dynamic to whatever number of categories are made in the newExpenseModal. 
         this.state = {
-            newCategories: this.props.categories
+            newCategories: []
         };
         this.handleCategorySubmit = this.handleCategorySubmit.bind(this)
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleCategorySubmit() {
-        const newCats = _.map(this.props.categories, category => {
+    // initialize the state as a copy of the prop categories
+    componentWillReceiveProps() {
+        this.setState({newCategories: this.props.categories.slice()})
+    }
 
-        })
-        this.props.updateCategories()
+    handleCategorySubmit() {
+        // assembling object to pass to updateCategories
+        let objToSubmit = {};
+        let i;
+        for(i = 0; i < this.props.categories.length; i++) {
+            objToSubmit[this.props.categories[i]] = this.state.newCategories[i];
+        }
+        console.log(objToSubmit)
+        this.props.updateCategories(objToSubmit)
     }
 
     handleChange(e) {
         // we need to update only the part of the state that is the current target
-        let arr = this.state.newCategories;
-        arr[arr.indexOf(e.target.name)] = e.target.value;
-        this.setState({newCategories: arr})
-       // console.log(this.state.newCategories);
+        
+
+       let arr = this.state.newCategories.slice();
+        arr[this.props.categories.indexOf(e.target.name)] = e.target.value;
+        this.setState({newCategories: arr}); 
+
+       console.log(this.state.newCategories);
+       console.log(this.props.categories);
     }
     
     renderCategories(categories) {
@@ -52,7 +65,7 @@ class CategorySettings extends React.Component {
         <div className="categoryInputsContainer">
         {_.map(categories, (item, index) => {
             //console.log(item);
-            return <input type="text" name={item} value={this.state.newCategories[index]} onChange={this.handleChange}></input>;
+            return <input type="text" name={item} defaultValue={this.props.categories[index]} onChange={this.handleChange}></input>;
         })}
         <a className="categorySubmitButton" onClick={this.handleCategorySubmit}>Submit Categories</a>
         </div>

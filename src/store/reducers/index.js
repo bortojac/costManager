@@ -7,7 +7,9 @@ import {
     CATEGORY_DATA_RECEIVED,
     CATEGORY_DATA_REQUESTED,
     MONTHLY_DATA_RECEIVED,
-    MONTHLY_DATA_REQUESTED
+    MONTHLY_DATA_REQUESTED,
+    UPDATE_CATEGORIES_REQUESTED,
+    UPDATE_CATEGORIES_FINISHED
 }
     from '../actions/types';
 
@@ -72,8 +74,6 @@ export const monthlyData = (
     }
 };
 
-
-
 export const newExpenseForm = (
     state = {
         message: ''
@@ -91,6 +91,23 @@ export const newExpenseForm = (
         }
     };
 
+    export const updateCategories = (
+        state = {
+            message: ''
+        }, action) => {
+            switch(action.type) {
+                case UPDATE_CATEGORIES_REQUESTED:
+                return Object.assign({}, state, {
+                });
+            case UPDATE_CATEGORIES_FINISHED:
+                return Object.assign({}, state, {
+                
+                });
+            default:
+                return state; 
+            }
+        };
+    
 
 const rootReducer = combineReducers(
     {
