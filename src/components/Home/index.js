@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Home from './Home';
-import { fetchTableData, fetchCategoryData, fetchMonthlyData } from '@@store/actions';
+//import { fetchTableData, fetchCategoryData, fetchMonthlyData } from '@@store/actions';
 import { getTableLoadingFlag, 
   getTotalSumState
  } from '@@store/selectors';
@@ -8,8 +8,8 @@ import { getTableLoadingFlag,
 
 
 const mapStateToProps = state => {
+    console.log('Home');
     console.log(state);
-    console.log(_.sum(_.map(state.categoryData.json, item => item.amount)));
     return {
     totalSum: getTotalSumState(state),
     tableLoading: getTableLoadingFlag(state)
@@ -18,14 +18,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchTableData: () => {
-      dispatch(fetchTableData())
-    },
-    fetchCategoryData: () => dispatch(fetchCategoryData()),
-    fetchMonthlyData: () => dispatch(fetchMonthlyData())
+    //fetchTableData: () => {
+     // dispatch(fetchTableData())
+    //},
+    //fetchCategoryData: () => dispatch(fetchCategoryData()),
+    //fetchMonthlyData: () => dispatch(fetchMonthlyData())
   }
 }
 
-export default connect(mapStateToProps,
-  mapDispatchToProps
+export default connect(mapStateToProps//,
+  //mapDispatchToProps
 )(Home);

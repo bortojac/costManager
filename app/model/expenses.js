@@ -12,7 +12,9 @@ var expenseSchema = new Schema ({
     day: Number,
     category: String,
     amount: Number,
-    notes: String
+    notes: String,
+    monthStartInterval: String
 })
+
 
 module.exports = mongoose.model('Expenses', expenseSchema);

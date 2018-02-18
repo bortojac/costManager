@@ -9,7 +9,13 @@ import {
     MONTHLY_DATA_RECEIVED,
     MONTHLY_DATA_REQUESTED,
     UPDATE_CATEGORIES_REQUESTED,
-    UPDATE_CATEGORIES_FINISHED
+    UPDATE_CATEGORIES_FINISHED,
+    DELETE_ALL_REQUESTED,
+    DELETE_ALL_FINISHED,
+    MONTH_START_DAY_REQUESTED,
+    MONTH_START_DAY_RECEIVED,
+    USER_INFO_RECEIVED,
+    USER_INFO_REQUESTED
 }
     from '../actions/types';
 
@@ -93,20 +99,56 @@ export const newExpenseForm = (
 
     export const updateCategories = (
         state = {
-            message: ''
+            message: '',
+            newCategories: {}
         }, action) => {
             switch(action.type) {
                 case UPDATE_CATEGORIES_REQUESTED:
                 return Object.assign({}, state, {
+                    newCategories: action.newCategories
                 });
             case UPDATE_CATEGORIES_FINISHED:
                 return Object.assign({}, state, {
-                
                 });
             default:
                 return state; 
             }
         };
+
+
+        export const deleteAll = (
+            state = {
+                message: ''
+            }, action) => {
+                switch(action.type) {
+                    case DELETE_ALL_REQUESTED:
+                    return Object.assign({}, state, {
+                    });
+                case DELETE_ALL_FINISHED:
+                    return Object.assign({}, state, {
+                        message: action.textResponse
+                    });
+                default:
+                    return state; 
+                }
+            };
+
+            export const userInfo = (
+                state = {
+                   json: []
+                }, action) => {
+                    switch(action.type) {
+                        case USER_INFO_REQUESTED:
+                        return Object.assign({}, state, {
+                      });
+                    case USER_INFO_RECEIVED:
+                        return Object.assign({}, state, {
+                            json: action.json
+                        });
+                    default:
+                        return state; 
+                    }
+                }; 
     
 
 const rootReducer = combineReducers(
@@ -114,7 +156,10 @@ const rootReducer = combineReducers(
     tableData,
      categoryData,
       monthlyData,
-       newExpenseForm
+       newExpenseForm,
+       deleteAll,
+       updateCategories,
+       userInfo
         }
     );
 

@@ -7,7 +7,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import NewExpense from '../NewExpense';
 import CategoryGraph from '../CategoryGraph';
 import Home from '../Home';
-import Settings from '../Settings/Settings';
+import Settings from '../Settings';
 import './app.css';
 import MonthlyGraph from '../MonthlyGraph';
 

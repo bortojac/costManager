@@ -47,15 +47,11 @@
 .settingsRow2Col2Content {
     flex: 1;
     position: relative;
+    display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
 }
 
-.settingsRow2Col2Content > p {
-    font-size: 5rem;
-    flex: 1;
-    text-align: center;
-}
 
 .settingsRow2 h2 {
     text-align: center;
@@ -89,6 +85,13 @@
     position: absolute;
     top: 0;
     right: 0;
+}
+
+.settingsRow3 {
+    display: flex;
+    flex: initial;
+    justify-content: 'center';
+    align-items: 'center';
 }
 
 @media screen and (min-width: 1000px) {

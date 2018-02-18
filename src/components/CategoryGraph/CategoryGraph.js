@@ -17,6 +17,10 @@ class CategoryGraph extends React.Component {
         super(props)
     }
 
+    componentWillMount() {
+        this.props.fetchCategoryData();
+    }
+
     render() {
         // we set the width to 99% and a static height to help with responsiveness. issue 172 -> https://github.com/recharts/recharts/issues/172
         return (

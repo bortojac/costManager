@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import CategoryGraph from './CategoryGraph';
-import {  } from '@@store/actions';
+import { fetchCategoryData } from '@@store/actions';
 import { getCategoryData, getCategoryLoadingFlag} from '@@store/selectors';
 
 
@@ -11,11 +11,12 @@ const mapStateToProps = state => {
     }; 
  }
 
-/*const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
+        fetchCategoryData: () => dispatch(fetchCategoryData()),
     };
-  }*/
+  }
 
 export default connect(mapStateToProps,
- // mapDispatchToProps
+ mapDispatchToProps
 )(CategoryGraph);

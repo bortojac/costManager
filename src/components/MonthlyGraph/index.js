@@ -1,22 +1,23 @@
 import { connect } from 'react-redux';
 import MonthlyGraph from './MonthlyGraph';
-import {  } from '@@store/actions';
+import {  fetchMonthlyData } from '@@store/actions';
 import { getMonthlyDataState, getMonthlyLoadingFlag} from '@@store/selectors';
 
 
 const mapStateToProps = state => {
-  console.log(state);
+  //console.log(state);
     return {
         data: getMonthlyDataState(state),
         loading: getMonthlyLoadingFlag(state)
     }; 
  }
 
-/*const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
+        fetchMonthlyData: () => dispatch(fetchMonthlyData())
     };
-  }*/
+  }
 
 export default connect(mapStateToProps,
- // mapDispatchToProps
+  mapDispatchToProps
 )(MonthlyGraph);

@@ -10,7 +10,10 @@ class Table extends React.Component {
         super(props);
         //this.props.fetchTableData();
     }
-
+    componentWillMount() {
+        this.props.fetchTableData();
+    }
+    
     render() {
        let tableDat =_.get(this.props,'tableData', [{date: [], category: [], amount: [], notes: []}]);
        //console.log(tableDat);

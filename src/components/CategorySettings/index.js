@@ -7,6 +7,7 @@ import { getCategoriesState
 
 
 const mapStateToProps = state => {
+    console.log("categorySettings");
     console.log(state);
     return {
     categories: getCategoriesState(state)

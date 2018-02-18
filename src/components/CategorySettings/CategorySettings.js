@@ -1,7 +1,6 @@
 import React from 'react';
 import './categorySettings.css';
 import _ from 'lodash';
-import Categories from './CategorySettings';
 
 class CategorySettings extends React.Component {
     constructor(props) {
@@ -26,14 +25,14 @@ class CategorySettings extends React.Component {
         for(i = 0; i < this.props.categories.length; i++) {
             objToSubmit[this.props.categories[i]] = this.state.newCategories[i];
         }
-        console.log(objToSubmit)
-        this.props.updateCategories(objToSubmit)
+        console.log(objToSubmit);
+        this.props.updateCategories(objToSubmit);
+        this.props.handleCategoryEdit();
     }
 
     handleChange(e) {
         // we need to update only the part of the state that is the current target
         
-
        let arr = this.state.newCategories.slice();
         arr[this.props.categories.indexOf(e.target.name)] = e.target.value;
         this.setState({newCategories: arr}); 

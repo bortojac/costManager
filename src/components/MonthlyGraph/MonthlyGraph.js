@@ -21,6 +21,10 @@ class MonthlyGraph extends React.Component {
         }
     }
 
+    componentWillMount() {
+        this.props.fetchMonthlyData();
+    }
+
     render() {
         //console.log('MonthlyGraphData Below')
         //console.log(this.props.data);

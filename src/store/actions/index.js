@@ -8,7 +8,13 @@ import {
     MONTHLY_DATA_RECEIVED,
     MONTHLY_DATA_REQUESTED,
     UPDATE_CATEGORIES_FINISHED,
-    UPDATE_CATEGORIES_REQUESTED
+    UPDATE_CATEGORIES_REQUESTED,
+    DELETE_ALL_FINISHED,
+    DELETE_ALL_REQUESTED,
+    USER_INFO_REQUESTED,
+    USER_INFO_RECEIVED,
+    UPDATE_MONTH_START_DAY_FINISHED,
+    UPDATE_MONTH_START_DAY_REQUESTED
 } from './types';
 
 const apiURL = 'http://localhost:3000/expenseBase';
@@ -54,8 +60,6 @@ export const saveNeeded = () => {
 }
 
 export const saveFinished = (responseMessage) => {
-    console.log('saved');
-    //console.log(jsonResponse);
     return {
             type: SAVE_FINISHED,
             pending: false,
@@ -64,7 +68,7 @@ export const saveFinished = (responseMessage) => {
 }
 
 // POST request to save expense to database
-export const saveExpense = (date, category, amount, notes) => {
+export const saveExpense = (date, category, amount, notes, monthStartDay) => {
     return dispatch => {
         dispatch(saveNeeded());
         return fetch(apiURL, {
@@ -72,9 +76,10 @@ export const saveExpense = (date, category, amount, notes) => {
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
                 date: date,
-            category: category,
-            amount: amount,
-        notes: notes       
+                category: category,
+                amount: amount,
+                notes: notes,
+                monthStartDay: monthStartDay
     })
             })
         .then(response => response.text())
@@ -85,7 +90,6 @@ export const saveExpense = (date, category, amount, notes) => {
             dispatch(fetchMonthlyData());
         });
     };
-
 }
 
 export const categoryDataRequested = () => {
@@ -97,6 +101,7 @@ export const categoryDataRequested = () => {
 
 export const categoryDataReceived = (jsonResponse) => {
     console.log('categoryDataReceived');
+    console.log(jsonResponse);
     return {
         type: CATEGORY_DATA_RECEIVED,
         loading: false,
@@ -177,3 +182,93 @@ export const updateCategories = (newCategories) => {
     })}).then(dispatch(updateCategoriesFinished()))
         }
     }
+
+    export const deleteAllRequested = () => {
+        return {
+            type: DELETE_ALL_REQUESTED,
+            deleted: true
+        }
+    }
+    
+    export const deleteAllFinished = (textResponse) => {
+        return {
+            type: DELETE_ALL_FINISHED,
+            deleted: false,
+            textResponse: textResponse
+        }
+    }
+    
+    export const deleteAll = () => {
+        return dispatch => {
+            dispatch(deleteAllRequested())
+            return fetch(apiURL, {
+                method: 'delete'
+        })
+        .then(response => response.text())
+        .then(textResponse => dispatch(deleteAllFinished(textResponse)))
+            }
+        }
+
+        export const userInfoRequested = () => {
+            return {
+                type: USER_INFO_REQUESTED,
+                loading: true
+            };
+        }
+        
+        export const userInfoReceived = (jsonResponse) => {
+            console.log('monthStartDayreceived');
+            //console.log(jsonResponse);
+            return {
+                type: USER_INFO_RECEIVED,
+                loading: false,
+                json: jsonResponse
+            };
+        }
+        
+        export const fetchUserInfo = (userId) => {
+            return dispatch => {
+                dispatch(userInfoRequested());
+                return fetch('/userBase/'+userId,
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                      }
+                })
+                .then(response => response.json())
+                .then(jsonResponse => dispatch(userInfoReceived(jsonResponse)));
+            };
+        } 
+        
+        export const updateMonthStartDayRequested = (monthStartDay) => {
+            return {
+                type: UPDATE_MONTH_START_DAY_REQUESTED,
+                fetching: true,
+                monthStartDay: monthStartDay
+            }
+        }
+        
+        export const updateMonthStartDayFinished = () => {
+            return {
+                type: UPDATE_MONTH_START_DAY_FINISHED,
+                fetching: false
+            }
+        }
+        
+        export const updateMonthStartDay = (monthStartDay) => {
+            return dispatch => {
+                dispatch(updateMonthStartDayRequested(monthStartDay))
+                return fetch('/userBase/bortojac/monthStartDay', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        monthStartDay: monthStartDay
+            })}).then(() => {
+                dispatch(updateMonthStartDayFinished())
+            })
+                }
+            }
+     
