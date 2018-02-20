@@ -37,8 +37,8 @@ class CategorySettings extends React.Component {
         arr[this.props.categories.indexOf(e.target.name)] = e.target.value;
         this.setState({newCategories: arr}); 
 
-       console.log(this.state.newCategories);
-       console.log(this.props.categories);
+       //console.log(this.state.newCategories);
+       //console.log(this.props.categories);
     }
     
     renderCategories(categories) {

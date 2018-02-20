@@ -14,7 +14,7 @@ class MonthStartDate extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
   
-    componentWillMount() {
+    componentDidMount() {
         // get UserInfo to 
         this.props.fetchMonthStartDay('bortojac'); 
     }
@@ -28,7 +28,7 @@ class MonthStartDate extends React.Component {
 
     handleChange(e) {
         this.setState({monthStartDay: e.target.value}); 
-        console.log(this.state.monthStartDay);
+        //console.log(this.state.monthStartDay);
     }
     
     renderMonthStartInput() {

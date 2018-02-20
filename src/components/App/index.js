@@ -1,6 +1,6 @@
 /*import { connect } from 'react-redux';
 import App from './App';
-import { } from '@@store/actions';
+import { fetchUserInfo } from '@@store/actions';
 import {  
   
  } from '@@store/selectors';
@@ -8,12 +8,13 @@ import {
 
 
 const mapStateToProps = state => {
- }
+ };
 
 const mapDispatchToProps = dispatch => {
   return {
-  }
-}
+    fetchMonthStartDay: (userId) => dispatch(fetchUserInfo(userId))
+  };
+};
 
 export default connect(mapStateToProps,
   mapDispatchToProps

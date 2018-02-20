@@ -24,8 +24,12 @@ class App extends React.Component {
         Modal.setAppElement('#root');
     }
 
+    //componentWillMount() {
+    //    this.props.fetchMonthStartDay('bortojac');
+    //}
+
     handleCloseModal() {
-        this.setState({modalIsOpen: false})
+        this.setState({modalIsOpen: false});
     }
 
     handleModalOpen() {

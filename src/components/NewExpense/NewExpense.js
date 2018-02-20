@@ -49,7 +49,7 @@ class NewExpense extends React.Component {
     }
     
     componentWillMount() {
-        this.props.fetchMonthStartDay('bortojac');
+        //this.props.fetchMonthStartDay('bortojac');
     }
 
     updateDateValue(date) {
@@ -78,8 +78,9 @@ class NewExpense extends React.Component {
             formatDate(this.state.dateInputValue), // formatting to yyyy-mm-dd for storage
              this.state.categoryInputValue,
              this.state.amountInputValue,
-            this.state.notesInputText,
-            this.props.monthStartDay);
+            this.state.notesInputText//,
+            //this.props.monthStartDay
+        );
         this.props.closeModal();
         //this.setState({submitted: false})
     }
@@ -92,8 +93,8 @@ class NewExpense extends React.Component {
     }*/
 
     render() {
-        console.log('New Expense');
-        console.log(this.props.monthStartDay);
+        //console.log('New Expense');
+        //console.log(this.props.monthStartDay);
         return (
             <div className="newExpenseDiv">
                 <h1 className="modalContentHeader">New Expense Entry</h1>

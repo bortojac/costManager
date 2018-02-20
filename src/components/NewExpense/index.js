@@ -10,7 +10,7 @@ import {
 
 // eventually we will need to pass props to NewExpense for the user-selected categories
 const mapStateToProps = state => {
-    console.log(state)
+    //console.log(state)
     return {
         categories: getCategoriesState(state),
         saveMessage: getSaveMessage(state),
@@ -21,8 +21,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        saveExpense: (date, category, amount, notes, monthStartDay) => {
-            dispatch(saveExpense(date, category, amount, notes, monthStartDay))
+        saveExpense: (date, category, amount, notes//,
+             //monthStartDay
+            ) => {
+            dispatch(saveExpense(date, category, amount, notes//, 
+                //monthStartDay
+            ))
         },
         fetchMonthStartDay: (userId) => dispatch(fetchUserInfo(userId))
     };

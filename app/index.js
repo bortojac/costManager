@@ -73,14 +73,14 @@ app.post('/expenseBase', function(req, res) {
     expense.notes = req.body.notes;
 
     // create monthStartInterval from the users selected monthStartDay
-    var userMonthStartDay = req.body.monthStartDay;
+    /*var userMonthStartDay = req.body.monthStartDay;
 
     day >= userMonthStartDay ? (
         expense.monthStartInterval = `${month}/${userMonthStartDay} - ${month+1}/${userMonthStartDay-1}`
     ) :
     (
         expense.monthStartInterval = `${month-1}/${userMonthStartDay} - ${month}/${userMonthStartDay-1}`
-    )
+    )*/
 
     // save
     expense.save(function(err) {
@@ -119,37 +119,150 @@ app.get('/expenseBase/categoryGraph', function (req, res) {
             });
 });
 
-// handle get requests for monthlyGraph
-app.get('/expenseBase/monthlyGraph', function (req, res) {
-    Expenses.aggregate(
-        [
-            {
-                $group: {
-                    _id: { monthStartInterval: '$monthStartInterval', year: '$year', month: '$month' },
-                    amount: { $sum: '$amount' }
+// handle post requests for monthlyGraph
+app.post('/expenseBase/monthlyGraph/', function (req, res) {
+   
+        // create monthStartInterval from the users selected monthStartDay
+   // Users.findOne({userId: req.body.userId}, function (err, userInfo) {
+     //  var userMonthStartDay = userInfo.monthStartDay;
+       // console.log(userInfo.monthStartDay);
+       var userMonthStartDay = req.body.monthStartDay;
+       console.log(req.body.monthStartDay)
+         Expenses.aggregate(
+            [{
+                $project:
+                    {
+                        monthStartInterval:
+                            {
+                                $switch: 
+                                    {
+                                    branches: [
+                                        {
+                                            case: { $eq: [userMonthStartDay, 1] },
+                                            then: {
+                                                $concat: [
+                                                    { $substrBytes: ['$month', 0, -1] },
+                                                    '/',
+                                                    { $substrBytes: [userMonthStartDay, 0, -1] },
+                                                    '-',
+                                                    { $substrBytes: ['$month', 0, -1] },
+                                                    '/',
+                                                    {
+                                                        $substrBytes: [
+                                                            {
+                                                                $switch: {
+                                                                    branches: [
+                                                                        {
+                                                                            case: { $in: ['$month', [0, 2, 4, 6, 7, 9, 11]] },
+                                                                            then: 31
+                                                                        },
+                                                                        {
+                                                                            case: { $eq: ['$month', 1] },
+                                                                            then: 28
+                                                                        },
+                                                                        {
+                                                                            case: { $in: ['$month', [3, 5, 8, 10]] },
+                                                                            then: 30
+                                                                        },
+                                                                    ],
+                                                                    default: 'Did not match'
+                                                                }
+                                                            }, 0, -1]
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            case: { $and: [ { $eq: ['$month', 0] }, { $lt: ['$day', userMonthStartDay ]} ]},
+                                            then: {
+                                                $concat: [
+                                                    '11',
+                                                    '/',
+                                                    { $substrBytes: [userMonthStartDay, 0, -1] },
+                                                    '-',
+                                                    { $substrBytes: ['$month', 0, -1] },
+                                                    '/',
+                                                    { $substrBytes: [ {$subtract: [userMonthStartDay, 1]}, 0, -1]}
+                                                ]
+                                            }
+                                        },
+                                         {
+                                            case: { $gte: ['$day', userMonthStartDay ]},
+                                            then: {
+                                                $concat: [
+                                                    {$substrBytes: ['$month', 0, -1]},
+                                                    '/',
+                                                    { $substrBytes: [userMonthStartDay, 0, -1] },
+                                                    '-',
+                                                    { $substrBytes: [{$add: ['$month', 1]}, 0, -1] },
+                                                    '/',
+                                                    { $substrBytes: [ { $subtract: [userMonthStartDay, 1] }, 0, -1 ] }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            case: { $lt: ['$day', userMonthStartDay ]},
+                                            then: {
+                                                $concat: [
+                                                    {$substrBytes: [ {$subtract: [ '$month', 1 ] }, 0, -1]},
+                                                    '/',
+                                                    { $substrBytes: [ userMonthStartDay, 0, -1 ] },
+                                                    '-',
+                                                    { $substrBytes: [{$add: '$month'}, 0, -1] },
+                                                    '/',
+                                                    { $substrBytes: [ { $subtract: [ userMonthStartDay, 1] }, 0, -1 ] }
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    default: 'did not match'
+                                    }
+                                },
+                            year: '$year',
+                            month: '$month',
+                            amount: '$amount'
+                    }
+                },
+                {
+                    $group: {
+                        _id: { monthStartInterval: '$monthStartInterval', year: '$year', month: '$month'},
+                        amount: { $sum: '$amount' }
+                    }
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        amount: 1,
+                        month: '$_id.month',
+                        year: '$_id.year',
+                        monthStartInterval: '$_id.monthStartInterval'
+                    }
+                },
+                {
+                    $sort: {
+                        'year': 1,
+                        'month': 1
+                    }
                 }
-            },
-            {
-                $project: {
-                    _id: 0,
-                    amount: 1,
-                    month: '$_id.month',
-                    year: '$_id.year',
-                    monthStartInterval: '$_id.monthStartInterval'
-                }
-            },
-            {
-                $sort: {
-                    'year': 1,
-                    'month': 1
-                }
-            }
-        ],
-        function (err, _res) {
-            if (err) return handleError(err);
-            res.json(_res);
-        });
-
+            ],
+            function (err, _res) {
+                if (err) return handleError(err);
+                console.log(_res);
+                res.json(_res);
+            });
+        //.then(function(err, result) {
+    //console.log(result);
+//});
+    //var userMonthStartDay = 1;
+    //Users.findOne({UserId: req.body.userId}, function (err, result) {
+        //userInfo = result
+    //});
+    //console.log('user info below');
+    //console.log(userInfo);
+    // if userMonthStartDay == 1, then month/userMonthStartDay - month/endOfMonth - DONE
+    // if month = 0, and day < userMonthStartDay, should be 11/userMonthStartDay - month/userMonthStartDay - 1 - DONE
+    // if day >= userMonthStartDay, then month/userMonthStartDay - month+1/userMonthStartDay-1 - DONE
+    // if day < userMonthStartDay, then month-1/userMonthStartDay - month/userMonthStartDay-1 - DONE
 });
 
 app.put('/expenseBase/newCategories', function (req, res) {

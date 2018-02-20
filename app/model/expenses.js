@@ -12,8 +12,8 @@ var expenseSchema = new Schema ({
     day: Number,
     category: String,
     amount: Number,
-    notes: String,
-    monthStartInterval: String
+    notes: String//,
+    //monthStartInterval: String
 })
 
 

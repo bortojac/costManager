@@ -1,8 +1,9 @@
 import { connect } from 'react-redux';
 import Home from './Home';
-//import { fetchTableData, fetchCategoryData, fetchMonthlyData } from '@@store/actions';
+import { fetchUserInfo } from '@@store/actions';
 import { getTableLoadingFlag, 
-  getTotalSumState
+  getTotalSumState,
+  getMonthStartDayState
  } from '@@store/selectors';
  import _ from 'lodash';
 
@@ -12,7 +13,8 @@ const mapStateToProps = state => {
     console.log(state);
     return {
     totalSum: getTotalSumState(state),
-    tableLoading: getTableLoadingFlag(state)
+    tableLoading: getTableLoadingFlag(state),
+    monthStartDay: getMonthStartDayState(state)
     }; 
  }
 
@@ -21,11 +23,11 @@ const mapDispatchToProps = dispatch => {
     //fetchTableData: () => {
      // dispatch(fetchTableData())
     //},
-    //fetchCategoryData: () => dispatch(fetchCategoryData()),
+    fetchMonthStartDay: (userId) => dispatch(fetchUserInfo(userId)),
     //fetchMonthlyData: () => dispatch(fetchMonthlyData())
   }
 }
 
-export default connect(mapStateToProps//,
-  //mapDispatchToProps
+export default connect(mapStateToProps,
+  mapDispatchToProps
 )(Home);

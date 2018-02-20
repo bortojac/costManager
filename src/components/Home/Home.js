@@ -11,8 +11,13 @@ class Home extends React.Component {
         super(props);
     }
 
+    componentDidMount() {
+        this.props.fetchMonthStartDay('bortojac');
+    }
+
     render() {
-        console.log(this.props.totalSum);
+        //console.log(this.props.totalSum);
+        console.log('the month Start day in Home Component is ' +  this.props.monthStartDay)
         return (
             <div className="homeContainer">
                 <div className="row1">
@@ -21,7 +26,7 @@ class Home extends React.Component {
                 </div>
                 <div className="row2">
                     <CategoryGraph />
-                    <MonthlyGraph />
+                    <MonthlyGraph monthStartDay={this.props.monthStartDay}/>
                 </div>
                 <div className="row3">
                     <Table />

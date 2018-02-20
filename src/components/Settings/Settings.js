@@ -31,7 +31,7 @@ class Settings extends React.Component {
     }
     
     render() {
-        console.log(moment().endOf('month').format('DD'));
+        //console.log(moment().endOf('month').format('DD'));
         return (
             <div className="settingsContainer">
                 <div className="settingsRow1">
