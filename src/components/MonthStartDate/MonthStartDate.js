@@ -45,7 +45,7 @@ class MonthStartDate extends React.Component {
                         type="number"
                         name="amount"
                         min="1"
-                        max={`${moment().endOf('month').format('DD')}`}
+                        max={28}
                         value={this.state.monthStartDay ? this.state.monthStartDay : this.props.monthStartDay}
                         onChange={this.handleChange}></input>
 

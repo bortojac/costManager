@@ -12,13 +12,11 @@
     align-items: center;
 }
 
-.sidebarButtons {
+.fa-chart-bar, .fa-cog {
     margin-top: 0;
-    background-color: #fff;
-    padding: 1rem;
-    border-radius: 4px;
-    color: #000;
+    color: #fff;
 }
+
 
 
 @media screen and (min-width:1000px) {
@@ -30,8 +28,13 @@
         justify-content: flex-start;
     }
     
-    .sidebarButtons {
+    .fa-chart-bar, .fa-cog {
         margin-top: 1rem;
+        transition: opacity .4s
+    }
+
+    .fa-chart-bar:hover, .fa-cog:hover {
+        opacity: .8;
     }
     
 }

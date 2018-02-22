@@ -42,7 +42,7 @@ class App extends React.Component {
     render() {
         return (
             <div id="container">
-                <Header />
+                <Header openModal={this.handleModalOpen} />
                 <div id="mainContainer">
                     <Modal
                         isOpen={this.state.modalIsOpen}
@@ -55,7 +55,7 @@ class App extends React.Component {
                         <NewExpense closeModal={this.handleCloseModal} />
                     </Modal>
                     <aside className="sidebarContainer">
-                        <Sidebar openModal={this.handleModalOpen} />
+                        <Sidebar />
                     </aside>
                     <main>
                         <Route exact path="/" component={Home} /> 

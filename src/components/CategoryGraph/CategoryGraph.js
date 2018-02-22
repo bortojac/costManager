@@ -32,7 +32,7 @@ class CategoryGraph extends React.Component {
                     <XAxis dataKey="category"/>
                     <YAxis tickFormatter={tickItem => tickItem.toLocaleString()}/>
                     <Tooltip formatter={value => value.toLocaleString()}/>
-                    <Bar dataKey="amount" fill="#CC0000" fillOpacity={.7}/>
+                    <Bar dataKey="amount" fill="#CC0000" fillOpacity={1}/>
                                     </BarChart>
             </ResponsiveContainer>
             </section>

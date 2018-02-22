@@ -40,6 +40,8 @@
 .settingsRow2Col2 {
     width: 100%;
     flex: 1;
+    border-bottom: solid 2px #ff0000;
+    border-right: none;
     display: flex;
     flex-flow: column;
 }
@@ -60,6 +62,22 @@
     padding: 1rem;
     color: #fff;
 }
+
+.settingsRow2Col3 {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+}
+
+.settingsRow2Col3Content {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .categoryList {
     list-style: none;
@@ -85,14 +103,10 @@
     position: absolute;
     top: 0;
     right: 0;
+    cursor: pointer;
 }
 
-.settingsRow3 {
-    display: flex;
-    flex: initial;
-    justify-content: 'center';
-    align-items: 'center';
-}
+
 
 @media screen and (min-width: 1000px) {
 
@@ -101,13 +115,14 @@
 }
 
 .settingsRow2Col1 {
-    width: 50%;
+    /*width: 50%;*/
     border-right: solid 2px #ff0000;
 
 }
 
-settingsRow2Col2 {
-    width: 50%;
+.settingsRow2Col2 {
+    /*width: 50%;*/
+    border-right: solid 2px #ff0000;
 }
 
 }
