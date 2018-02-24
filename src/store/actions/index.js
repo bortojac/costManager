@@ -69,6 +69,8 @@ export const saveFinished = (responseMessage) => {
 export const saveExpense = (date, category, amount, notes, monthStartDay) => {
     return dispatch => {
         dispatch(saveNeeded());
+        console.log('saveExpenseAction');
+        console.log(date);
         return fetch(apiURL, {
             method: 'POST',
             headers: {'Content-Type':'application/json'},

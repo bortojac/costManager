@@ -56,6 +56,8 @@ class NewExpense extends React.Component {
         this.setState({
             dateInputValue: date
         });
+        console.log(this.state.dateInputValue);
+        console.log(formatDate(this.state.dateInputValue));
     }
     updateCategoryValue(selectedOption) {
         this.setState({

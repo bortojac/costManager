@@ -34,12 +34,12 @@ class MonthStartDate extends React.Component {
     renderMonthStartInput() {
         if(!this.props.monthStartEditFlag) {
         return (
-            <p>{this.props.monthStartDay}</p>
+            <p className="monthStartDayText">{this.props.monthStartDay}</p>
         );
         }
     else {
             return (
-                <div>
+                <div className="row2Col2InputContainer">
                     <input
                         className="monthStartDayInput"
                         type="number"

@@ -60,6 +60,7 @@ app.post('/expenseBase', function(req, res) {
     // create new expense document
     var expense = new Expenses();
     var date = new Date(req.body.date);
+    console.log(date);
     // body parser lets us use the req.body
     var month = date.getMonth();
     var day = date.getDate();
@@ -180,9 +181,25 @@ app.post('/expenseBase/monthlyGraph/', function (req, res) {
                                                     '/',
                                                     { $substrBytes: [userMonthStartDay, 0, -1] },
                                                     '-',
-                                                    { $substrBytes: ['$month', 0, -1] },
+                                                    //{ $substrBytes: ['$month', 0, -1] },
+                                                    '0',
                                                     '/',
                                                     { $substrBytes: [ {$subtract: [userMonthStartDay, 1]}, 0, -1]}
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            case: { $and: [{ $eq: ['$month', 11] }, { $gte: ['$day', userMonthStartDay] }] },
+                                            then: {
+                                                $concat: [
+                                                    '11',
+                                                    '/',
+                                                    { $substrBytes: [userMonthStartDay, 0, -1] },
+                                                    '-',
+                                                    //{ $substrBytes: ['$month', 0, -1] },
+                                                    '0',
+                                                    '/',
+                                                    { $substrBytes: [{ $subtract: [userMonthStartDay, 1] }, 0, -1] }
                                                 ]
                                             }
                                         },
@@ -220,12 +237,13 @@ app.post('/expenseBase/monthlyGraph/', function (req, res) {
                                 },
                             year: '$year',
                             month: '$month',
+                            day: '$day',
                             amount: '$amount'
                     }
                 },
                 {
                     $group: {
-                        _id: { monthStartInterval: '$monthStartInterval', year: '$year', month: '$month'},
+                        _id: { monthStartInterval: '$monthStartInterval', year: '$year', month: '$month', day: '$day'},
                         amount: { $sum: '$amount' }
                     }
                 },
@@ -233,6 +251,7 @@ app.post('/expenseBase/monthlyGraph/', function (req, res) {
                     $project: {
                         _id: 0,
                         amount: 1,
+                        day: '$_id.day',
                         month: '$_id.month',
                         year: '$_id.year',
                         monthStartInterval: '$_id.monthStartInterval'
@@ -241,13 +260,15 @@ app.post('/expenseBase/monthlyGraph/', function (req, res) {
                 {
                     $sort: {
                         'year': 1,
-                        'month': 1
-                    }
+                        'month': 1,
+                        'day': 1
+                    
                 }
+            }
             ],
             function (err, _res) {
                 if (err) return handleError(err);
-                console.log(_res);
+                //console.log(_res);
                 res.json(_res);
             });
         //.then(function(err, result) {

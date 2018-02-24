@@ -50,6 +50,7 @@
     flex: 1;
     position: relative;
     display: flex;
+    flex-flow: column;
     justify-content: center;
     align-items: center;
 }
@@ -78,27 +79,6 @@
     align-items: center;
 }
 
-
-.categoryList {
-    list-style: none;
-    padding: 1rem;
-}
-
-.categoryList > li {
-    border-bottom: solid 2px #000;
-    padding: .5rem;
-    text-align: center;
-}
-
-.categoryListItem {
-    display: flex;
-    flex-flow: row;
-}
-
-.categoryText {
-    flex: 1;
-}
-
 .editLink {
     position: absolute;
     top: 0;
@@ -106,7 +86,18 @@
     cursor: pointer;
 }
 
-
+.deleteAll {
+    font-size: 1rem;
+    border-radius: 4px;
+    background-color: #ff0000;
+    width: 10rem;
+    padding: .7rem;
+    margin: 1rem;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    transition: opacity .4s;
+}
 
 @media screen and (min-width: 1000px) {
 
@@ -123,6 +114,10 @@
 .settingsRow2Col2 {
     /*width: 50%;*/
     border-right: solid 2px #ff0000;
+}
+
+.deleteAll:hover {
+    opacity: .7;
 }
 
 }

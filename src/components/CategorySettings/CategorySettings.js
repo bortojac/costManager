@@ -27,6 +27,7 @@ class CategorySettings extends React.Component {
         }
         console.log(objToSubmit);
         this.props.updateCategories(objToSubmit);
+        this.props.fetchCategoryData();
         this.props.handleCategoryEdit();
     }
 
@@ -66,7 +67,7 @@ class CategorySettings extends React.Component {
             //console.log(item);
             return <input type="text" name={item} defaultValue={this.props.categories[index]} onChange={this.handleChange}></input>;
         })}
-        <a className="categorySubmitButton" onClick={this.handleCategorySubmit}>Submit Categories</a>
+        <a className="categorySubmitButton" onClick={this.handleCategorySubmit}>Submit</a>
         </div>
         );
     }

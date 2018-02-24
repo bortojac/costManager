@@ -3,3 +3,32 @@
     flex: 1;
     text-align: center;
 }
+
+.monthStartDayText {
+    font-size: 5rem;
+}
+
+.monthStartSubmitButton {
+    font-size: 1rem;
+    border-radius: 4px;
+    background-color: #ff0000;
+    width: 10rem;
+    padding: .7rem;
+    margin: 1rem;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    transition: opacity .4s;
+}
+
+.row2Col2InputContainer {
+    display: flex;
+    flex-flow: column;
+    flex: 1;
+}
+
+@media screen and (min-width:1000px) {
+    .monthStartSubmitButton:hover {
+        opacity: .7;
+    }
+}

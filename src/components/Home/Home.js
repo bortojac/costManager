@@ -22,7 +22,7 @@ class Home extends React.Component {
             <div className="homeContainer">
                 <div className="row1">
                     <h1>{this.props.totalSum ? `You've Spent $${this.props.totalSum.toLocaleString()} this month`:
-                'Loading...'}</h1>
+                'Start logging expenses!'}</h1>
                 </div>
                 <div className="row2">
                     <CategoryGraph />

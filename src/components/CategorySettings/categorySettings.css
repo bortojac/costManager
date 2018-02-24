@@ -15,3 +15,46 @@
     border-radius: 4px;
     padding: .5rem;
 }
+
+.categorySubmitButton {
+    font-size: 1rem;
+    border-radius: 4px;
+    background-color: #ff0000;
+    width: 10rem;
+    padding: .7rem;
+    margin: 1rem;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    transition: opacity .4s;
+}
+
+.categoryList {
+    list-style: none;
+    padding: 1rem;
+}
+
+.categoryList > li {
+    border-bottom: solid 2px #000;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.categoryList > li:first-child {
+    border-top: solid 2px #000;
+}
+
+.categoryListItem {
+    display: flex;
+    flex-flow: row;
+}
+
+.categoryText {
+    flex: 1;
+}
+
+@media screen and (min-width: 1000px) {
+    .categorySubmitButton:hover {
+        opacity: .7;
+    }
+}

@@ -13,7 +13,7 @@ export const getTableDataState = createSelector(
         //console.log(json);
        return json.map(
         item => ({
-            date: moment(item.date).format('ddd, MMM Do, YYYY'),
+            date: moment.utc(item.date).format('ddd, MMM Do, YYYY'),//.format('ddd, MMM Do, YYYY'),
             category: item.category,
             amount: item.amount.toLocaleString(),
             notes: item.notes
@@ -26,18 +26,21 @@ export const getTableDataState = createSelector(
 export const getTotalSum = (state) => state.monthlyData.json
 
 // totalSum reselect function to actually calculate the sum of the most recent period
-// filter to current year, sort descending by month, group by monthStartInterval, sum by amount, grab first amount
+// filter to current year, sort descending by month and day, group by monthStartInterval, sum by amount, grab first amount
 export const getTotalSumState = createSelector(
     [getTotalSum],
     (json) => {
+        console.log('totalSum');
+        console.log(json);
         let monthIntervalGrouped = _(json)
         .filter({'year': moment().year()})
-        .orderBy(['month'],['desc'])
+        .orderBy(['month', 'day'],['desc', 'desc'])
         .groupBy(item => item.monthStartInterval)
         .map((monthIntervalArray) => ({
             monthStartInterval: monthIntervalArray[0].monthStartInterval,
             amount: _.sumBy(monthIntervalArray, x => x.amount)
         })).value();
+        console.log(monthIntervalGrouped);
         return _.head(_.map(monthIntervalGrouped, item => item.amount))
     }
 )
@@ -59,20 +62,50 @@ const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July",
 export const getMonthlyData = (state) => state.monthlyData.json
 export const getMonthlyLoadingFlag = (state) => state.monthlyData.loading
 
+export const formatIntervalXAxis = (monthInterval) => {
+
+}
+
+const formatMonthInterval = (monthInterval) => {
+    let firstMonthNumber = Number(monthInterval.match(/[^\/]*/)[0]);
+    let firstMonth = months[firstMonthNumber];
+    let firstDay = monthInterval.match(/\/([^-]*)/)[1];
+    let lastMonthNumber = Number(monthInterval.match(/[^\/]*/)[0])+1;
+    let lastMonth = firstMonthNumber == 11 ? 'Jan' : months[firstMonthNumber+1];
+    let lastDay = firstDay == 1 ? 
+    (
+        [0, 2, 4, 6, 7, 9, 11].includes(firstMonthNumber) ? 31 : firstMonthNumber == 1 ? 28 : 30
+    )
+    : 
+    (
+        firstDay - 1
+    )
+    if(firstDay == 1) {
+        lastMonth = firstMonth;
+    }
+    return `${firstMonth} ${firstDay} - ${lastMonth} ${lastDay}`;
+}
+
+
 export const getMonthlyDataState = createSelector(
     [getMonthlyData],
     json => {
         console.log('monthlyDataSelector');
+        console.log(json);
         console.log(_(json)
         .groupBy(item => item.monthStartInterval)
         .map((monthIntervalArray) => ({
-            monthStartInterval: monthIntervalArray.monthStartInterval,
+            monthStartInterval: monthIntervalArray[0].monthStartInterval,
+            monthIntervalTooltip: formatMonthInterval(monthIntervalArray[0].monthStartInterval),
+            monthStartXAxis: months[Number(monthIntervalArray[0].monthStartInterval.match(/[^\/]*/)[0])],
             amount: _.sumBy(monthIntervalArray, x => x.amount)
         })).value());
         return _(json)
         .groupBy(item => item.monthStartInterval)
         .map((monthIntervalArray) => ({
             monthStartInterval: monthIntervalArray[0].monthStartInterval,
+            monthIntervalTooltip: formatMonthInterval(monthIntervalArray[0].monthStartInterval),
+            monthStartXAxis: months[Number(monthIntervalArray[0].monthStartInterval.match(/[^\/]*/)[0])],
             amount: _.sumBy(monthIntervalArray, x => x.amount)
         })).value();
         

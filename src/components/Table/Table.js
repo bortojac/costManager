@@ -16,7 +16,8 @@ class Table extends React.Component {
     
     render() {
        let tableDat =_.get(this.props,'tableData', [{date: [], category: [], amount: [], notes: []}]);
-       //console.log(tableDat);
+       console.log('tableDat');
+       console.log(tableDat);
         return (
                 <ReactTable
                     data={tableDat}
