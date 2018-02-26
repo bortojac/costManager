@@ -23,7 +23,7 @@ const mapDispatchToProps = dispatch => {
     //fetchTableData: () => {
      // dispatch(fetchTableData())
     //},
-    fetchMonthStartDay: (userId) => dispatch(fetchUserInfo(userId)),
+    fetchUserInfo: (userId) => dispatch(fetchUserInfo(userId)),
     //fetchMonthlyData: () => dispatch(fetchMonthlyData())
   }
 }

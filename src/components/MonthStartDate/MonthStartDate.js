@@ -31,10 +31,25 @@ class MonthStartDate extends React.Component {
         //console.log(this.state.monthStartDay);
     }
     
+    renderMonthStartString() {
+        if([3,23].includes(this.props.monthStartDay)) {
+            return `${this.props.monthStartDay}rd`;
+        }
+        else if([2,22].includes(this.props.monthStartDay)) {
+            return `${this.props.monthStartDay}nd`;
+        }
+        else if([1,21].includes(this.props.monthStartDay)) {
+            return `${this.props.monthStartDay}st`;
+        }
+        else {
+            return `${this.props.monthStartDay}th`;
+        }
+    }
+
     renderMonthStartInput() {
         if(!this.props.monthStartEditFlag) {
         return (
-            <p className="monthStartDayText">{this.props.monthStartDay}</p>
+            <p className="monthStartDayText">{this.renderMonthStartString()}</p>
         );
         }
     else {

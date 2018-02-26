@@ -14,7 +14,11 @@ import {
     USER_INFO_REQUESTED,
     USER_INFO_RECEIVED,
     UPDATE_MONTH_START_DAY_FINISHED,
-    UPDATE_MONTH_START_DAY_REQUESTED
+    UPDATE_MONTH_START_DAY_REQUESTED,
+    ADD_USER_CATEGORY_REQUESTED,
+    ADD_USER_CATEGORY_FINISHED,
+    UPDATE_USER_CATEGORIES_FINISHED,
+    UPDATE_USER_CATEGORIES_REQUESTED
 } from './types';
 
 const apiURL = 'http://localhost:3000/expenseBase';
@@ -198,6 +202,64 @@ export const updateCategories = (newCategories) => {
         }
     };
 
+    export const addUserCategoryRequested = (newCategory) => {
+        return {
+            type: ADD_USER_CATEGORY_REQUESTED,
+            fetching: true,
+            newCategory: newCategory        
+        }
+    };
+    
+    export const addUserCategoryFinished = () => {
+        return {
+            type: ADD_USER_CATEGORY_FINISHED,
+            fetching: false
+        }
+    };
+    
+    export const addUserCategory = (newCategory) => {
+        return dispatch => {
+            dispatch(addUserCategoryRequested(newCategory))
+            return fetch('/userBase/'+userId+'/addCategory', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    category: newCategory
+        })}).then(dispatch(addUserCategoryFinished()))
+            }
+        };
+
+        export const updateUserCategoriesRequested = (newCategories) => {
+            return {
+                type: UPDATE_USER_CATEGORIES_REQUESTED,
+                fetching: true,
+                newCategories: newCategories      
+            }
+        };
+        
+        export const updateUserCategoriesFinished = () => {
+            return {
+                type: UPDATE_USER_CATEGORIES_FINISHED,
+                fetching: false
+            }
+        };
+        
+        export const updateUserCategories = (newCategories) => {
+            return dispatch => {
+                dispatch(updateUserCategoriesRequested(newCategories))
+                return fetch('/userBase/'+userId+'/categories', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        newCategories: newCategories
+            })}).then(dispatch(updateUserCategoriesFinished()))
+                }
+            };
+
     export const deleteAllRequested = () => {
         return {
             type: DELETE_ALL_REQUESTED,
@@ -241,7 +303,7 @@ export const updateCategories = (newCategories) => {
             };
         };
         
-        export const fetchUserInfo = (userId) => {
+        export const fetchUserInfo = () => {
             return dispatch => {
                 dispatch(userInfoRequested());
                 return fetch('/userBase/'+userId,

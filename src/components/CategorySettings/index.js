@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import CategorySettings from './CategorySettings';
-import { updateCategories, fetchCategoryData } from '@@store/actions';
+import { updateCategories, fetchCategoryData, updateUserCategories } from '@@store/actions';
 import { getCategoriesState
  } from '@@store/selectors';
  import _ from 'lodash';
@@ -19,7 +19,8 @@ const mapDispatchToProps = dispatch => {
     updateCategories: (newCategories) => {
       dispatch(updateCategories(newCategories))
     },
-    fetchCategoryData: () => dispatch(fetchCategoryData())
+    fetchCategoryData: () => dispatch(fetchCategoryData()),
+    updateUserCategories: (newCategories) => dispatch(updateUserCategories(newCategories))
   };
 };
 

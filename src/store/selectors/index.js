@@ -14,7 +14,7 @@ export const getTableDataState = createSelector(
        return json.map(
         item => ({
             date: moment.utc(item.date).format('ddd, MMM Do, YYYY'),//.format('ddd, MMM Do, YYYY'),
-            category: item.category,
+            category: item.category.replace(/\b\w/g, l => l.toUpperCase()),
             amount: item.amount.toLocaleString(),
             notes: item.notes
         })
@@ -49,10 +49,18 @@ export const getTotalSumState = createSelector(
 export const getCategoryData = (state) => state.categoryData.json;
 export const getCategoryLoadingFlag = (state) => state.categoryData.loading;
 
+export const getCategoryDataState = createSelector(
+    [getCategoryData],
+    (json) => _.map(json, item => ({
+        category: item.category.replace(/\b\w/g, l => l.toUpperCase()),
+        amount: item.amount
+    }))
+)
+
 // get just the categories for CategorySettings
 export const getCategoriesState = createSelector(
     [getCategoryData],
-    (json) => _.map(json, item => item.category)
+    (json) => _.map(json, item => item.category.replace(/\b\w/g, l => l.toUpperCase()))
 );
 
 // monthlyData selectors
@@ -132,4 +140,9 @@ export const getUserInfo = (state) => state.userInfo.json;
 export const getMonthStartDayState = createSelector(
     [getUserInfo],
     json => json.monthStartDay
+);
+
+export const getUserCategoriesState = createSelector(
+    [getUserInfo],
+    json => json.categories
 );

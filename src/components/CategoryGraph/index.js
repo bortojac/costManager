@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 import CategoryGraph from './CategoryGraph';
 import { fetchCategoryData } from '@@store/actions';
-import { getCategoryData, getCategoryLoadingFlag} from '@@store/selectors';
+import { getCategoryDataState, getCategoryLoadingFlag} from '@@store/selectors';
 
 
 const mapStateToProps = state => {
     return {
-        data: getCategoryData(state),
+        data: getCategoryDataState(state),
         loading: getCategoryLoadingFlag(state)
     }; 
  }

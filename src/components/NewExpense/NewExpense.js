@@ -32,13 +32,12 @@ class NewExpense extends React.Component {
             categoryInputValue: undefined,
             amountInputValue: 0,
             notesInputText: 'What was the expense on?',
-            options: [
-             {value: 'rent',label: 'Rent'},
-             {value: 'entertainment', label: 'Entertainment'},
-             {value: 'groceries', label: 'Groceries'},
-             {value: 'personal', label: 'Personal'},
-             {value: 'utilities', label: 'Utilities'}
-            ]
+            options: _.map(this.props.categoryOptions, category => (
+             {
+                 value: category,
+                 label: category.replace(/\b\w/g, l => l.toUpperCase())
+            })
+        )
             //submitted: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,9 +47,9 @@ class NewExpense extends React.Component {
         this.updateNotesText = this.updateNotesText.bind(this);
     }
     
-    componentWillMount() {
-        //this.props.fetchMonthStartDay('bortojac');
-    }
+   //componentDidMount() {
+
+//        }
 
     updateDateValue(date) {
         this.setState({
@@ -63,6 +62,18 @@ class NewExpense extends React.Component {
         this.setState({
             categoryInputValue: selectedOption.value
         });
+        if(!this.state.options.map(item => item.value).includes(selectedOption.value)) {
+            this.setState(prevState => ({
+                options: [
+                    ...prevState.options,
+                    {value: selectedOption.value,
+                     label: selectedOption.value.replace(/\b\w/g, l => l.toUpperCase())
+                    }]
+            }));
+        }
+        console.log(selectedOption.value);
+        console.log(this.state.categoryInputValue);
+        console.log(this.state.options);
     }
     updateAmountValue(event) {
         this.setState({
@@ -83,6 +94,11 @@ class NewExpense extends React.Component {
             this.state.notesInputText//,
             //this.props.monthStartDay
         );
+        // if the user has created a new category, we should add it to the user database too
+        if(!this.props.categoryOptions.includes(this.state.categoryInputValue)) {
+            this.props.addUserCategory(this.state.categoryInputValue);
+        }
+        this.props.fetchUserInfo();
         this.props.closeModal();
         //this.setState({submitted: false})
     }

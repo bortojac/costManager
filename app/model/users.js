@@ -7,7 +7,8 @@ var Schema = mongoose.Schema;
 
 var userSchema = new Schema ({
     userId: String,
-    monthStartDay: Number
+    monthStartDay: Number,
+    categories: Array
 })
 
 module.exports = mongoose.model('Users', userSchema);

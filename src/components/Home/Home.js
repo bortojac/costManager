@@ -12,7 +12,7 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchMonthStartDay('bortojac');
+        this.props.fetchUserInfo('bortojac');
     }
 
     render() {

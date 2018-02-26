@@ -304,9 +304,9 @@ app.put('/expenseBase/newCategories', function (req, res) {
         //    res.json(user);
         //})
         Users.findOne({ userId: req.params.userId })
-    .exec(function(err, users) {
+    .exec(function(err, user) {
         if (err) res.send(err);
-        res.json(users)
+        res.json(user)
     })
     });
 
@@ -316,11 +316,11 @@ app.put('/expenseBase/newCategories', function (req, res) {
     // body parser lets us use the req.body
     user.userId = req.params.userId;
     user.monthStartDay = req.body.monthStartDay;
-
+    user.categories = req.body.categories;
     // save
     user.save(function(err) {
         if (err) res.send(err)
-        res.send(`${req.params.userId} user has now chosen a month start date of ${req.body.monthStartDay}`);
+        res.send(`${req.params.userId} has now chosen a month start date of ${req.body.monthStartDay} and has categories ${req.body.categories}`);
     });
 });
 
@@ -331,6 +331,53 @@ app.put('/userBase/:userId/monthStartDay', function (req, res) {
     } );
     //Users.update(query, { $set: { monthStartDay: req.body.monthStartDay } }).exec();
 });
+
+app.put('/userBase/:userId/addCategory', function (req, res) {
+    var query = { userId: req.params.userId };
+    Users.findOneAndUpdate(query, { $push: { categories: req.body.category } }, function(err, result) {
+        res.send(`${req.params.userId} has added ${req.body.category} to their categories`);
+    } );
+    //Users.update(query, { $set: { monthStartDay: req.body.monthStartDay } }).exec();
+});
+
+app.put('/userBase/:userId/categories', function (req, res) {
+    // property is the old category and req[property] is the new one
+    Users.findOne({ userId: req.params.userId })
+    .exec(function(err, user) {
+        //console.log(user.categories);
+        var userCategories = user.categories;
+        console.log(userCategories);
+        console.log(req.body.newCategories);
+        var i;
+        //for(i=0;i<user.categories.length;i++) {
+            //["Rent","Utilities","Groceries","Entertainment","Personal","Bar","Electricity","Electricity","test","testing"]
+            // we need to update user.categories with the new updates
+          //  if()
+        //}
+         for (var property in req.body.newCategories) {
+    
+        console.log(property);
+        //console.log(query);
+        console.log(req.body.newCategories[property]);
+        console.log(userCategories.indexOf(property));
+        userCategories[userCategories.indexOf(property)] = req.body.newCategories[property];
+
+    }
+    console.log(userCategories)
+    var query = { userId: req.params.userId };
+    Users.update(query, {$set: { categories: userCategories } }).exec();
+
+        //if (err) res.send(err);
+        //res.json(user)
+    })
+    /*for (var property in req.body.newCategories) {
+        //console.log(property);
+        var query = { userId: req.params.userId };
+        //console.log(query);
+        //console.log(req.body.newCategories[property]);
+        Users.update(query, {$set: { categories: req.body.newCategories[property]}}).exec();*/
+    //}
+    });
 
 app.delete('/userBase/:userId', function (req, res) {
 
