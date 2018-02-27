@@ -21,6 +21,7 @@ import {
     UPDATE_USER_CATEGORIES_REQUESTED
 } from './types';
 
+
 const apiURL = 'http://localhost:3000/expenseBase';
 const userId = 'bortojac';
 
@@ -44,7 +45,7 @@ export const tableDataReceived = (jsonResponse) => {
 export const fetchTableData = () => {
     return dispatch => {
         dispatch(tableDataRequested());
-        return fetch(apiURL,
+        return fetch(apiURL+'/'+userId,
             {
                 method: 'GET'
         })
@@ -75,7 +76,7 @@ export const saveExpense = (date, category, amount, notes, monthStartDay) => {
         dispatch(saveNeeded());
         console.log('saveExpenseAction');
         console.log(date);
-        return fetch(apiURL, {
+        return fetch(apiURL+'/'+userId, {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
@@ -84,7 +85,7 @@ export const saveExpense = (date, category, amount, notes, monthStartDay) => {
                 amount: amount,
                 notes: notes,
                 monthStartDay: monthStartDay
-    })
+                })
             })
         .then(response => response.text())
         .then(textReponse => {
@@ -116,7 +117,7 @@ export const categoryDataReceived = (jsonResponse) => {
 export const fetchCategoryData = () => {
     return dispatch => {
         dispatch(categoryDataRequested());
-        return fetch(apiURL+'/categoryGraph',
+        return fetch(apiURL+'/'+userId+'/categoryGraph',
             {
                 method: 'GET'
         })
@@ -156,7 +157,7 @@ export const fetchMonthlyData = () => {
          .then(jsonResponse => {
                 console.log('monthlyDataFetchResponseBelow');
                 console.log(jsonResponse);
-                return fetch(apiURL + '/monthlyGraph',
+                return fetch(apiURL + '/' + userId + '/monthlyGraph',
                     {
                         method: 'POST',
                         headers: {
@@ -178,28 +179,28 @@ export const updateCategoriesRequested = (newCategories) => {
         type: UPDATE_CATEGORIES_REQUESTED,
         fetching: true,
         newCategories: newCategories
-    }
+    };
 };
 
 export const updateCategoriesFinished = () => {
     return {
         type: UPDATE_CATEGORIES_FINISHED,
         fetching: false
-    }
+    };
 };
 
 export const updateCategories = (newCategories) => {
     return dispatch => {
         dispatch(updateCategoriesRequested(newCategories))
-        return fetch(apiURL+'/newCategories', {
+        return fetch(apiURL+'/'+userId+'/newCategories', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 newCategories: newCategories
-    })}).then(dispatch(updateCategoriesFinished()))
-        }
+    })}).then(() =>dispatch(updateCategoriesFinished()))
+        };
     };
 
     export const addUserCategoryRequested = (newCategory) => {
@@ -207,14 +208,14 @@ export const updateCategories = (newCategories) => {
             type: ADD_USER_CATEGORY_REQUESTED,
             fetching: true,
             newCategory: newCategory        
-        }
+        };
     };
     
     export const addUserCategoryFinished = () => {
         return {
             type: ADD_USER_CATEGORY_FINISHED,
             fetching: false
-        }
+        };
     };
     
     export const addUserCategory = (newCategory) => {
@@ -228,7 +229,7 @@ export const updateCategories = (newCategories) => {
                 body: JSON.stringify({
                     category: newCategory
         })}).then(dispatch(addUserCategoryFinished()))
-            }
+            };
         };
 
         export const updateUserCategoriesRequested = (newCategories) => {
@@ -236,14 +237,14 @@ export const updateCategories = (newCategories) => {
                 type: UPDATE_USER_CATEGORIES_REQUESTED,
                 fetching: true,
                 newCategories: newCategories      
-            }
+            };
         };
         
         export const updateUserCategoriesFinished = () => {
             return {
                 type: UPDATE_USER_CATEGORIES_FINISHED,
                 fetching: false
-            }
+            };
         };
         
         export const updateUserCategories = (newCategories) => {
@@ -256,15 +257,17 @@ export const updateCategories = (newCategories) => {
                     },
                     body: JSON.stringify({
                         newCategories: newCategories
-            })}).then(dispatch(updateUserCategoriesFinished()))
-                }
+            })}).then(() => {
+                dispatch(updateUserCategoriesFinished());
+                  })
+                };
             };
 
     export const deleteAllRequested = () => {
         return {
             type: DELETE_ALL_REQUESTED,
             deleted: true
-        }
+        };
     };
     
     export const deleteAllFinished = (textResponse) => {
@@ -272,18 +275,18 @@ export const updateCategories = (newCategories) => {
             type: DELETE_ALL_FINISHED,
             deleted: false,
             textResponse: textResponse
-        }
+        };
     };
     
     export const deleteAll = () => {
         return dispatch => {
             dispatch(deleteAllRequested())
-            return fetch(apiURL, {
+            return fetch(apiURL+'/'+userId, {
                 method: 'delete'
         })
         .then(response => response.text())
         .then(textResponse => dispatch(deleteAllFinished(textResponse)))
-            }
+            };
         };
 
         export const userInfoRequested = () => {
@@ -320,20 +323,20 @@ export const updateCategories = (newCategories) => {
                 type: UPDATE_MONTH_START_DAY_REQUESTED,
                 fetching: true,
                 monthStartDay: monthStartDay
-            }
+            };
         };
         
         export const updateMonthStartDayFinished = () => {
             return {
                 type: UPDATE_MONTH_START_DAY_FINISHED,
                 fetching: false
-            }
+            };
         };
         
         export const updateMonthStartDay = (monthStartDay) => {
             return dispatch => {
                 dispatch(updateMonthStartDayRequested(monthStartDay))
-                return fetch('/userBase/bortojac/monthStartDay', {
+                return fetch('/userBase/'+userId+'/monthStartDay', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -343,6 +346,6 @@ export const updateCategories = (newCategories) => {
             })}).then(() => {
                 dispatch(updateMonthStartDayFinished())
             })
-                }
+                };
             };
      

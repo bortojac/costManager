@@ -46,8 +46,8 @@ app.get('/', function (req, res) {
 
 // handle routes to Expense database
 
-app.get('/expenseBase', function (req, res) {
-    Expenses.find()
+app.get('/expenseBase/:userId', function (req, res) {
+    Expenses.find({userId: req.params.userId})
     .sort({date: -1})
     .exec(function(err, expenses) {
         if (err) res.send(err);
@@ -55,7 +55,7 @@ app.get('/expenseBase', function (req, res) {
     })
 });
 
-app.post('/expenseBase', function(req, res) {
+app.post('/expenseBase/:userId', function(req, res) {
     
     // create new expense document
     var expense = new Expenses();
@@ -72,6 +72,7 @@ app.post('/expenseBase', function(req, res) {
     expense.amount = req.body.amount;
     //console.log(req.body.notes);
     expense.notes = req.body.notes;
+    expense.userId = req.params.userId;
 
     // create monthStartInterval from the users selected monthStartDay
     /*var userMonthStartDay = req.body.monthStartDay;
@@ -90,10 +91,11 @@ app.post('/expenseBase', function(req, res) {
     });
 });
 
-app.delete('/expenseBase', function(req, res) {
+app.delete('/expenseBase/:userId', function(req, res) {
     
     Expenses.remove(
         {
+            userId: req.params.userId
             /*date: req.body.date,
             category: req.body.category,
             amount: req.body.amount,
@@ -109,19 +111,20 @@ app.delete('/expenseBase', function(req, res) {
 });
 
 // handle get requests for categoryGraph
-app.get('/expenseBase/categoryGraph', function (req, res) {
+app.get('/expenseBase/:userId/categoryGraph', function (req, res) {
     //console.log('in here');
         Expenses.aggregate([
+            { $match : { userId : req.params.userId } },
             { $group: { _id: '$category', amount: { $sum: '$amount' }}},
             { $project: { _id: 0, amount: 1, category: "$_id"}}],
             function (err, _res) {
-              if (err) return handleError(err);
-              res.json(_res);
+                if (err) res.send(err);
+                res.json(_res);
             });
 });
 
 // handle post requests for monthlyGraph
-app.post('/expenseBase/monthlyGraph/', function (req, res) {
+app.post('/expenseBase/:userId/monthlyGraph/', function (req, res) {
    
         // create monthStartInterval from the users selected monthStartDay
    // Users.findOne({userId: req.body.userId}, function (err, userInfo) {
@@ -130,7 +133,9 @@ app.post('/expenseBase/monthlyGraph/', function (req, res) {
        var userMonthStartDay = req.body.monthStartDay;
        console.log(req.body.monthStartDay)
          Expenses.aggregate(
-            [{
+            [   
+                { $match : { userId : req.params.userId } },
+                {
                 $project:
                     {
                         monthStartInterval:
@@ -267,7 +272,7 @@ app.post('/expenseBase/monthlyGraph/', function (req, res) {
             }
             ],
             function (err, _res) {
-                if (err) return handleError(err);
+                if (err) res.send(err);
                 //console.log(_res);
                 res.json(_res);
             });
@@ -286,11 +291,14 @@ app.post('/expenseBase/monthlyGraph/', function (req, res) {
     // if day < userMonthStartDay, then month-1/userMonthStartDay - month/userMonthStartDay-1 - DONE
 });
 
-app.put('/expenseBase/newCategories', function (req, res) {
+app.put('/expenseBase/:userId/newCategories', function (req, res) {
     // property is the old category and req[property] is the new one
     for (var property in req.body.newCategories) {
         //console.log(property);
-        var query = { category: property };
+        var query = { 
+            category: property,
+            userId: req.params.userId
+         };
         //console.log(query);
         //console.log(req.body.newCategories[property]);
         Expenses.update(query, {$set: {category: req.body.newCategories[property]}}, {multi: true}).exec();

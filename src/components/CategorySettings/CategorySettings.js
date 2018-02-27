@@ -26,9 +26,14 @@ class CategorySettings extends React.Component {
             objToSubmit[this.props.categories[i]] = this.state.newCategories[i];
         }
         console.log(objToSubmit);
+
+        //dispatch actions to update categories of both mongoose collections
         this.props.updateCategories(objToSubmit);
         this.props.updateUserCategories(objToSubmit);
+        //fetch updated data
         this.props.fetchCategoryData();
+        this.props.fetchUserInfo();
+        
         this.props.handleCategoryEdit();
     }
 

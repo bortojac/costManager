@@ -60,14 +60,14 @@ class NewExpense extends React.Component {
     }
     updateCategoryValue(selectedOption) {
         this.setState({
-            categoryInputValue: selectedOption.value
+            categoryInputValue: selectedOption.value//.toLowerCase()
         });
         if(!this.state.options.map(item => item.value).includes(selectedOption.value)) {
             this.setState(prevState => ({
                 options: [
                     ...prevState.options,
-                    {value: selectedOption.value,
-                     label: selectedOption.value.replace(/\b\w/g, l => l.toUpperCase())
+                    {value: selectedOption.value,//.toLowerCase(),
+                     label: selectedOption.value//.replace(/\b\w/g, l => l.toUpperCase())
                     }]
             }));
         }

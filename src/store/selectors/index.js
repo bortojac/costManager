@@ -14,7 +14,7 @@ export const getTableDataState = createSelector(
        return json.map(
         item => ({
             date: moment.utc(item.date).format('ddd, MMM Do, YYYY'),//.format('ddd, MMM Do, YYYY'),
-            category: item.category.replace(/\b\w/g, l => l.toUpperCase()),
+            category: item.category,//.replace(/\b\w/g, l => l.toUpperCase()),
             amount: item.amount.toLocaleString(),
             notes: item.notes
         })
@@ -52,7 +52,7 @@ export const getCategoryLoadingFlag = (state) => state.categoryData.loading;
 export const getCategoryDataState = createSelector(
     [getCategoryData],
     (json) => _.map(json, item => ({
-        category: item.category.replace(/\b\w/g, l => l.toUpperCase()),
+        category: item.category,//.replace(/\b\w/g, l => l.toUpperCase()),
         amount: item.amount
     }))
 )
@@ -60,7 +60,8 @@ export const getCategoryDataState = createSelector(
 // get just the categories for CategorySettings
 export const getCategoriesState = createSelector(
     [getCategoryData],
-    (json) => _.map(json, item => item.category.replace(/\b\w/g, l => l.toUpperCase()))
+    (json) => _.map(json, item => item.category//.replace(/\b\w/g, l => l.toUpperCase())
+)
 );
 
 // monthlyData selectors
