@@ -75,8 +75,8 @@
     flex: 1;
     position: relative;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /*justify-content: center;
+    align-items: center;*/
 }
 
 .editLink {
@@ -84,19 +84,6 @@
     top: 0;
     right: 0;
     cursor: pointer;
-}
-
-.deleteAll {
-    font-size: 1rem;
-    border-radius: 4px;
-    background-color: #ff0000;
-    width: 10rem;
-    padding: .7rem;
-    margin: 1rem;
-    text-align: center;
-    color: #fff;
-    cursor: pointer;
-    transition: opacity .4s;
 }
 
 @media screen and (min-width: 1000px) {

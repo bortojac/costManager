@@ -91,7 +91,7 @@ app.post('/expenseBase/:userId', function(req, res) {
     });
 });
 
-app.delete('/expenseBase/:userId', function(req, res) {
+app.delete('/expenseBase/:userId/deleteAll', function(req, res) {
     
     Expenses.remove(
         {
@@ -109,6 +109,27 @@ app.delete('/expenseBase/:userId', function(req, res) {
            }
         )
 });
+
+app.delete('/expenseBase/:userId/deleteEntries/:date/:category/:amount', function(req, res) {
+    console.log(req.params.date);
+    console.log(req.params.category);
+    console.log(req.params.amount);
+    Expenses.remove(
+        {
+            userId: req.params.userId,
+            date: req.params.date,
+            category: req.params.category,
+            amount: req.params.amount
+                   }, 
+           function(err) {
+               if(err) res.send(err);
+               console.log('entry has been deleted');
+               //console.log('the entry with date: '+ req.params.date + 'category: ' + req.params.category + 'amount: ' + req.params.amount + 'has been deleted');
+               //res.send('the entry with date: '+ req.params.date + 'category: ' + req.params.category + 'amount: ' + req.params.amount + 'has been deleted');
+               //res.send(`Entry with date: ${req.body.date} and category: ${req.body.category} has been deleted`);
+           }
+        )
+})
 
 // handle get requests for categoryGraph
 app.get('/expenseBase/:userId/categoryGraph', function (req, res) {

@@ -8,6 +8,7 @@
     color: #000;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 /* this row should grow to fill as much space as it needs */

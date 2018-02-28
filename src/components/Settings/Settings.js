@@ -5,6 +5,7 @@ import moment from 'moment';
 import CategorySettings from '../CategorySettings';
 import MonthStartDate from '../MonthStartDate';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import DeleteInputs from '../Delete';
 import { faTimes } from '@fortawesome/fontawesome-free-solid';
 import { faEdit } from '@fortawesome/fontawesome-free-regular';
 
@@ -14,11 +15,21 @@ class Settings extends React.Component {
         super(props);
         this.state = {
             categoryEditFlag: false,
-            monthStartEditFlag: false
+            monthStartEditFlag: false,
+            dateInputValue: moment(),
+            categoryInputValue: undefined,
+            amountInputValue: 0,
+            notesInputText: 'What was the expense on?',
+            options: _.map(this.props.categoryOptions, category => (
+                {
+                    value: category,
+                    label: category.replace(/\b\w/g, l => l.toUpperCase())
+                })
+            )
+            //submitted: false
         };
         this.handleCategoryEdit = this.handleCategoryEdit.bind(this);
         this.handleMonthStartEdit = this.handleMonthStartEdit.bind(this);
-        this.handleDeleteAllClick = this.handleDeleteAllClick.bind(this);
     }
 
     handleCategoryEdit() {
@@ -28,10 +39,6 @@ class Settings extends React.Component {
     handleMonthStartEdit() {
         this.setState({monthStartEditFlag: !this.state.monthStartEditFlag});
         //console.log(this.state.monthStartEditFlag);
-    }
-
-    handleDeleteAllClick() {
-        this.props.deleteAll();
     }
 
     renderIcons(flag, handleFunc) {
@@ -73,7 +80,7 @@ class Settings extends React.Component {
                     <section className="settingsRow2Col3">
                         <h2>Delete Entries</h2>
                         <div className="settingsRow2Col3Content">
-                        <a className="deleteAll" onClick={this.handleDeleteAllClick}>Delete All</a>
+                        <DeleteInputs />
                         </div>
                         </section>
                 </div>

@@ -18,7 +18,9 @@ import {
     ADD_USER_CATEGORY_REQUESTED,
     ADD_USER_CATEGORY_FINISHED,
     UPDATE_USER_CATEGORIES_FINISHED,
-    UPDATE_USER_CATEGORIES_REQUESTED
+    UPDATE_USER_CATEGORIES_REQUESTED,
+    DELETE_ENTRIES_FINISHED,
+    DELETE_ENTRIES_REQUESTED
 } from './types';
 
 
@@ -281,13 +283,40 @@ export const updateCategories = (newCategories) => {
     export const deleteAll = () => {
         return dispatch => {
             dispatch(deleteAllRequested())
-            return fetch(apiURL+'/'+userId, {
+            return fetch(apiURL+'/'+userId+'/deleteAll', {
                 method: 'delete'
         })
         .then(response => response.text())
         .then(textResponse => dispatch(deleteAllFinished(textResponse)))
             };
         };
+
+        export const deleteEntriesRequested = () => {
+            return {
+                type: DELETE_ENTRIES_REQUESTED,
+                deleted: true
+            };
+        };
+        
+        export const deleteEntriesFinished = (textResponse) => {
+            return {
+                type: DELETE_ENTRIES_FINISHED,
+                deleted: false,
+                textResponse: textResponse
+            };
+        };
+        
+        export const deleteEntries = (date, category, amount) => {
+            return dispatch => {
+                dispatch(deleteEntriesRequested())
+                return fetch(`${apiURL}/${userId}/deleteEntries/${date}/${category}/${amount}`,
+                {
+                    method: 'delete'
+            })
+            .then(response => response.text())
+            .then(textResponse => dispatch(deleteEntriesFinished(textResponse)))
+                };
+            };
 
         export const userInfoRequested = () => {
             return {

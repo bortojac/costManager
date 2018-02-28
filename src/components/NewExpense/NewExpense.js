@@ -8,7 +8,7 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import _ from 'lodash';
 
-const formatDate = (momentObj) => {
+/*const formatDate = (momentObj) => {
     let date = momentObj._d;
     let dd = date.getDate();
     let mm = date.getMonth()+1; // january is 0
@@ -22,7 +22,7 @@ const formatDate = (momentObj) => {
 
    date = `${yyyy}-${mm}-${dd}`;
    return date;
-}
+}*/
 
 class NewExpense extends React.Component {
     constructor(props) {
@@ -59,19 +59,20 @@ class NewExpense extends React.Component {
         console.log(formatDate(this.state.dateInputValue));
     }
     updateCategoryValue(selectedOption) {
+        const value = selectedOption === null ? '' : selectedOption.value
         this.setState({
-            categoryInputValue: selectedOption.value//.toLowerCase()
+            categoryInputValue: value
         });
-        if(!this.state.options.map(item => item.value).includes(selectedOption.value)) {
+        if(!this.state.options.map(item => item.value).includes(value) & value !== '') {
             this.setState(prevState => ({
                 options: [
                     ...prevState.options,
-                    {value: selectedOption.value,//.toLowerCase(),
-                     label: selectedOption.value//.replace(/\b\w/g, l => l.toUpperCase())
+                    {value: value,//.toLowerCase(),
+                     label: value//.replace(/\b\w/g, l => l.toUpperCase())
                     }]
             }));
         }
-        console.log(selectedOption.value);
+        console.log(value);
         console.log(this.state.categoryInputValue);
         console.log(this.state.options);
     }
@@ -88,7 +89,8 @@ class NewExpense extends React.Component {
 
     handleSubmit() {
         this.props.saveExpense(
-            formatDate(this.state.dateInputValue), // formatting to yyyy-mm-dd for storage
+            //formatDate(this.state.dateInputValue), // formatting to yyyy-mm-dd for storage
+            this.state.dateInputValue.format('YYYY-MM-DD'),
              this.state.categoryInputValue,
              this.state.amountInputValue,
             this.state.notesInputText//,
@@ -131,13 +133,12 @@ class NewExpense extends React.Component {
                     <div className="inputContainer">
                         <h4>Category:</h4>
                         <Select.Creatable
-                         name="category"
+                            name="category"
+                            clearable={true}
                             value={this.state.categoryInputValue}
                             onChange={this.updateCategoryValue}
                             className="categorySelect"
-                           options={this.state.options
-                           //this.renderOptions()
-                        }
+                            options={this.state.options}
                         />
                     </div>
                     <div className="inputContainer">
