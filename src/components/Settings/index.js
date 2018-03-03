@@ -2,13 +2,13 @@ import { connect } from 'react-redux';
 import Settings from './Settings';
 import { deleteAll } from '@@store/actions';
 import {  
-  getDeletedAllMessage
+  getDeleteMessage
  } from '@@store/selectors';
  import _ from 'lodash';
 
 
 const mapStateToProps = state => ({
-    deletedAll: getDeletedAllMessage(state)
+    deleteMessage: getDeleteMessage(state)
  })
 
 const mapDispatchToProps = dispatch => {

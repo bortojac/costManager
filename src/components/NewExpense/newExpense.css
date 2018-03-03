@@ -84,6 +84,13 @@
 
   }
 
+  .disabled {
+      /*pointer-events: none;*/
+      opacity: .7;
+      cursor: not-allowed;
+
+  }
+
 .saveButton:hover {
     opacity: .7;
 }

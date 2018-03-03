@@ -110,21 +110,26 @@ app.delete('/expenseBase/:userId/deleteAll', function(req, res) {
         )
 });
 
-app.delete('/expenseBase/:userId/deleteEntries/:date/:category/:amount', function(req, res) {
-    console.log(req.params.date);
-    console.log(req.params.category);
-    console.log(req.params.amount);
+app.delete('/expenseBase/:userId/deleteEntries', function(req, res) {
+    //console.log(req.params.date);
+    //console.log(req.params.category);
+    //console.log(req.params.amount);
+    var date = req.body.date;
+    var category = req.body.category;
+    var amount = req.body.amount;
+    var notes = req.body.notes;
+    console.log(notes);
     Expenses.remove(
         {
             userId: req.params.userId,
-            date: req.params.date,
-            category: req.params.category,
-            amount: req.params.amount
+            date: date,
+            category: category,
+            amount: amount,
+            notes: notes
                    }, 
            function(err) {
                if(err) res.send(err);
-               console.log('entry has been deleted');
-               //console.log('the entry with date: '+ req.params.date + 'category: ' + req.params.category + 'amount: ' + req.params.amount + 'has been deleted');
+               res.send('the entry with date: '+ date + 'category: ' + category + 'amount: ' + amount + 'notes: ' + notes + 'has been deleted');
                //res.send('the entry with date: '+ req.params.date + 'category: ' + req.params.category + 'amount: ' + req.params.amount + 'has been deleted');
                //res.send(`Entry with date: ${req.body.date} and category: ${req.body.category} has been deleted`);
            }

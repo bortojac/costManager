@@ -4,6 +4,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import Select from 'react-select';
 import DatePicker from 'react-datepicker';
+import { fetchCategoryData } from '../../store/actions';
 
 
 class Delete extends React.Component {
@@ -12,56 +13,162 @@ class Delete extends React.Component {
         this.state = {
             categoryEditFlag: false,
             monthStartEditFlag: false,
-            dateInputValue: moment(),
+            dateInputValue: undefined,
             categoryInputValue: undefined,
-            amountInputValue: 0,
-            options: _.map(this.props.categories, category => (
-                {
-                    value: category,
-                    label: category.replace(/\b\w/g, l => l.toUpperCase())
-                })
-            )
-            //submitted: false
+            amountInputValue: undefined,
+            notesInputValue: undefined
         };
         this.handleDeleteEntriesClick = this.handleDeleteEntriesClick.bind(this);
         this.handleDeleteAllClick = this.handleDeleteAllClick.bind(this);
         this.updateCategoryValue = this.updateCategoryValue.bind(this);
         this.updateAmountValue = this.updateAmountValue.bind(this);
         this.updateDateValue = this.updateDateValue.bind(this);
+       this.updateNotesValue = this.updateNotesValue.bind(this);
 
     }
 
+
     updateDateValue(date) {
+        //console.log('state');
+        //console.log(this.state.dateInputValue);
+        //console.log(date);
         this.setState({
-            dateInputValue: date
+            dateInputValue: date//,
+            //renderDeleteMessage: false
         });
     }
 
     updateCategoryValue(selectedOption) {
         const value = selectedOption === null ? '' : selectedOption.value
         this.setState({
-            categoryInputValue: value
+            categoryInputValue: value//,
+           // renderDeleteMessage: false
+        });
+
+        console.log(this.state.categoryInputValue);
+    }
+
+    updateAmountValue(val) {
+        const value = val === null ? '' : val
+        this.setState({
+            amountInputValue: value//,
+            //deleteBool: false
         });
     }
 
-    updateAmountValue(e) {
+updateNotesValue(selectedOption) {
+        const value = selectedOption === null ? '' : selectedOption.value
         this.setState({
-            amountInputValue: e.target.value
+            notesInputValue: value//,
+            //deleteBool: false
         });
     }
+
     handleDeleteEntriesClick() {
-        this.props.deleteEntries(
-            this.state.dateInputValue.format('YYYY-MM-DD'),
-            this.state.categoryInputValue,
-            this.state.amountInputValue);
+        if(this.state.notesInputValue && this.state.amountInputValue && this.state.dateInputValue && this.state.categoryInputValue) {
+            console.log('worked');
+            this.props.deleteEntries(
+                this.state.dateInputValue.format('YYYY-MM-DD'),
+                this.state.categoryInputValue,
+                Number(this.state.amountInputValue),
+                this.state.notesInputValue
+            );
+            this.setState({
+                dateInputValue: undefined,
+                categoryInputValue: undefined,
+                notesInputValue: undefined,
+                amountInputValue: undefined
+            })
+        }
+        return
     }
 
     handleDeleteAllClick() {
         this.props.deleteAll();
     }
 
+    /*renderDeleteMessage() {
+        if(this.state.renderDeleteMessage) {
+            return <p className="deleteMessage">{_.get(this.props,'deleteMessage','waiting')}</p>;
+        }
+    }*/
+
+    includeDatesArr() {
+      return _.map(_.get(this.props, 'dbData', []), obj => obj.date);
+    }
+
+    categoryOptions() {
+        //console.log('categoryOptions');
+        //console.log(this.props.dbData);
+        //console.log(this.state.dateInputValue.format("DD-MM-YYYY"));
+        //console.log(_.map(_.get(this.props, 'dbData', []), obj => obj.date));
+        if(this.state.dateInputValue) {
+            // moments were not updating as planned: _d value not matching _i value when state updates. format gives correct value. likely due to utc. 
+            let formattedDateArr = _.map(this.props.dbData, obj => ({
+                date: obj.date.format("DD-MM-YYYY"),
+                category: obj.category
+            }));
+            let formattedDateInput = this.state.dateInputValue.format('DD-MM-YYYY');
+           // console.log(formattedDateArr);
+            //console.log(formattedDateInput);
+            return _.map(_.filter(formattedDateArr, { date: formattedDateInput }), obj => ({
+                value: obj.category,
+                label: obj.category.replace(/\b\w/g, l => l.toUpperCase())
+            }));
+
+        }
+    }
+
+        notesOptions() {
+            //console.log('notesOptions');
+            //console.log(this.props.dbData);
+            //console.log(this.state.dateInputValue.format("DD-MM-YYYY"));
+            //console.log(_.map(_.get(this.props, 'dbData', []), obj => obj.date));
+            if(this.state.dateInputValue && this.state.categoryInputValue) {
+                // moments were not updating as planned: _d value not matching _i value when state updates. format gives correct value. likely due to utc. 
+                let formattedDateArr = _.map(this.props.dbData, obj => ({
+                    date: obj.date.format("DD-MM-YYYY"),
+                    category: obj.category,
+                    notes: obj.notes
+                }));
+                let formattedDateInput = this.state.dateInputValue.format('DD-MM-YYYY');
+                //console.log(formattedDateArr);
+              //  console.log(formattedDateInput);
+                  //  console.log(this.state.categoryInputValue);
+                return _.map(_.filter(formattedDateArr, { date: formattedDateInput, category: this.state.categoryInputValue }), obj => ({
+                    value: obj.notes,
+                    label: obj.notes
+                })); 
+}
+}
+
+amountOptions() {
+    //console.log('categoryOptions');
+    //console.log(this.props.dbData);
+    //console.log(this.state.dateInputValue.format("DD-MM-YYYY"));
+    //console.log(_.map(_.get(this.props, 'dbData', []), obj => obj.date));
+    if(this.state.dateInputValue && this.state.categoryInputValue && this.state.notesInputValue) {
+        // moments were not updating as planned: _d value not matching _i value when state updates. format gives correct value. likely due to utc. 
+        let formattedDateArr = _.map(this.props.dbData, obj => ({
+            date: obj.date.format("DD-MM-YYYY"),
+            category: obj.category,
+            note: obj.notes,
+            amount: obj.amount
+        }));
+        let formattedDateInput = this.state.dateInputValue.format('DD-MM-YYYY');
+        //console.log(formattedDateArr);
+        //console.log(formattedDateInput);
+        return _.map(_.filter(formattedDateArr, { date: formattedDateInput, category: this.state.categoryInputValue }), obj => ({
+            value: obj.amount,
+            label: obj.amount
+        })); 
+}
+} 
+
     render() {
-        //console.log(moment().endOf('month').format('DD'));
+        //console.log(_.map(_.get(this.props, 'dbData', []), obj => obj.date.format('MM-DD-YYYY')));
+        //;
+
         return (
             <div className="deleteContainer">
             <div className="deleteEntriesContainer">
@@ -71,7 +178,11 @@ class Delete extends React.Component {
                         <DatePicker
                             onChange={this.updateDateValue}
                             selected={this.state.dateInputValue}
+                            includeDates={this.includeDatesArr()}
+                            placeholderText="Select a date"
                         />
+                        {//_.map(_.get(this.props, 'dbData', []), obj => obj.date)]
+                        }
                     </div>
                     <div className="deleteInputContainer">
                         <h4>Category:</h4>
@@ -80,22 +191,39 @@ class Delete extends React.Component {
                             clearable={true}
                             value={this.state.categoryInputValue}
                             onChange={this.updateCategoryValue}
-                            className="deleteCategorySelect"
-                            options={this.state.options}
+                            disabled={ this.state.dateInputValue ? false : true}
+                            className="deleteSelect"
+                            options={this.categoryOptions()}
                         />
                     </div>
-                    <div className="deleteAmountInputContainer">
-                        <h4>Amount:</h4>
-                        <input
-                            type="number"
-                            name="deleteAmount"
-                            min="1"
-                            max="50000"
-                            value={this.state.amountInputValue}
-                            onChange={this.updateAmountValue}></input>
+                    <div className="deleteInputContainer">
+                        <h4>Notes:</h4>
+                        <Select
+                            name="deleteNotes"
+                            clearable={true}
+                            value={this.state.notesInputValue}
+                            disabled={this.state.categoryInputValue && this.state.dateInputValue ? false: true}
+                            className="deleteSelect"
+                            options={this.notesOptions()}
+                            onChange={this.updateNotesValue}>
+                            </Select>
                     </div>
-                </form>
-                <a className="deleteButton" onClick={this.handleDeleteEntriesClick}>Delete Entries</a>
+                    <div className="deleteInputContainer">
+                        <h4>Amount:</h4>
+                        <Select
+                            name="deleteAmount"
+                            clearable={true}
+                            simpleValue
+                            value={this.state.amountInputValue}
+                            disabled={this.state.categoryInputValue && this.state.dateInputValue && this.state.notesInputValue ? false : true }
+                            className="deleteSelect"
+                            options={this.amountOptions()}
+                            onChange={this.updateAmountValue}></Select>
+                    </div>
+               </form>
+                {//this.renderDeleteMessage()
+                }
+                <a className="deleteButton" onClick={this.handleDeleteEntriesClick}>Delete Entry</a>
                 </div>
                 <a className="deleteButton" onClick={this.handleDeleteAllClick}>Delete All</a>
             </div>

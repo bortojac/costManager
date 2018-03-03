@@ -306,15 +306,28 @@ export const updateCategories = (newCategories) => {
             };
         };
         
-        export const deleteEntries = (date, category, amount) => {
+        export const deleteEntries = (date, category, amount, notes) => {
             return dispatch => {
                 dispatch(deleteEntriesRequested())
-                return fetch(`${apiURL}/${userId}/deleteEntries/${date}/${category}/${amount}`,
+                return fetch(`${apiURL}/${userId}/deleteEntries/`,
                 {
-                    method: 'delete'
+                    method: 'delete', 
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        userId: userId,
+                        date: date,
+                        category: category,
+                        amount: amount,
+                        notes: notes
+                    })
             })
             .then(response => response.text())
-            .then(textResponse => dispatch(deleteEntriesFinished(textResponse)))
+            .then(textResponse => {
+                dispatch(deleteEntriesFinished(textResponse));
+                dispatch(fetchCategoryData());
+            })
                 };
             };
 

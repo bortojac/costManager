@@ -15,7 +15,9 @@ import {
     MONTH_START_DAY_REQUESTED,
     MONTH_START_DAY_RECEIVED,
     USER_INFO_RECEIVED,
-    USER_INFO_REQUESTED
+    USER_INFO_REQUESTED,
+    DELETE_ENTRIES_REQUESTED,
+    DELETE_ENTRIES_FINISHED
 }
     from '../actions/types';
 
@@ -116,19 +118,31 @@ export const newExpenseForm = (
         };
 
 
-        export const deleteAll = (
+        export const deleteEntries = (
             state = {
-                message: ''
+                message: '',
+                deleted: false
             }, action) => {
                 switch(action.type) {
                     case DELETE_ALL_REQUESTED:
                     return Object.assign({}, state, {
+                        deleted: false
                     });
                 case DELETE_ALL_FINISHED:
                     return Object.assign({}, state, {
-                        message: action.textResponse
+                        message: action.textResponse,
+                        deleted: true
                     });
-                default:
+                case DELETE_ENTRIES_REQUESTED:
+                    return Object.assign({}, state, {
+                        deleted: false
+                    });
+                case DELETE_ENTRIES_FINISHED:
+                    return Object.assign({}, state, {
+                        message: action.textResponse,
+                        deleted: true
+                    });
+                    default:
                     return state; 
                 }
             };
@@ -157,7 +171,7 @@ const rootReducer = combineReducers(
      categoryData,
       monthlyData,
        newExpenseForm,
-       deleteAll,
+       deleteEntries,
        updateCategories,
        userInfo
         }

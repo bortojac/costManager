@@ -22,6 +22,20 @@ export const getTableDataState = createSelector(
     }
 )
 
+export const getDBDataState = createSelector(
+    [ getTableData ],
+    (json) => {
+        return json.map(
+        item => ({
+            date: moment.utc(item.date),
+            category: item.category,//.replace(/\b\w/g, l => l.toUpperCase()),
+            amount: item.amount.toLocaleString(),
+            notes: item.notes
+        })
+);      
+    }
+)
+
 // totalSum selector for the headline. (We will start with the category data and sum it up)
 export const getTotalSum = (state) => state.monthlyData.json
 
@@ -132,8 +146,6 @@ export const getMonthlyDataState = createSelector(
 //export const isExpenseSaved = (state) => state.newExpenseForm.saved;
 export const getSaveMessage = (state) => state.newExpenseForm.message;
 
-export const getDeletedAllMessage = (state) => state.deleteAll.message;
-
 export const getUpdatedCategories = (state) => state.updateCategories.newCategories;
 
 export const getUserInfo = (state) => state.userInfo.json;
@@ -147,3 +159,8 @@ export const getUserCategoriesState = createSelector(
     [getUserInfo],
     json => json.categories
 );
+
+// deleteEntries selectors
+
+export const getDeleteMessage = (state) => state.deleteEntries.message;
+export const getDeleteBool = (state) => state.deleteEntries.deleted;

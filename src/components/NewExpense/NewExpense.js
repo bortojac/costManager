@@ -88,20 +88,26 @@ class NewExpense extends React.Component {
     }
 
     handleSubmit() {
-        this.props.saveExpense(
-            //formatDate(this.state.dateInputValue), // formatting to yyyy-mm-dd for storage
-            this.state.dateInputValue.format('YYYY-MM-DD'),
-             this.state.categoryInputValue,
-             this.state.amountInputValue,
-            this.state.notesInputText//,
-            //this.props.monthStartDay
-        );
-        // if the user has created a new category, we should add it to the user database too
-        if(!this.props.categoryOptions.includes(this.state.categoryInputValue)) {
-            this.props.addUserCategory(this.state.categoryInputValue);
+        if(this.state.categoryInputValue) {
+            this.props.saveExpense(
+                //formatDate(this.state.dateInputValue), // formatting to yyyy-mm-dd for storage
+                this.state.dateInputValue.format('YYYY-MM-DD'),
+                this.state.categoryInputValue,
+                this.state.amountInputValue,
+                this.state.notesInputText//,
+                //this.props.monthStartDay
+            );
+            // if the user has created a new category, we should add it to the user database too
+            if (!this.props.categoryOptions.includes(this.state.categoryInputValue)) {
+                this.props.addUserCategory(this.state.categoryInputValue);
+            }
+            this.props.fetchUserInfo();
+            this.props.closeModal();
+
         }
-        this.props.fetchUserInfo();
-        this.props.closeModal();
+        else {
+            return false;
+        }
         //this.setState({submitted: false})
     }
 
@@ -124,6 +130,7 @@ class NewExpense extends React.Component {
                         <DatePicker
                             onChange={this.updateDateValue}
                             //className="datePicker"
+                            maxDate={moment()}
                             selected={this.state.dateInputValue}
                         />
                     </div>
@@ -160,7 +167,7 @@ class NewExpense extends React.Component {
                             value={this.state.notesInputText}
                             onChange={this.updateNotesText}></textarea>
                     </div>
-                    <button className="saveButton" type="button" onClick={this.handleSubmit}>Save</button>
+                    <button className={this.state.categoryInputValue ? "saveButton" : "disabled saveButton"} type="button" onClick={this.handleSubmit}>Save</button>
                     {//this.renderSaveMessage()
                     }
                 </form>
