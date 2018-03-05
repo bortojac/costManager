@@ -40,9 +40,13 @@ app.get('/', function (req, res) {
     //console.log(__dirname);
     //console.log(path);
     //console.log(req);
-    res.sendFile(path.join(__dirname, '../public/index.html'))
+    res.sendFile(path.join(__dirname, '../public/index.html'));
     //res.sendFile(path.join(__dirname, '../public/reset.css'));
 });
+
+app.get('/settings', function (req, res) {
+    res.sendFile(path.join(__dirname, '../public/index.html'));
+})
 
 // handle routes to Expense database
 
@@ -413,10 +417,35 @@ app.put('/userBase/:userId/categories', function (req, res) {
     //}
     });
 
+app.put('/userBase/:userId/deleteCategory', function (req, res) {
+
+    Users.findOne({ userId: req.params.userId })
+    .exec(function(err, user) {
+       console.log(user);
+        var userCategories = user.categories;
+        var catIndex = userCategories.indexOf(req.body.category);
+        var query = { userId: req.params.userId };
+
+        // delete the category at the index of catIndex
+        userCategories.splice(catIndex, 1)
+
+        Users.update(query, {$set: { categories: userCategories } }).exec();
+        Expenses.remove({
+            userId: req.params.userId,
+            category: req.body.category
+        }, function(err) {
+            if (err) res.send(err);
+            console.log('category has been removed from userBase and expenseBase');
+            res.send('category' + req.body.category + 'has been removed');
+        })
+    })
+})
+
 app.delete('/userBase/:userId', function (req, res) {
 
     Users.remove(
         {
+            userId: req.params.userId
         },
         function (err) {
             if (err) res.send(err);

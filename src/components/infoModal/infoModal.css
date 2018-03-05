@@ -1,0 +1,35 @@
+.infoModalContainer {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    height: 20rem;
+    flex: auto;
+  }
+  
+  .infoModalHeader {
+    /*position: fixed;
+    top: 0;
+    right: 0;*/
+    color: #000;
+    width: 75%;
+    border-bottom: .2rem solid rgb(204, 204, 204);
+    background-color: #fff;
+    border-bottom: 2px solid #ff0000;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin: 0 auto;
+  }
+  .infoModalContent {
+      overflow-y: scroll;
+      overflow-x: hidden;
+      width: 75%;
+      margin: 0 auto;
+      flex: 1;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      background-color: #fff;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 4px;
+  }
+

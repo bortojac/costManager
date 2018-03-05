@@ -6,31 +6,26 @@
     text-align: center;
     overflow: hidden;
     border-bottom: solid 2px #ff0000;
-    /*display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: auto;*/
-
 }
 
-.fa-plus-square {
+.fa-user-circle {
     position: absolute;
-    left: 0;
+    right: 0;
     margin-top: .67em;
     margin-bottom: .67em;
     margin-right: calc(2.5rem - 14px);
     margin-left: calc(2.5rem - 14px);
-    cursor: pointer;
 }
 
 @media screen and (min-width:1000px) {
     
-    .fa-plus-square {
-        transition: opacity .4s;
+    .fa-user-circle {
+        transition: opacity;
+        cursor: pointer;
     }
 
-    .fa-plus-square:hover {
-        opacity: .6;
+    .fa-user-circle:hover {
+        opacity: .5;
     }
     
 }

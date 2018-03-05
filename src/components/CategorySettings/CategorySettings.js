@@ -7,15 +7,18 @@ class CategorySettings extends React.Component {
         super(props);
         // state needs to be dynamic to whatever number of categories are made in the newExpenseModal. 
         this.state = {
-            newCategories: []
+            newCategories: this.props.categories.slice()
         };
         this.handleCategorySubmit = this.handleCategorySubmit.bind(this)
         this.handleChange = this.handleChange.bind(this);
     }
 
     // initialize the state as a copy of the prop categories
-    componentWillReceiveProps() {
+    /*componentWillReceiveProps() {
         this.setState({newCategories: this.props.categories.slice()})
+    }*/
+    componentDidMount() {
+        this.props.fetchCategoryData()
     }
 
     handleCategorySubmit() {
@@ -36,7 +39,7 @@ class CategorySettings extends React.Component {
         
         this.props.handleCategoryEdit();
     }
-
+    
     handleChange(e) {
         // we need to update only the part of the state that is the current target
         
@@ -46,6 +49,11 @@ class CategorySettings extends React.Component {
 
        console.log(this.state.newCategories);
        //console.log(this.props.categories);
+    }
+
+    handleDeleteClick(category) {
+        console.log(category);
+        this.props.deleteUserCategory(category);
     }
     
     renderCategories(categories) {
@@ -58,6 +66,7 @@ class CategorySettings extends React.Component {
                         <div className="categoryText">
                             {item}
                         </div>
+                        <a className="deleteLink" onClick={() => this.handleDeleteClick(item)}>-</a>
                     </li>
                 );
             }

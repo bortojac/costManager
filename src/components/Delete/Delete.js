@@ -111,10 +111,14 @@ updateNotesValue(selectedOption) {
             let formattedDateInput = this.state.dateInputValue.format('DD-MM-YYYY');
            // console.log(formattedDateArr);
             //console.log(formattedDateInput);
-            return _.map(_.filter(formattedDateArr, { date: formattedDateInput }), obj => ({
+            console.log(_.uniqBy(_.map(_.filter(formattedDateArr, { date: formattedDateInput }), obj => ({
                 value: obj.category,
                 label: obj.category.replace(/\b\w/g, l => l.toUpperCase())
-            }));
+            })), 'value'));
+            return _.uniqBy(_.map(_.filter(formattedDateArr, { date: formattedDateInput }), obj => ({
+                value: obj.category,
+                label: obj.category.replace(/\b\w/g, l => l.toUpperCase())
+            })), 'value' );
 
         }
     }
@@ -135,10 +139,10 @@ updateNotesValue(selectedOption) {
                 //console.log(formattedDateArr);
               //  console.log(formattedDateInput);
                   //  console.log(this.state.categoryInputValue);
-                return _.map(_.filter(formattedDateArr, { date: formattedDateInput, category: this.state.categoryInputValue }), obj => ({
+                return _.uniqBy(_.map(_.filter(formattedDateArr, { date: formattedDateInput, category: this.state.categoryInputValue }), obj => ({
                     value: obj.notes,
                     label: obj.notes
-                })); 
+                })), 'value'); 
 }
 }
 
@@ -158,10 +162,10 @@ amountOptions() {
         let formattedDateInput = this.state.dateInputValue.format('DD-MM-YYYY');
         //console.log(formattedDateArr);
         //console.log(formattedDateInput);
-        return _.map(_.filter(formattedDateArr, { date: formattedDateInput, category: this.state.categoryInputValue }), obj => ({
+        return _.uniqBy(_.map(_.filter(formattedDateArr, { date: formattedDateInput, category: this.state.categoryInputValue }), obj => ({
             value: obj.amount,
             label: obj.amount
-        })); 
+        })), 'value');
 }
 } 
 
@@ -223,7 +227,9 @@ amountOptions() {
                </form>
                 {//this.renderDeleteMessage()
                 }
-                <a className="deleteButton" onClick={this.handleDeleteEntriesClick}>Delete Entry</a>
+                <a 
+                className={this.state.categoryInputValue && this.state.dateInputValue && this.state.notesInputValue && this.state.amountInputValue ? "deleteButton" : "disabled deleteButton"}
+                onClick={this.handleDeleteEntriesClick}>Delete Entry</a>
                 </div>
                 <a className="deleteButton" onClick={this.handleDeleteAllClick}>Delete All</a>
             </div>

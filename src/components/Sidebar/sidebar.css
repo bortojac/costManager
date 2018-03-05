@@ -12,7 +12,7 @@
     align-items: center;
 }
 
-.fa-chart-bar, .fa-cog {
+.fa-chart-bar, .fa-cog, .fa-plus-square {
     margin-top: 0;
     color: #fff;
 }
@@ -28,13 +28,14 @@
         justify-content: flex-start;
     }
     
-    .fa-chart-bar, .fa-cog {
+    .fa-chart-bar, .fa-cog, .fa-plus-square {
         margin-top: 1rem;
         transition: opacity .4s
     }
 
-    .fa-chart-bar:hover, .fa-cog:hover {
+    .fa-chart-bar:hover, .fa-cog:hover, .fa-plus-square:hover {
         opacity: .8;
+        cursor: pointer;
     }
     
 }

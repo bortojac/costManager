@@ -71,7 +71,12 @@ class MonthStartDate extends React.Component {
     }
 
     render() {
-        return <div>{this.renderMonthStartInput()}</div>
+        return (
+            <div className="monthStartDateTextContainer">
+                <h3 className="monthStartDateTextHeader">Which day of the month should be the start of your monthly budget period?</h3>
+                {this.renderMonthStartInput()}
+            </div>
+        );
     }
 }
 

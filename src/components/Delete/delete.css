@@ -93,6 +93,11 @@
     opacity: .7;
 }
 
+.disabled {
+    opacity: .7;
+    cursor: not-allowed;
+}
+
 .deleteMessage {
     color: #ff0000;
     text-align: center;

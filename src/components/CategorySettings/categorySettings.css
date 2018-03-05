@@ -53,8 +53,20 @@
     flex: 1;
 }
 
+.deleteLink {
+    font-size: 1.2rem;
+    color: #ff0000;
+    font-weight: bold;
+    transition: opacity .4s;
+}
+
 @media screen and (min-width: 1000px) {
     .categorySubmitButton:hover {
+        opacity: .7;
+    }
+
+    .deleteLink:hover {
+        cursor: pointer;
         opacity: .7;
     }
 }

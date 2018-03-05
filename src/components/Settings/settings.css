@@ -49,12 +49,7 @@
 .settingsRow2Col2Content {
     flex: 1;
     position: relative;
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
 }
-
 
 .settingsRow2 h2 {
     text-align: center;
@@ -69,6 +64,7 @@
     flex: 1;
     display: flex;
     flex-flow: column;
+    border-bottom: solid 2px #ff0000;
 }
 
 .settingsRow2Col3Content {
@@ -86,6 +82,91 @@
     cursor: pointer;
 }
 
+.infoLink {
+    transition: opacity;
+    padding: 2px;
+}
+
+.infoLink:hover {
+    opacity: .7;
+    cursor: pointer;
+}
+
+div > h4 {
+    margin: .5rem;
+    text-align: left;
+}
+
+.myModalDialog {
+    background-color: #ff0000;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    border: .1rem solid rgb(204, 204, 204);
+    border-radius: 4px;
+    outline: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    -webkit-transform: translate(-50%,-50%) scale(0) ;
+    transform: translate(-50,-50%) scale(0) ;
+    transition: all 300ms ease-in-out;
+    overflow: scroll;
+    /*height: 25rem;*/
+        /*-webkit-transform: translate3d(0px,75px,0px);
+    transform: translate3d(0px,75px,0px);*/
+}
+
+.myOverlay {
+    background-color: rgba(131, 9, 9, 0.541);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    /*-webkit-transform: scale(0.5);
+    transform: scale(0.2);
+    /*opacity: 0;*/
+    
+}
+
+/* Remove scroll on the body when react-moadl is open */
+.ReactModal__Body--open {
+    overflow: hidden;
+}
+
+  .ReactModal__Overlay--after-open {
+    /*opacity: .9;*/
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    transition: all 300ms ease-in-out;
+  }
+
+  .ReactModal__Overlay--before-close {
+    /*opacity: 0;*/
+    /*-webkit-transform: scale(0.5);
+    transform: scale(0.2);*/
+    transition: all 300ms ease-in-out;
+    
+  }
+
+  .ReactModal__Content--after-open {
+    -webkit-transform: translate(-50%,-50%) scale(1);
+    transform: translate(-50,-50%) scale(1);
+      /*-webkit-transform: translate3d(0px,0px,0px);
+    transform: translate3d(0px,0px,0px);*/
+    transition: all 300ms ease-in-out;
+  }
+  
+  .ReactModal__Content--before-close {
+    -webkit-transform: translate(-50%,-50%) scale(0) ;
+    transform: translate(-50,-50%) scale(0) ;
+    /*-webkit-transform: translate3d(0px,75px,0px);
+    transform: translate3d(0px,75px,0px);*/
+    transition: all 300ms ease-in-out;
+  }
 @media screen and (min-width: 1000px) {
 
 .settingsRow2 {

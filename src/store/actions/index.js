@@ -20,7 +20,9 @@ import {
     UPDATE_USER_CATEGORIES_FINISHED,
     UPDATE_USER_CATEGORIES_REQUESTED,
     DELETE_ENTRIES_FINISHED,
-    DELETE_ENTRIES_REQUESTED
+    DELETE_ENTRIES_REQUESTED,
+    DELETE_USER_CATEGORY_REQUESTED,
+    DELETE_USER_CATEGORY_FINISHED
 } from './types';
 
 
@@ -386,8 +388,45 @@ export const updateCategories = (newCategories) => {
                     body: JSON.stringify({
                         monthStartDay: monthStartDay
             })}).then(() => {
-                dispatch(updateMonthStartDayFinished())
+                dispatch(updateMonthStartDayFinished());
             })
                 };
             };
+
+            export const deleteUserCategoryRequested = (newCategories) => {
+                return {
+                    type: DELETE_USER_CATEGORY_REQUESTED,
+                    fetching: true,
+                    newCategories: newCategories      
+                };
+            };
+            
+            export const deleteUserCategoryFinished = (textResponse) => {
+                return {
+                    type: DELETE_USER_CATEGORY_FINISHED,
+                    fetching: false,
+                    textResponse
+                };
+            };
+            
+            export const deleteUserCategory = (category) => {
+                return dispatch => {
+                    dispatch(deleteUserCategoryRequested(category))
+                    return fetch('/userBase/'+userId+'/deleteCategory', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            category: category
+                        })
+                    })
+                    .then(response => response.text())
+                    .then(textResponse => {
+                    dispatch(deleteUserCategoryFinished(textResponse));
+                    dispatch(fetchCategoryData());
+                    dispatch(fetchUserInfo());
+                      })
+                    };
+                };
      
