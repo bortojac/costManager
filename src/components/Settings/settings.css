@@ -78,13 +78,15 @@
 .editLink {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 2px;
     cursor: pointer;
 }
 
 .infoLink {
+    position: absolute;
     transition: opacity;
-    padding: 2px;
+    top: 0;
+    left: 4px;
 }
 
 .infoLink:hover {

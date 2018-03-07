@@ -24,10 +24,20 @@ import {
     DELETE_USER_CATEGORY_REQUESTED,
     DELETE_USER_CATEGORY_FINISHED
 } from './types';
+import { getAccessToken } from '../../authActions';
 
 
 const apiURL = 'http://localhost:3000/expenseBase';
 const userId = 'bortojac';
+
+console.log("userInfo");
+ fetch('https://cost-manager.auth0.com/userinfo/',
+{
+    method: 'GET',
+    headers: { Authorization: `Bearer ${getAccessToken()}` } 
+})
+  .then(response => response.json()) 
+  .then(jsonResponse => console.log(jsonResponse));
 
 export const tableDataRequested = () => {
     return {
@@ -51,7 +61,8 @@ export const fetchTableData = () => {
         dispatch(tableDataRequested());
         return fetch(apiURL+'/'+userId,
             {
-                method: 'GET'
+                method: 'GET',
+                headers: { Authorization: `Bearer ${getAccessToken()}` }
         })
         .then(response => response.json())
         .then(jsonResponse => dispatch(tableDataReceived(jsonResponse)));
@@ -123,7 +134,8 @@ export const fetchCategoryData = () => {
         dispatch(categoryDataRequested());
         return fetch(apiURL+'/'+userId+'/categoryGraph',
             {
-                method: 'GET'
+                method: 'GET',
+                headers: { Authorization: `Bearer ${getAccessToken()}` }
         })
         .then(response => response.json())
         .then(jsonResponse => dispatch(categoryDataReceived(jsonResponse)));
@@ -155,7 +167,8 @@ export const fetchMonthlyData = () => {
         dispatch(monthlyDataRequested(userId));
         return fetch('/userBase/' + userId,
             {
-                method: 'GET'
+                method: 'GET',
+                headers: { Authorization: `Bearer ${getAccessToken()}` }
             }
         ).then(res => res.json())
          .then(jsonResponse => {
@@ -355,7 +368,8 @@ export const updateCategories = (newCategories) => {
                 dispatch(userInfoRequested());
                 return fetch('/userBase/'+userId,
                     {
-                        method: 'GET'
+                        method: 'GET',
+                        headers: { Authorization: `Bearer ${getAccessToken()}` }
                 })
                 .then(response => response.json())
                 .then(jsonResponse => dispatch(userInfoReceived(jsonResponse)));

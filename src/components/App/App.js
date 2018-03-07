@@ -10,6 +10,12 @@ import Home from '../Home';
 import Settings from '../Settings';
 import './app.css';
 import MonthlyGraph from '../MonthlyGraph';
+import Login from '../Login/Login';
+import SignUp from '../SignUp/SignUp';
+import SignIn from '../SignIn/SignIn';
+import PasswordForget from '../PasswordForget/PasswordForget';
+import { isLoggedIn } from '../../authActions';
+import Callback from '../Callback/Callback';
 
 
 class App extends React.Component {
@@ -42,8 +48,9 @@ class App extends React.Component {
     render() {
         return (
             <div id="container">
-                <Header />
+                 <Header />
                 <div id="mainContainer">
+                <Route path="/callback" component={Callback} />
                     <Modal
                         isOpen={this.state.modalIsOpen}
                         onRequestClose={this.handleCloseModal}
@@ -52,14 +59,25 @@ class App extends React.Component {
                         contentLabel="Example Modal"
                         closeTimeoutMS={300}
                     >
-                        <NewExpense closeModal={this.handleCloseModal} />
+                        {
+                            (isLoggedIn()) ? <NewExpense closeModal={this.handleCloseModal} /> : ''
+                        }
                     </Modal>
                     <aside className="sidebarContainer">
-                        <Sidebar openModal={this.handleModalOpen}/>
+                        <Sidebar openModal={this.handleModalOpen} />
                     </aside>
                     <main>
-                        <Route exact path="/" component={Home} /> 
-                        <Route path="/settings" component={Settings} />
+                        {
+                            (isLoggedIn()) ? <Route exact path="/" component={Home} /> : ''
+                        }
+                        {
+                            (isLoggedIn()) ? <Route exact path="/settings" component={Settings} /> : ''
+                        }
+                        {// <Route exact path="/login" component={Login} />
+                            //<Route exact path="/signup" component={SignUp} />
+                            //<Route exact path="/signin" component={SignIn} />
+                            //<Route exact path="/passForget" component={PasswordForget} />
+                        }
                     </main>
                 </div>
             </div>

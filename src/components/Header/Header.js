@@ -2,8 +2,8 @@ import React from 'react';
 import './header.css';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/fontawesome-free-regular';
-
-
+import { Link } from 'react-router-dom';
+import {login, logout, isLoggedIn } from '../../authActions';
 
 class Header extends React.Component {
     constructor(props) {
@@ -13,12 +13,14 @@ class Header extends React.Component {
     render() {
         return (
             <div className="header">
-            <a  onClick={this.props.openModal}><FontAwesomeIcon icon={faUserCircle} size="2x"/></a>
+             {
+             (isLoggedIn()) ? ( <a onClick={() => logout()}>Log Out</a> ) : ( <a  onClick={() => login()}>Log In</a> )
+           }
+             {//<Link to="/login"><FontAwesomeIcon icon={faUserCircle} size="2x"/></Link>
+             }
                 <h1>Cost Manager</h1>
-                {//<i className="fa fa-2x fa-user-circle"></i>
-                }
             </div>
-        )
+        );
     }
 }
 

@@ -5,9 +5,13 @@ var webpackHotMiddleware = require('webpack-hot-middleware');
 var path = require('path');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var jwt = require('express-jwt');
+var jwks = require('jwks-rsa');
 var Expenses = require('./model/expenses');
 var Users = require('./model/users');
 var _ = require('lodash');
+var AUTH_DOMAIN = require('./auth/constants').AUTH_DOMAIN;
+var AUDIENCE_DOMAIN = require('./auth/constants').AUDIENCE_DOMAIN;
 //set our port to either a predetermined port number if it is set up, or 3000
 //var port = process.env.API_PORT || 3000;
 
@@ -36,6 +40,19 @@ app.use(function(req, res, next) {
    });
 
 
+   var authCheck = jwt({
+    secret: jwks.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: "https://"+AUTH_DOMAIN+"/.well-known/jwks.json"
+    }),
+    audience: AUDIENCE_DOMAIN,
+    issuer: AUTH_DOMAIN,
+    algorithms: ['RS256']
+});
+
+
 app.get('/', function (req, res) {
     //console.log(__dirname);
     //console.log(path);
@@ -44,9 +61,13 @@ app.get('/', function (req, res) {
     //res.sendFile(path.join(__dirname, '../public/reset.css'));
 });
 
-app.get('/settings', function (req, res) {
+app.get('/settings', authCheck, function (req, res) {
     res.sendFile(path.join(__dirname, '../public/index.html'));
-})
+});
+
+app.get('/callback', function (req, res) {
+    res.sendFile(path.join(__dirname, '../public/index.html'));
+});
 
 // handle routes to Expense database
 

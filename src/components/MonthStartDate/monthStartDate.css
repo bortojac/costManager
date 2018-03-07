@@ -8,6 +8,7 @@
 .monthStartDateTextContainer {
     align-self: flex-start;
     display: flex;
+    margin-top: 1rem;
     flex-flow: column;
     align-items: center;
 }
