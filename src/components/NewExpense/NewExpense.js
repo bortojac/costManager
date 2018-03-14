@@ -104,6 +104,7 @@ class NewExpense extends React.Component {
                             clearable={true}
                             value={this.state.categoryInputValue}
                             onChange={this.updateCategoryValue}
+                            placeholder="Select or Type to Create New"
                             className="categorySelect"
                             options={this.state.options}
                         />

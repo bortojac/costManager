@@ -87,7 +87,7 @@ class Settings extends React.Component {
         this.setState({
             infoModalHeader: 'Delete Entries Information',
             infoModalContent: <div>
-                <h4>You may delete entries from the database one at a time, or you may delete all entries at once</h4>
+                <p>You may delete entries from the database one at a time, or you may delete all entries at once</p>
                 <h4>To delete entries one at a time:</h4>
                 <ul>
                     <li>Click the clipboard icon in the top right corner, provide the date, category, amount, and notes of the entry you wish you delete and press Delete Entry</li>

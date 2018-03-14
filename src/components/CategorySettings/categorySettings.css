@@ -58,15 +58,63 @@
     color: #ff0000;
     font-weight: bold;
     transition: opacity .4s;
+    position: relative;
 }
+
 
 @media screen and (min-width: 1000px) {
     .categorySubmitButton:hover {
         opacity: .7;
     }
-
-    .deleteLink:hover {
-        cursor: pointer;
-        opacity: .7;
+    
+      .deleteLink:hover {
+          cursor: pointer;
+      }
+      
+    .deleteLink::before {
+        position: absolute;
+        top: -66px;
+        left: -50px;
+        background-color: rgb(53, 52, 52);
+        border-radius: 5px;
+        color: #fff;
+        content: attr(aria-label);
+        padding: 1rem;
+        font-size: 1rem;
+        text-transform: none;
+        transition: all 0.5s ease;
+        width: 55px;
+        z-index: 10;
+      }
+    
+    .deleteLink::after {
+        position: absolute;
+        top: -5px;
+        left: 9px;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid rgb(53, 52, 52);
+        content: " ";
+        font-size: 0;
+        line-height: 0;
+        margin-left: -5px;
+        width: 0;
+      }
+      
+    .deleteLink::before,
+    .deleteLink::after {
+        color: #efefef;
+        font-family: monospace;
+        opacity: 0;
+        pointer-events: none;
+        text-align: center;
+      }
+      
+    .deleteLink:focus::before,
+    .deleteLink:focus::after,
+    .deleteLink:hover::before,
+    .deleteLink:hover::after {
+      opacity: 1;
+      transition: all 0.75s ease;
     }
 }

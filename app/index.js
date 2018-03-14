@@ -18,7 +18,6 @@ var app = express();
 var config = require('../webpack.config.js');
 var compiler = webpack(config);
 
-//app.use(express.static('public'));
 
 //now we should configure the API to use bodyParser and look for JSON data in the request body
 // if extended: false, we cannot post nested objects. let's allow that for now and see what we need
@@ -37,11 +36,7 @@ app.use(function(req, res, next) {
 
 
 app.get('/', function (req, res) {
-    //console.log(__dirname);
-    //console.log(path);
-    //console.log(req);
     res.sendFile(path.join(__dirname, '../public/index.html'));
-    //res.sendFile(path.join(__dirname, '../public/reset.css'));
 });
 
 app.get('/settings', function (req, res) {
@@ -74,18 +69,8 @@ app.post('/expenseBase/:userId', function(req, res) {
     expense.day = day;
     expense.category = req.body.category;
     expense.amount = req.body.amount;
-    //console.log(req.body.notes);
     expense.notes = req.body.notes;
     expense.userId = req.params.userId;
-
-    // create monthStartInterval from the users selected monthStartDay
-    /*var userMonthStartDay = req.body.monthStartDay;
-    day >= userMonthStartDay ? (
-        expense.monthStartInterval = `${month}/${userMonthStartDay} - ${month+1}/${userMonthStartDay-1}`
-    ) :
-    (
-        expense.monthStartInterval = `${month-1}/${userMonthStartDay} - ${month}/${userMonthStartDay-1}`
-    )*/
 
     // save
     expense.save(function(err) {
@@ -99,24 +84,16 @@ app.delete('/expenseBase/:userId/deleteAll', function(req, res) {
     Expenses.remove(
         {
             userId: req.params.userId
-            /*date: req.body.date,
-            category: req.body.category,
-            amount: req.body.amount,
-            notes: req.body.notes*/
            }, 
            function(err) {
                if(err) res.send(err);
                console.log('every entry has been deleted');
                res.send('Every entry has been deleted');
-               //res.send(`Entry with date: ${req.body.date} and category: ${req.body.category} has been deleted`);
            }
         )
 });
 
 app.delete('/expenseBase/:userId/deleteEntries', function(req, res) {
-    //console.log(req.params.date);
-    //console.log(req.params.category);
-    //console.log(req.params.amount);
     var date = req.body.date;
     var category = req.body.category;
     var amount = req.body.amount;
@@ -133,8 +110,6 @@ app.delete('/expenseBase/:userId/deleteEntries', function(req, res) {
            function(err) {
                if(err) res.send(err);
                res.send('the entry with date: '+ date + 'category: ' + category + 'amount: ' + amount + 'notes: ' + notes + 'has been deleted');
-               //res.send('the entry with date: '+ req.params.date + 'category: ' + req.params.category + 'amount: ' + req.params.amount + 'has been deleted');
-               //res.send(`Entry with date: ${req.body.date} and category: ${req.body.category} has been deleted`);
            }
         )
 })
@@ -215,7 +190,6 @@ app.post('/expenseBase/:userId/monthlyGraph/', function (req, res) {
                                                     '/',
                                                     { $substrBytes: [userMonthStartDay, 0, -1] },
                                                     '-',
-                                                    //{ $substrBytes: ['$month', 0, -1] },
                                                     '0',
                                                     '/',
                                                     { $substrBytes: [ {$subtract: [userMonthStartDay, 1]}, 0, -1]}
@@ -302,22 +276,8 @@ app.post('/expenseBase/:userId/monthlyGraph/', function (req, res) {
             ],
             function (err, _res) {
                 if (err) res.send(err);
-                //console.log(_res);
                 res.json(_res);
             });
-        //.then(function(err, result) {
-    //console.log(result);
-//});
-    //var userMonthStartDay = 1;
-    //Users.findOne({UserId: req.body.userId}, function (err, result) {
-        //userInfo = result
-    //});
-    //console.log('user info below');
-    //console.log(userInfo);
-    // if userMonthStartDay == 1, then month/userMonthStartDay - month/endOfMonth - DONE
-    // if month = 0, and day < userMonthStartDay, should be 11/userMonthStartDay - month/userMonthStartDay - 1 - DONE
-    // if day >= userMonthStartDay, then month/userMonthStartDay - month+1/userMonthStartDay-1 - DONE
-    // if day < userMonthStartDay, then month-1/userMonthStartDay - month/userMonthStartDay-1 - DONE
 });
 
 app.put('/expenseBase/:userId/newCategories', function (req, res) {
@@ -328,8 +288,6 @@ app.put('/expenseBase/:userId/newCategories', function (req, res) {
             category: property,
             userId: req.params.userId
          };
-        //console.log(query);
-        //console.log(req.body.newCategories[property]);
         Expenses.update(query, {$set: {category: req.body.newCategories[property]}}, {multi: true}).exec();
     }
     });
@@ -337,9 +295,6 @@ app.put('/expenseBase/:userId/newCategories', function (req, res) {
     // handle routes to the user database
 
     app.get('/userBase/:userId', function (req, res) {
-        //Users.findOne({ userId: req.params.userId }, function (err, user) {
-        //    res.json(user);
-        //})
         Users.findOne({ userId: req.params.userId })
     .exec(function(err, user) {
         if (err) res.send(err);
@@ -366,7 +321,6 @@ app.put('/userBase/:userId/monthStartDay', function (req, res) {
     Users.findOneAndUpdate(query, { $set: { monthStartDay: req.body.monthStartDay } }, function(err, result) {
         res.send(`${req.params.userId} now has a month start date of ${result.monthStartDay}`);
     } );
-    //Users.update(query, { $set: { monthStartDay: req.body.monthStartDay } }).exec();
 });
 
 app.put('/userBase/:userId/addCategory', function (req, res) {
@@ -374,33 +328,17 @@ app.put('/userBase/:userId/addCategory', function (req, res) {
     Users.findOneAndUpdate(query, { $push: { categories: req.body.category } }, function(err, result) {
         res.send(`${req.params.userId} has added ${req.body.category} to their categories`);
     } );
-    //Users.update(query, { $set: { monthStartDay: req.body.monthStartDay } }).exec();
 });
 
 app.put('/userBase/:userId/categories', function (req, res) {
     // property is the old category and req[property] is the new one
     Users.findOne({ userId: req.params.userId })
     .exec(function(err, user) {
-        //console.log(user.categories);
         var userCategories = user.categories;
-        console.log(userCategories);
-        console.log(req.body.newCategories);
         var i;
-        //for(i=0;i<user.categories.length;i++) {
-            //["Rent","Utilities","Groceries","Entertainment","Personal","Bar","Electricity","Electricity","test","testing"]
-            // we need to update user.categories with the new updates
-          //  if()
-        //}
          for (var property in req.body.newCategories) {
-    
-        console.log(property);
-        //console.log(query);
-        console.log(req.body.newCategories[property]);
-        console.log(userCategories.indexOf(property));
         userCategories[userCategories.indexOf(property)] = req.body.newCategories[property];
-
     }
-    console.log(userCategories)
     var query = { userId: req.params.userId };
     Users.update(query, {$set: { categories: userCategories } }).exec(function(err,_res) {
 
@@ -411,20 +349,12 @@ app.put('/userBase/:userId/categories', function (req, res) {
     });
 
     })
-    /*for (var property in req.body.newCategories) {
-        //console.log(property);
-        var query = { userId: req.params.userId };
-        //console.log(query);
-        //console.log(req.body.newCategories[property]);
-        Users.update(query, {$set: { categories: req.body.newCategories[property]}}).exec();*/
-    //}
     });
 
 app.put('/userBase/:userId/deleteCategory', function (req, res) {
 
     Users.findOne({ userId: req.params.userId })
     .exec(function(err, user) {
-       console.log(user);
         var userCategories = user.categories;
         var catIndex = userCategories.indexOf(req.body.category);
         var query = { userId: req.params.userId };
@@ -438,7 +368,6 @@ app.put('/userBase/:userId/deleteCategory', function (req, res) {
             category: req.body.category
         }, function(err) {
             if (err) res.send(err);
-            console.log('category has been removed from userBase and expenseBase');
             res.send('category' + req.body.category + 'has been removed');
         })
     })
@@ -452,9 +381,7 @@ app.delete('/userBase/:userId', function (req, res) {
         },
         function (err) {
             if (err) res.send(err);
-            console.log('every entry has been deleted');
             res.send('Every entry has been deleted');
-            //res.send(`Entry with date: ${req.body.date} and category: ${req.body.category} has been deleted`);
         }
     );
 });

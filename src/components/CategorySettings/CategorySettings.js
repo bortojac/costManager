@@ -1,7 +1,9 @@
 import React from 'react';
 import './categorySettings.css';
 import PropTypes from 'prop-types'
-import _ from 'lodash';;
+import _ from 'lodash';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { faMinusCircle } from '@fortawesome/fontawesome-free-solid';
 
 class CategorySettings extends React.Component {
     constructor(props) {
@@ -54,7 +56,7 @@ class CategorySettings extends React.Component {
                                 <div className="categoryText">
                                     {item}
                                 </div>
-                                <a className="deleteLink" onClick={() => this.handleDeleteClick(item)}>-</a>
+                                <a className="deleteLink" aria-label="Delete Category" onClick={() => this.handleDeleteClick(item)}><FontAwesomeIcon icon={faMinusCircle} /></a>
                             </li>
                         );
                     }
