@@ -8,46 +8,45 @@ import _ from 'lodash';
 class Table extends React.Component {
     constructor(props) {
         super(props);
-        //this.props.fetchTableData();
     }
+
     componentWillMount() {
         this.props.fetchTableData();
     }
-    
-    render() {
-       let tableDat =_.get(this.props,'tableData', [{date: [], category: [], amount: [], notes: []}]);
-       console.log('tableDat');
-       console.log(tableDat);
-        return (
-                <ReactTable
-                    data={tableDat}
-                    columns={[
-                        {
-                            Header: "Expenses in Database",
-                            columns: [
-                                {
-                                    Header: "Date",
-                                    accessor: "date"
-                                },
-                                {
-                                    Header: "Category",
-                                    accessor: "category"
-                                },
-                                {
-                                    Header: "Amount",
-                                    accessor: "amount" 
-                                },
-                                {
-                                    Header: "Notes",
-                                    accessor: "notes" 
-                                }
 
-                            ]}
-                            ]
-                        }
-                    defaultPageSize={5}
-                    className="-striped -highlight"
-                />
+    render() {
+        let tableDat = _.get(this.props, 'tableData', [{ date: [], category: [], amount: [], notes: [] }]);
+        return (
+            <ReactTable
+                data={tableDat}
+                columns={[
+                    {
+                        Header: "Expenses in Database",
+                        columns: [
+                            {
+                                Header: "Date",
+                                accessor: "date"
+                            },
+                            {
+                                Header: "Category",
+                                accessor: "category"
+                            },
+                            {
+                                Header: "Amount",
+                                accessor: "amount"
+                            },
+                            {
+                                Header: "Notes",
+                                accessor: "notes"
+                            }
+
+                        ]
+                    }
+                ]
+                }
+                defaultPageSize={5}
+                className="-striped -highlight"
+            />
         )
     }
 }

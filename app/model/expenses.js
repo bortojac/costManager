@@ -3,8 +3,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 //create new instance of the mongoose schema.
-// the schema takes an obj that shows the shape of your database entries
-
 var expenseSchema = new Schema ({
     date: Date,
     year: Number,
@@ -14,7 +12,6 @@ var expenseSchema = new Schema ({
     amount: Number,
     notes: String,
     userId: String
-    //monthStartInterval: String
 })
 
 

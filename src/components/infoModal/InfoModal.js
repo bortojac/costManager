@@ -1,25 +1,23 @@
 import React from 'react';
 import './infoModal.css';
+import PropTypes from 'prop-types';
 
-
-class InfoModal extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return ( 
-           <div className="infoModalContainer">
-            <h1 className="infoModalHeader">
-            {this.props.headerContent}
-            </h1>
-            <div className="infoModalContent">
-            {this.props.modalMainContent}
-            </div>
-            </div>
+const InfoModal = ({ headerContent, modalMainContent }) => {
+        return (
+                <div className="infoModalContainer">
+                        <h1 className="infoModalHeader">
+                                {headerContent}
+                        </h1>
+                        <div className="infoModalContent">
+                                {modalMainContent}
+                        </div>
+                </div>
         );
-   }
 }
 
+InfoModal.propTypes = {
+        headerContent: PropTypes.string.isRequired,
+        modalMainContent: PropTypes.object.isRequired
+}
 
 export default InfoModal;

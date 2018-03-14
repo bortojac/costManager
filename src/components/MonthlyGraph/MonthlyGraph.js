@@ -1,7 +1,8 @@
 import React from 'react';
 import './monthlyGraph.css';
 import _ from 'lodash';
-import { 
+import PropTypes from 'prop-types';
+import {
     ResponsiveContainer,
     BarChart,
     CartesianGrid,
@@ -10,8 +11,8 @@ import {
     Tooltip,
     Legend,
     Bar
- } from 'recharts';
-
+} from 'recharts';
+import { PulseLoader } from 'react-spinners';
 
 class MonthlyGraph extends React.Component {
     constructor(props) {
@@ -23,22 +24,10 @@ class MonthlyGraph extends React.Component {
     }
 
     componentDidMount() {
-        //this.props.fetchMonthStartDay('bortojac');
-        console.log('monthlyGraphComponentDidMount');
-        this.props.fetchMonthlyData('bortojac');
-
-        //console.log('monthlyGraphComponentMethod');
-        //console.log(this.props.monthStartDay);
-        //console.log(this.nextProps);
-        /*if(this.props.monthStartDay) {
-            console.log(`the monthStartDay is ${this.props.monthStartDay}`);
-            this.props.fetchMonthlyData(this.props.monthStartDay);
-        }*/
+        this.props.fetchMonthlyData();
     }
 
     renderTooltip(props) {
-        //console.log(payload);
-        //console.log(_.get(props, 'payload[0].payload', 'default'));
         const monthInterval = _.get(props, 'payload[0].payload.monthIntervalTooltip', 'default');
         const tooltipAmount = _.get(props, 'payload[0].payload.amount', 'default');
         const { active } = props;
@@ -53,13 +42,13 @@ class MonthlyGraph extends React.Component {
     }
 
     renderMonthStartString() {
-        if([3,23].includes(this.props.monthStartDay)) {
+        if ([3, 23].includes(this.props.monthStartDay)) {
             return `${this.props.monthStartDay}rd`;
         }
-        else if([2,22].includes(this.props.monthStartDay)) {
+        else if ([2, 22].includes(this.props.monthStartDay)) {
             return `${this.props.monthStartDay}nd`;
         }
-        else if([1,21].includes(this.props.monthStartDay)) {
+        else if ([1, 21].includes(this.props.monthStartDay)) {
             return `${this.props.monthStartDay}st`;
         }
         else {
@@ -67,27 +56,56 @@ class MonthlyGraph extends React.Component {
         }
     }
 
+    renderGraph() {
+        if (this.props.loading) {
+            return (
+                <section className="monthlyGraph">
+                    <PulseLoader
+                        color={'#ff0000'}
+                        loading={this.props.loading}
+                    />
+                </section>
+            )
+        }
+        else {
+            return (
+                // we set the width to 99% and a static height to help with responsiveness. issue 172 -> https://github.com/recharts/recharts/issues/172
+                <section className="monthlyGraph">
+                    <h2 className="monthlyGraphTitle">Cost by Month</h2>
+                    <p className="monthlyGraphSubtitle">{`Beginning the ${this.renderMonthStartString()}`}</p>
+                    <ResponsiveContainer width={'99%'} height={400}>
+                        <BarChart data={_.takeRight(this.props.data, this.state.showMonths)}>
+                            <CartesianGrid vertical={false} horizontal={false} fill={'#fff'} fillOpacity={.8} />
+                            <XAxis dataKey="monthStartXAxis" />
+                            <YAxis tickFormatter={tickItem => tickItem.toLocaleString()} />
+                            <Tooltip content={this.renderTooltip} />
+                            <Bar dataKey="amount" fill="#CC0000" fillOpacity={1} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </section>
+            )
+        }
+    }
+
     render() {
-        //console.log('MonthlyGraphData Below')
-        
-        console.log(this.props.monthStartDay);
-        // we set the width to 99% and a static height to help with responsiveness. issue 172 -> https://github.com/recharts/recharts/issues/172
         return (
-            <section className="monthlyGraph">
-            <h2 className="monthlyGraphTitle">Cost by Month</h2>
-            <p className="monthlyGraphSubtitle">{`Beginning the ${this.renderMonthStartString()}`}</p>
-            <ResponsiveContainer width={'99%'} height={400}>
-                <BarChart data={_.takeRight(this.props.data, this.state.showMonths) }>
-                    <CartesianGrid vertical={false} horizontal={false} fill={'#fff'} fillOpacity={.8}/>
-                    <XAxis dataKey="monthStartXAxis" />
-                    <YAxis tickFormatter={tickItem => tickItem.toLocaleString()}/>
-                    <Tooltip content={this.renderTooltip} />
-                    <Bar dataKey="amount" fill="#CC0000" fillOpacity={1} />
-                </BarChart>
-            </ResponsiveContainer>
-            </section>
+            this.renderGraph()
         )
     }
 }
+
+MonthlyGraph.propTypes = {
+    data: PropTypes.arrayOf(
+        PropTypes.shape({
+            amount: PropTypes.number.isRequired,
+            monthStartInterval: PropTypes.string.isRequired,
+        }).isRequired
+    ),
+    fetchMonthlyData: PropTypes.func.isRequired,
+    monthStartDay: PropTypes.number,
+    loading: PropTypes.bool.isRequired
+}
+
+
 
 export default MonthlyGraph;

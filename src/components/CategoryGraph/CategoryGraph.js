@@ -1,6 +1,6 @@
 import React from 'react';
 import './categoryGraph.css';
-import { 
+import {
     ResponsiveContainer,
     BarChart,
     CartesianGrid,
@@ -9,8 +9,9 @@ import {
     Tooltip,
     Legend,
     Bar
- } from 'recharts';
-
+} from 'recharts';
+import PropTypes from 'prop-types';
+import { PulseLoader } from 'react-spinners';
 
 class CategoryGraph extends React.Component {
     constructor(props) {
@@ -23,8 +24,6 @@ class CategoryGraph extends React.Component {
     }
 
     renderTooltip(props) {
-        //console.log(payload);
-        //console.log(_.get(props, 'payload[0].payload', 'default'));
         const tooltipCategory = _.get(props, 'payload[0].payload.category', 'default');
         const tooltipAmount = _.get(props, 'payload[0].payload.amount', 'default');
         const { active } = props;
@@ -38,24 +37,52 @@ class CategoryGraph extends React.Component {
         }
     }
 
+    renderGraph() {
+        if (this.props.loading) {
+            return (
+                <section className="categoryGraph">
+                    <PulseLoader
+                        color={'#ff0000'}
+                        loading={this.props.loading}
+                    />
+                </section>
+            )
+        }
+        else {
+            return (
+                // we set the width to 99% and a static height to help with responsiveness. issue 172 -> https://github.com/recharts/recharts/issues/172
+                <section className="categoryGraph">
+                    <h2 className="categoryGraphTitle">Cost by Category</h2>
+                    <ResponsiveContainer width={'99%'} height={400}>
+                        <BarChart data={this.props.data} >
+                            <CartesianGrid horizontal={false} vertical={false} fill={'#fff'} fillOpacity={.8} />
+                            <XAxis dataKey="category" />
+                            <YAxis tickFormatter={tickItem => tickItem.toLocaleString()} />
+                            <Tooltip content={this.renderTooltip} />
+                            <Bar dataKey="amount" fill="#CC0000" fillOpacity={1} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </section>
+            )
+        }
+    }
 
     render() {
-        // we set the width to 99% and a static height to help with responsiveness. issue 172 -> https://github.com/recharts/recharts/issues/172
         return (
-            <section className="categoryGraph">
-            <h2 className="categoryGraphTitle">Cost by Category</h2>
-            <ResponsiveContainer width={'99%'} height={400}> 
-                <BarChart data={this.props.data} >
-                <CartesianGrid horizontal={false} vertical={false} fill={'#fff'} fillOpacity={.8}/>
-                    <XAxis dataKey="category"/>
-                    <YAxis tickFormatter={tickItem => tickItem.toLocaleString()}/>
-                    <Tooltip content={this.renderTooltip}/>
-                    <Bar dataKey="amount" fill="#CC0000" fillOpacity={1}/>
-                                    </BarChart>
-            </ResponsiveContainer>
-            </section>
+            this.renderGraph()
         )
     }
+}
+
+CategoryGraph.propTypes = {
+    fetchCategoryData: PropTypes.func.isRequired,
+    data: PropTypes.arrayOf(
+        PropTypes.shape({
+            category: PropTypes.string.isRequired,
+            amount: PropTypes.number.isRequired
+        })
+    ),
+    loading: PropTypes.bool.isRequired
 }
 
 export default CategoryGraph;

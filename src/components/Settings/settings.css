@@ -71,8 +71,6 @@
     flex: 1;
     position: relative;
     display: flex;
-    /*justify-content: center;
-    align-items: center;*/
 }
 
 .editLink {
@@ -113,10 +111,7 @@ div > h4 {
     -webkit-transform: translate(-50%,-50%) scale(0) ;
     transform: translate(-50,-50%) scale(0) ;
     transition: all 300ms ease-in-out;
-    overflow: scroll;
-    /*height: 25rem;*/
-        /*-webkit-transform: translate3d(0px,75px,0px);
-    transform: translate3d(0px,75px,0px);*/
+    overflow: hidden;
 }
 
 .myOverlay {
@@ -126,10 +121,6 @@ div > h4 {
     left: 0px;
     right: 0px;
     bottom: 0px;
-    /*-webkit-transform: scale(0.5);
-    transform: scale(0.2);
-    /*opacity: 0;*/
-    
 }
 
 /* Remove scroll on the body when react-moadl is open */
@@ -138,16 +129,12 @@ div > h4 {
 }
 
   .ReactModal__Overlay--after-open {
-    /*opacity: .9;*/
     -webkit-transform: scale(1);
     transform: scale(1);
     transition: all 300ms ease-in-out;
   }
 
   .ReactModal__Overlay--before-close {
-    /*opacity: 0;*/
-    /*-webkit-transform: scale(0.5);
-    transform: scale(0.2);*/
     transition: all 300ms ease-in-out;
     
   }
@@ -155,18 +142,15 @@ div > h4 {
   .ReactModal__Content--after-open {
     -webkit-transform: translate(-50%,-50%) scale(1);
     transform: translate(-50,-50%) scale(1);
-      /*-webkit-transform: translate3d(0px,0px,0px);
-    transform: translate3d(0px,0px,0px);*/
     transition: all 300ms ease-in-out;
   }
   
   .ReactModal__Content--before-close {
     -webkit-transform: translate(-50%,-50%) scale(0) ;
     transform: translate(-50,-50%) scale(0) ;
-    /*-webkit-transform: translate3d(0px,75px,0px);
-    transform: translate3d(0px,75px,0px);*/
     transition: all 300ms ease-in-out;
   }
+
 @media screen and (min-width: 1000px) {
 
 .settingsRow2 {
@@ -174,13 +158,11 @@ div > h4 {
 }
 
 .settingsRow2Col1 {
-    /*width: 50%;*/
     border-right: solid 2px #ff0000;
 
 }
 
 .settingsRow2Col2 {
-    /*width: 50%;*/
     border-right: solid 2px #ff0000;
 }
 

@@ -18,8 +18,7 @@ import {
     USER_INFO_REQUESTED,
     DELETE_ENTRIES_REQUESTED,
     DELETE_ENTRIES_FINISHED
-}
-    from '../actions/types';
+ } from '../actions/types';
 
 
 export const tableData = (
@@ -86,8 +85,8 @@ export const newExpenseForm = (
     state = {
         message: ''
     }, action) => {
-        switch(action.type) {
-            case SAVE_NEEDED:
+    switch (action.type) {
+        case SAVE_NEEDED:
             return Object.assign({}, state, {
             });
         case SAVE_FINISHED:
@@ -95,86 +94,86 @@ export const newExpenseForm = (
                 message: action.message
             });
         default:
-            return state; 
-        }
-    };
+            return state;
+    }
+};
 
-    export const updateCategories = (
-        state = {
-            message: '',
-            newCategories: {}
-        }, action) => {
-            switch(action.type) {
-                case UPDATE_CATEGORIES_REQUESTED:
-                return Object.assign({}, state, {
-                    newCategories: action.newCategories
-                });
-            case UPDATE_CATEGORIES_FINISHED:
-                return Object.assign({}, state, {
-                });
-            default:
-                return state; 
-            }
-        };
+export const updateCategories = (
+    state = {
+        message: '',
+        newCategories: {}
+    }, action) => {
+    switch (action.type) {
+        case UPDATE_CATEGORIES_REQUESTED:
+            return Object.assign({}, state, {
+                newCategories: action.newCategories
+            });
+        case UPDATE_CATEGORIES_FINISHED:
+            return Object.assign({}, state, {
+            });
+        default:
+            return state;
+    }
+};
 
-
-        export const deleteEntries = (
-            state = {
-                message: '',
+export const deleteEntries = (
+    state = {
+        message: '',
+        deleted: false
+    }, action) => {
+    switch (action.type) {
+        case DELETE_ALL_REQUESTED:
+            return Object.assign({}, state, {
                 deleted: false
-            }, action) => {
-                switch(action.type) {
-                    case DELETE_ALL_REQUESTED:
-                    return Object.assign({}, state, {
-                        deleted: false
-                    });
-                case DELETE_ALL_FINISHED:
-                    return Object.assign({}, state, {
-                        message: action.textResponse,
-                        deleted: true
-                    });
-                case DELETE_ENTRIES_REQUESTED:
-                    return Object.assign({}, state, {
-                        deleted: false
-                    });
-                case DELETE_ENTRIES_FINISHED:
-                    return Object.assign({}, state, {
-                        message: action.textResponse,
-                        deleted: true
-                    });
-                    default:
-                    return state; 
-                }
-            };
+            });
+        case DELETE_ALL_FINISHED:
+            return Object.assign({}, state, {
+                message: action.textResponse,
+                deleted: true
+            });
+        case DELETE_ENTRIES_REQUESTED:
+            return Object.assign({}, state, {
+                deleted: false
+            });
+        case DELETE_ENTRIES_FINISHED:
+            return Object.assign({}, state, {
+                message: action.textResponse,
+                deleted: true
+            });
+        default:
+            return state;
+    }
+};
 
-            export const userInfo = (
-                state = {
-                   json: []
-                }, action) => {
-                    switch(action.type) {
-                        case USER_INFO_REQUESTED:
-                        return Object.assign({}, state, {
-                      });
-                    case USER_INFO_RECEIVED:
-                        return Object.assign({}, state, {
-                            json: action.json
-                        });
-                    default:
-                        return state; 
-                    }
-                }; 
-    
+export const userInfo = (
+    state = {
+        json: []
+    }, action) => {
+    switch (action.type) {
+        case USER_INFO_REQUESTED:
+            return Object.assign({}, state, {
+                loading: true
+            });
+        case USER_INFO_RECEIVED:
+            return Object.assign({}, state, {
+                json: action.json,
+                loading: false
+            });
+        default:
+            return state;
+    }
+};
 
 const rootReducer = combineReducers(
     {
-    tableData,
-     categoryData,
-      monthlyData,
-       newExpenseForm,
-       deleteEntries,
-       updateCategories,
-       userInfo
-        }
-    );
+        tableData,
+        categoryData,
+        monthlyData,
+        newExpenseForm,
+        deleteEntries,
+        updateCategories,
+        userInfo
+    }
+);
 
 export default rootReducer; 

@@ -1,10 +1,11 @@
 import React from 'react';
 import Table from '../Table';
 import CategoryGraph from '../CategoryGraph';
+import PropTypes from 'prop-types';
 import './home.css';
 import MonthlyGraph from '../MonthlyGraph';
 import _ from 'lodash';
-
+import { PulseLoader } from 'react-spinners';
 
 class Home extends React.Component {
     constructor(props) {
@@ -12,21 +13,41 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchUserInfo('bortojac');
+        this.props.fetchUserInfo();
+    }
+
+    renderHeader() {
+        return (
+            <h1>
+                {this.props.totalSum ?
+                    (
+                        `You've Spent $${this.props.totalSum.toLocaleString()} this month`
+                    )
+                    :
+                    (
+                        this.props.loading ?
+                            (
+                                <PulseLoader color={'#ff0000'} loading={this.props.loading} />
+                            )
+                            :
+                            (
+                                'Start logging expenses!'
+                            )
+                    )
+                }
+            </h1>
+        )
     }
 
     render() {
-        //console.log(this.props.totalSum);
-        console.log('the month Start day in Home Component is ' +  this.props.monthStartDay)
         return (
             <div className="homeContainer">
                 <div className="row1">
-                    <h1>{this.props.totalSum ? `You've Spent $${this.props.totalSum.toLocaleString()} this month`:
-                'Start logging expenses!'}</h1>
+                    {this.renderHeader()}
                 </div>
                 <div className="row2">
                     <CategoryGraph />
-                    <MonthlyGraph monthStartDay={this.props.monthStartDay}/>
+                    <MonthlyGraph monthStartDay={this.props.monthStartDay} />
                 </div>
                 <div className="row3">
                     <Table />
@@ -35,5 +56,12 @@ class Home extends React.Component {
         )
     }
 }
+
+Home.propTypes = {
+    totalSum: PropTypes.number,
+    fetchUserInfo: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired
+}
+
 
 export default Home;

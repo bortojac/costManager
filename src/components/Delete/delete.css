@@ -93,6 +93,18 @@
     opacity: .7;
 }
 
+.modalButton {
+  font-size: 1rem;
+  border-radius: 4px;
+  background-color: #ff0000;
+  padding: .7rem;
+  margin: 1rem;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity .4s;
+}
+
 .disabled {
     opacity: .7;
     cursor: not-allowed;

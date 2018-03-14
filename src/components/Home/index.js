@@ -1,30 +1,25 @@
 import { connect } from 'react-redux';
 import Home from './Home';
 import { fetchUserInfo } from '@@store/actions';
-import { getTableLoadingFlag, 
+import { 
   getTotalSumState,
-  getMonthStartDayState
+  getMonthStartDayState,
+  getMonthlyLoadingFlag
  } from '@@store/selectors';
  import _ from 'lodash';
 
 
 const mapStateToProps = state => {
-    console.log('Home');
-    console.log(state);
     return {
     totalSum: getTotalSumState(state),
-    tableLoading: getTableLoadingFlag(state),
+    loading: getMonthlyLoadingFlag(state),
     monthStartDay: getMonthStartDayState(state)
     }; 
  }
 
 const mapDispatchToProps = dispatch => {
   return {
-    //fetchTableData: () => {
-     // dispatch(fetchTableData())
-    //},
-    fetchUserInfo: (userId) => dispatch(fetchUserInfo(userId)),
-    //fetchMonthlyData: () => dispatch(fetchMonthlyData())
+    fetchUserInfo: (userId) => dispatch(fetchUserInfo(userId))
   }
 }
 

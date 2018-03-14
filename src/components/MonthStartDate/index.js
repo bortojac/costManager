@@ -7,8 +7,6 @@ import { getMonthStartDayState
 
 
 const mapStateToProps = state => {
-    console.log("getMonthStart");
-    console.log(state);
     return {
     monthStartDay: getMonthStartDayState(state),
     }; 

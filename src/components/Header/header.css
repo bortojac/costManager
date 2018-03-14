@@ -7,25 +7,3 @@
     overflow: hidden;
     border-bottom: solid 2px #ff0000;
 }
-
-.fa-user-circle {
-    position: absolute;
-    right: 0;
-    margin-top: .67em;
-    margin-bottom: .67em;
-    margin-right: calc(2.5rem - 14px);
-    margin-left: calc(2.5rem - 14px);
-}
-
-@media screen and (min-width:1000px) {
-    
-    .fa-user-circle {
-        transition: opacity;
-        cursor: pointer;
-    }
-
-    .fa-user-circle:hover {
-        opacity: .5;
-    }
-    
-}

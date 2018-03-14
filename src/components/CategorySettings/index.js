@@ -7,8 +7,6 @@ import { getCategoriesState
 
 
 const mapStateToProps = state => {
-    console.log("categorySettings");
-    console.log(state);
     return {
     categories: getCategoriesState(state)
     }; 
@@ -16,9 +14,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateCategories: (newCategories) => {
-      dispatch(updateCategories(newCategories))
-    },
+    updateCategories: (newCategories) => dispatch(updateCategories(newCategories)),
     fetchCategoryData: () => dispatch(fetchCategoryData()),
     updateUserCategories: (newCategories) => dispatch(updateUserCategories(newCategories)),
     fetchUserInfo: () => dispatch(fetchUserInfo()),

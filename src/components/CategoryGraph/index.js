@@ -3,7 +3,6 @@ import CategoryGraph from './CategoryGraph';
 import { fetchCategoryData } from '@@store/actions';
 import { getCategoryDataState, getCategoryLoadingFlag} from '@@store/selectors';
 
-
 const mapStateToProps = state => {
     return {
         data: getCategoryDataState(state),

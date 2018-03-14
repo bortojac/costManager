@@ -11,7 +11,6 @@ import Settings from '../Settings';
 import './app.css';
 import MonthlyGraph from '../MonthlyGraph';
 
-
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -24,19 +23,12 @@ class App extends React.Component {
         Modal.setAppElement('#root');
     }
 
-    //componentWillMount() {
-    //    this.props.fetchMonthStartDay('bortojac');
-    //}
-
     handleCloseModal() {
-        this.setState({modalIsOpen: false});
+        this.setState({ modalIsOpen: false });
     }
 
     handleModalOpen() {
-        ////code to render the new expense forms
-        
-        // open the modal
-        this.setState({modalIsOpen: true})
+        this.setState({ modalIsOpen: true })
     }
 
     render() {
@@ -55,10 +47,10 @@ class App extends React.Component {
                         <NewExpense closeModal={this.handleCloseModal} />
                     </Modal>
                     <aside className="sidebarContainer">
-                        <Sidebar openModal={this.handleModalOpen}/>
+                        <Sidebar openModal={this.handleModalOpen} />
                     </aside>
                     <main>
-                        <Route exact path="/" component={Home} /> 
+                        <Route exact path="/" component={Home} />
                         <Route path="/settings" component={Settings} />
                     </main>
                 </div>

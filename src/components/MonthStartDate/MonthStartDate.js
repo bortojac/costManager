@@ -2,43 +2,45 @@ import React from 'react';
 import './monthStartDate.css';
 import moment from 'moment';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
 
 class MonthStartDate extends React.Component {
     constructor(props) {
         super(props);
-        // state needs to be dynamic to whatever number of categories are made in the newExpenseModal. 
         this.state = {
             monthStartDay: undefined
         };
         this.handleMonthStartSubmit = this.handleMonthStartSubmit.bind(this)
         this.handleChange = this.handleChange.bind(this);
     }
-  
+
     componentDidMount() {
-        // get UserInfo to 
-        this.props.fetchMonthStartDay('bortojac'); 
+        this.props.fetchMonthStartDay();
     }
 
     handleMonthStartSubmit() {
-        console.log(this.state.monthStartDay);
         this.props.updateMonthStartDay(this.state.monthStartDay);
-        this.props.fetchMonthStartDay('bortojac'); 
+        this.props.fetchMonthStartDay();
         this.props.handleMonthStartEdit();
     }
 
     handleChange(e) {
-        this.setState({monthStartDay: e.target.value}); 
-        //console.log(this.state.monthStartDay);
+        if(e.target.value <= 28) {
+            this.setState({ monthStartDay: e.target.value });
+        } 
+        else {
+           e.target.value = null;
+        }
     }
-    
+
     renderMonthStartString() {
-        if([3,23].includes(this.props.monthStartDay)) {
+        if ([3, 23].includes(this.props.monthStartDay)) {
             return `${this.props.monthStartDay}rd`;
         }
-        else if([2,22].includes(this.props.monthStartDay)) {
+        else if ([2, 22].includes(this.props.monthStartDay)) {
             return `${this.props.monthStartDay}nd`;
         }
-        else if([1,21].includes(this.props.monthStartDay)) {
+        else if ([1, 21].includes(this.props.monthStartDay)) {
             return `${this.props.monthStartDay}st`;
         }
         else {
@@ -47,12 +49,12 @@ class MonthStartDate extends React.Component {
     }
 
     renderMonthStartInput() {
-        if(!this.props.monthStartEditFlag) {
-        return (
-            <p className="monthStartDayText">{this.renderMonthStartString()}</p>
-        );
+        if (!this.props.monthStartEditFlag) {
+            return (
+                <p className="monthStartDayText">{this.renderMonthStartString()}</p>
+            );
         }
-    else {
+        else {
             return (
                 <div className="row2Col2InputContainer">
                     <input
@@ -60,7 +62,7 @@ class MonthStartDate extends React.Component {
                         type="number"
                         name="amount"
                         min="1"
-                        max={28}
+                        max="28"
                         value={this.state.monthStartDay ? this.state.monthStartDay : this.props.monthStartDay}
                         onChange={this.handleChange}></input>
 
@@ -78,6 +80,13 @@ class MonthStartDate extends React.Component {
             </div>
         );
     }
+}
+
+MonthStartDate.propTypes = {
+    monthStartDay: PropTypes.number,
+    fetchMonthStartDay: PropTypes.func.isRequired,
+    updateMonthStartDay: PropTypes.func.isRequired,
+    handleMonthStartEdit: PropTypes.func.isRequired
 }
 
 export default MonthStartDate;

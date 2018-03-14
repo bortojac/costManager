@@ -80,7 +80,6 @@ app.post('/expenseBase/:userId', function(req, res) {
 
     // create monthStartInterval from the users selected monthStartDay
     /*var userMonthStartDay = req.body.monthStartDay;
-
     day >= userMonthStartDay ? (
         expense.monthStartInterval = `${month}/${userMonthStartDay} - ${month+1}/${userMonthStartDay-1}`
     ) :
@@ -403,10 +402,14 @@ app.put('/userBase/:userId/categories', function (req, res) {
     }
     console.log(userCategories)
     var query = { userId: req.params.userId };
-    Users.update(query, {$set: { categories: userCategories } }).exec();
+    Users.update(query, {$set: { categories: userCategories } }).exec(function(err,_res) {
 
-        //if (err) res.send(err);
-        //res.json(user)
+        if (err) {
+            res.send(err);
+        }
+        res.json(user);
+    });
+
     })
     /*for (var property in req.body.newCategories) {
         //console.log(property);

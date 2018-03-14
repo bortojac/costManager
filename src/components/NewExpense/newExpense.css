@@ -95,6 +95,16 @@
     opacity: .7;
 }
 
+::-webkit-scrollbar {
+    width: .5rem;
+    background-color: #fff
+}
+::-webkit-scrollbar-thumb {
+    background-color: #f16969;
+    border-radius: 1rem;
+}
+
+
 @media screen and (min-width: 1000px) {
     .newExpenseDiv input {
         width: 25rem;

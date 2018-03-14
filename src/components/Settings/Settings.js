@@ -12,7 +12,6 @@ import { faInfo } from '@fortawesome/fontawesome-free-solid';
 import Modal from 'react-modal';
 import InfoModal from '../infoModal';
 
-
 class Settings extends React.Component {
     constructor(props) {
         super(props);
@@ -23,12 +22,6 @@ class Settings extends React.Component {
             categoryInputValue: undefined,
             amountInputValue: 0,
             notesInputText: 'What was the expense on?',
-            options: _.map(this.props.categoryOptions, category => (
-                {
-                    value: category,
-                    label: category.replace(/\b\w/g, l => l.toUpperCase())
-                })
-            ),
             modalIsOpen: false,
             infoModalHeader: '',
             infoModalContent: ''
@@ -43,17 +36,11 @@ class Settings extends React.Component {
         Modal.setAppElement('#root');
     }
 
-    //componentWillMount() {
-    //    this.props.fetchMonthStartDay('bortojac');
-    //}
-
     handleCloseModal() {
         this.setState({ modalIsOpen: false });
     }
 
     handleModalOpen() {
-        ////code to render the new expense forms
-        // open the modal
         this.setState({ modalIsOpen: true })
     }
 
@@ -63,7 +50,6 @@ class Settings extends React.Component {
 
     handleMonthStartEdit() {
         this.setState({ monthStartEditFlag: !this.state.monthStartEditFlag });
-        //console.log(this.state.monthStartEditFlag);
     }
 
     handleCategorySettingsInfoClick() {
@@ -117,18 +103,14 @@ class Settings extends React.Component {
 
     renderIcons(flag, handleFunc) {
         if (flag) {
-            console.log(flag);
-            console.log('true');
             return (<a className="editLink" onClick={handleFunc}><FontAwesomeIcon icon={faTimes} /></a>);
         }
         else {
-            console.log(flag);
             return (<a className="editLink" onClick={handleFunc}><FontAwesomeIcon icon={faEdit} /></a>);
         }
     }
 
     render() {
-        //console.log(moment().endOf('month').format('DD'));
         return (
             <div className="settingsContainer">
                 <Modal

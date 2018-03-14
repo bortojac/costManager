@@ -1,12 +1,9 @@
 import { connect } from 'react-redux';
 import MonthlyGraph from './MonthlyGraph';
-import {  fetchMonthlyData, fetchUserInfo } from '@@store/actions';
+import {  fetchMonthlyData } from '@@store/actions';
 import { getMonthlyDataState, getMonthlyLoadingFlag, getMonthStartDayState} from '@@store/selectors';
 
-
 const mapStateToProps = state => {
-  console.log('monthlyDataStateBelow');
-  console.log(state);
     return {
         data: getMonthlyDataState(state),
         loading: getMonthlyLoadingFlag(state),
@@ -15,10 +12,8 @@ const mapStateToProps = state => {
  };
 
 const mapDispatchToProps = dispatch => {
-  //console.log('dispatchToPropsRunning');
   return {
         fetchMonthlyData: () => dispatch(fetchMonthlyData()),
-        //fetchMonthStartDay: (userId) => dispatch(fetchUserInfo(userId))
     };
   };
 

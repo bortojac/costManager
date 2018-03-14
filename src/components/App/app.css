@@ -46,10 +46,7 @@ main {
     -webkit-transform: translate(-50%,-50%) scale(0) ;
     transform: translate(-50,-50%) scale(0) ;
     transition: all 300ms ease-in-out;
-    overflow: scroll;
-    /*height: 25rem;*/
-        /*-webkit-transform: translate3d(0px,75px,0px);
-    transform: translate3d(0px,75px,0px);*/
+    overflow: hidden;
 }
 
 .myOverlay {
@@ -59,28 +56,20 @@ main {
     left: 0px;
     right: 0px;
     bottom: 0px;
-    /*-webkit-transform: scale(0.5);
-    transform: scale(0.2);
-    /*opacity: 0;*/
-    
 }
 
-/* Remove scroll on the body when react-moadl is open */
+/* Remove scroll on the body when react-modal is open */
 .ReactModal__Body--open {
     overflow: hidden;
 }
 
   .ReactModal__Overlay--after-open {
-    /*opacity: .9;*/
     -webkit-transform: scale(1);
     transform: scale(1);
     transition: all 300ms ease-in-out;
   }
 
   .ReactModal__Overlay--before-close {
-    /*opacity: 0;*/
-    /*-webkit-transform: scale(0.5);
-    transform: scale(0.2);*/
     transition: all 300ms ease-in-out;
     
   }
@@ -88,16 +77,12 @@ main {
   .ReactModal__Content--after-open {
     -webkit-transform: translate(-50%,-50%) scale(1);
     transform: translate(-50,-50%) scale(1);
-      /*-webkit-transform: translate3d(0px,0px,0px);
-    transform: translate3d(0px,0px,0px);*/
     transition: all 300ms ease-in-out;
   }
   
   .ReactModal__Content--before-close {
-    -webkit-transform: translate(-50%,-50%) scale(0) ;
-    transform: translate(-50,-50%) scale(0) ;
-    /*-webkit-transform: translate3d(0px,75px,0px);
-    transform: translate3d(0px,75px,0px);*/
+    -webkit-transform: translate(-50%,-50%) scale(0);
+    transform: translate(-50,-50%) scale(0);
     transition: all 300ms ease-in-out;
   }
  
