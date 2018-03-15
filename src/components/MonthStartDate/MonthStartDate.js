@@ -69,7 +69,6 @@ class MonthStartDate extends React.Component {
             );
         }
         else {
-            console.log(this.state.monthStartDay);
             return (
                 <div className="row2Col2InputContainer">
                     <input
