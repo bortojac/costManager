@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Delete from './Delete';
-import { deleteEntries, deleteAll } from '@@store/actions';
+import { deleteEntries, deleteAll, deleteUserCategory, updateUserCategories } from '@@store/actions';
 import { 
     getDBDataState
 } from '@@store/selectors';
@@ -14,7 +14,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         deleteEntries: (date, category, amount, notes) => dispatch(deleteEntries(date, category, amount, notes)),
-        deleteAll: () => dispatch(deleteAll())
+        deleteAll: () => dispatch(deleteAll()),
+        deleteUserCategory: (category) => dispatch(deleteUserCategory(category)),
+        updateUserCategories: (newCategories) => dispatch(updateUserCategories(newCategories))
     };
 };
 

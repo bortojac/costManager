@@ -35,7 +35,7 @@ class Settings extends React.Component {
         this.handleDeleteInfoClick = this.handleDeleteInfoClick.bind(this);
         Modal.setAppElement('#root');
     }
-
+    
     handleCloseModal() {
         this.setState({ modalIsOpen: false });
     }

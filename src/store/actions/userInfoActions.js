@@ -14,7 +14,6 @@ export const userInfoRequested = () => {
 };
 
 export const userInfoReceived = (jsonResponse) => {
-    console.log(jsonResponse);
     return {
         type: USER_INFO_RECEIVED,
         loading: false,
@@ -24,7 +23,6 @@ export const userInfoReceived = (jsonResponse) => {
 
 export const fetchUserInfo = () => {
     return dispatch => {
-        console.log('userInfoRequested');
         dispatch(userInfoRequested());
         return fetch('/userBase/' + userId,
             {

@@ -63,24 +63,30 @@ class Delete extends React.Component {
 
     handleDeleteEntriesClick() {
         if (this.state.notesInputValue && this.state.amountInputValue && this.state.dateInputValue && this.state.categoryInputValue) {
+            // delete from expense database
             this.props.deleteEntries(
                 this.state.dateInputValue.format('YYYY-MM-DD'),
                 this.state.categoryInputValue,
                 Number(this.state.amountInputValue),
                 this.state.notesInputValue
             );
+             // delete category from user database
+             this.props.deleteUserCategory(this.state.categoryInputValue);
+            // reset state
             this.setState({
                 dateInputValue: undefined,
                 categoryInputValue: undefined,
                 notesInputValue: undefined,
                 amountInputValue: undefined
             })
+           
         }
         return
     }
 
     handleYesDeleteAllClick() {
         this.props.deleteAll();
+        this.props.updateUserCategories([]);
         this.handleCloseModal();
     }
 
@@ -93,6 +99,7 @@ class Delete extends React.Component {
                 <a className="modalButton" onClick={this.handleCloseModal}>No</a>
             </div>)
         });
+
         this.handleModalOpen();
     }
 

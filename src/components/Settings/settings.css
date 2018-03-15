@@ -81,6 +81,7 @@
 }
 
 .infoLink {
+    position: absolute;
     transition: opacity;
     padding: 2px;
 }

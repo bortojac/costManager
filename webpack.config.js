@@ -19,8 +19,7 @@ module.exports = {
     },
     plugins: [
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin()//,
-        //new webpack
+        new webpack.HotModuleReplacementPlugin()
     ],
     module: {
         rules: [

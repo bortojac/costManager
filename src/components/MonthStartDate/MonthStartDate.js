@@ -8,28 +8,42 @@ class MonthStartDate extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            monthStartDay: undefined
+            monthStartDay: this.props.monthStartDay,
+            disableSubmit: false
         };
         this.handleMonthStartSubmit = this.handleMonthStartSubmit.bind(this)
         this.handleChange = this.handleChange.bind(this);
     }
-
+    
     componentDidMount() {
         this.props.fetchMonthStartDay();
     }
 
     handleMonthStartSubmit() {
+        if(this.state.disableSubmit) {
+            return
+        }
         this.props.updateMonthStartDay(this.state.monthStartDay);
         this.props.fetchMonthStartDay();
         this.props.handleMonthStartEdit();
     }
 
     handleChange(e) {
-        if(e.target.value <= 28) {
-            this.setState({ monthStartDay: e.target.value });
+
+        this.setState({
+            monthStartDay: e.target.value
+        })
+
+        // disable the submit button if the value is greater than 28 or blank
+        if(e.target.value <= 28 && e.target.value) {
+            this.setState({
+                disableSubmit: false
+             });
         } 
         else {
-           e.target.value = null;
+           this.setState({
+               disableSubmit: true
+           })
         }
     }
 
@@ -55,18 +69,19 @@ class MonthStartDate extends React.Component {
             );
         }
         else {
+            console.log(this.state.monthStartDay);
             return (
                 <div className="row2Col2InputContainer">
                     <input
                         className="monthStartDayInput"
                         type="number"
                         name="amount"
-                        min="1"
-                        max="28"
-                        value={this.state.monthStartDay ? this.state.monthStartDay : this.props.monthStartDay}
-                        onChange={this.handleChange}></input>
-
-                    <a className="monthStartSubmitButton" onClick={this.handleMonthStartSubmit}>Submit</a>
+                        onChange={this.handleChange}
+                        min={0}
+                        max={28}
+                        value={this.state.monthStartDay}
+            ></input>
+                    <a className= {this.state.disableSubmit ? "monthStartSubmitButton disabled" : "monthStartSubmitButton"} onClick={this.handleMonthStartSubmit}>Submit</a>
                 </div>
             );
         }

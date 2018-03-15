@@ -7,6 +7,7 @@
 .monthStartDateTextContainer {
     align-self: flex-start;
     display: flex;
+    margin-top: 1.5rem;
     flex-flow: column;
     align-items: center;
 }
@@ -41,6 +42,10 @@
     transition: opacity .4s;
 }
 
+.disabled {
+    opacity: .7;
+    cursor: not-allowed;
+}
 
 @media screen and (min-width:1000px) {
     .monthStartSubmitButton:hover {

@@ -11,6 +11,7 @@ import {
     DELETE_USER_CATEGORY_FINISHED
 } from './types';
 import { fetchUserInfo } from './userInfoActions';
+import { fetchTableData } from './tableActions';
 import { apiURL, userId } from './userInfoActions';
 
 export const categoryDataRequested = () => {
@@ -71,8 +72,8 @@ export const updateCategories = (newCategories) => {
         })
         .then(response => response.text())
         .then(textResponse => {
-            console.log("the textReponse ran")
             dispatch(updateCategoriesFinished(textResponse));
+            dispatch(fetchTableData());
             dispatch(fetchCategoryData());
             dispatch(fetchUserInfo());
         })
@@ -144,17 +145,19 @@ export const updateUserCategories = (newCategories) => {
         }).then((response) => response.text())
         .then(textResponse => {
             dispatch(updateUserCategoriesFinished(textResponse));
+            dispatch(fetchTableData());
+            dispatch(fetchCategoryData());
             dispatch(fetchUserInfo());
         }
         )
     };
 };
 
-export const deleteUserCategoryRequested = (newCategories) => {
+export const deleteUserCategoryRequested = (category) => {
     return {
         type: DELETE_USER_CATEGORY_REQUESTED,
         fetching: true,
-        newCategories: newCategories
+        category: category
     };
 };
 
@@ -170,7 +173,7 @@ export const deleteUserCategory = (category) => {
     return dispatch => {
         dispatch(deleteUserCategoryRequested(category))
         return fetch('/userBase/' + userId + '/deleteCategory', {
-            method: 'PUT',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -182,6 +185,7 @@ export const deleteUserCategory = (category) => {
             .then(textResponse => {
                 dispatch(deleteUserCategoryFinished(textResponse));
                 dispatch(fetchCategoryData());
+                dispatch(fetchTableData());
                 dispatch(fetchUserInfo());
             })
     };

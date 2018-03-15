@@ -334,24 +334,35 @@ app.put('/userBase/:userId/categories', function (req, res) {
     // property is the old category and req[property] is the new one
     Users.findOne({ userId: req.params.userId })
     .exec(function(err, user) {
-        var userCategories = user.categories;
-        var i;
-         for (var property in req.body.newCategories) {
-        userCategories[userCategories.indexOf(property)] = req.body.newCategories[property];
-    }
-    var query = { userId: req.params.userId };
-    Users.update(query, {$set: { categories: userCategories } }).exec(function(err,_res) {
+        // reset the categories if the request is empty
+        if(req.body.newCategories.length == 0) {
+            Users.update(query, {$set: { categories: [] } }).exec(function(err,_res) {
 
-        if (err) {
-            res.send(err);
-        }
-        res.json(user);
+                if (err) {
+                    res.send(err);
+                }
+                res.json(user);
+            });
+         
+        } else {
+            // update categories if request contains categories
+            var userCategories = user.categories;
+            for (var property in req.body.newCategories) {
+                userCategories[userCategories.indexOf(property)] = req.body.newCategories[property];
+            }
+            var query = { userId: req.params.userId };
+            Users.update(query, {$set: { categories: userCategories } }).exec(function(err,_res) {
+        
+                if (err) {
+                    res.send(err);
+                }
+                res.json(user);
+            });
+                }
+            })
     });
 
-    })
-    });
-
-app.put('/userBase/:userId/deleteCategory', function (req, res) {
+app.delete('/userBase/:userId/deleteCategory', function (req, res) {
 
     Users.findOne({ userId: req.params.userId })
     .exec(function(err, user) {

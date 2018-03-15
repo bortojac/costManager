@@ -17,16 +17,16 @@
 }
 
 .deleteForm {
-    /*overflow-y: scroll;*/
+    overflow-y: visible;
     overflow-x: hidden;
     width: 100%;
     margin: 0 auto;
     display: flex;
     flex: 1;
     flex-flow: column;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: center;
-    padding-top: 1rem;
+    padding-top: .4rem;
     padding-bottom: 1rem;
     background-color: #fff;
     -webkit-overflow-scrolling: touch;
@@ -34,7 +34,7 @@
 }
 
 .deleteContainer h4 {
-    margin:.5rem;
+    margin:.1rem;
 }
 
 .deleteInputContainer, .deleteDateInputContainer, .deleteAmountInputContainer {
@@ -42,29 +42,19 @@
   flex-flow: column;
   align-items: center;
   justify-content: center;
-  margin: .2rem 0 .8rem 0;
+  margin: .2rem 0 .6rem 0;
 }
 
 .react-datepicker-wrapper, .react-datepicker_input_container {
   width: 100%;
 }
 
-/* category select */
 .deleteSelect {
   font-size: 1rem;
   margin-top: .2rem;
   width: 10rem;
 }
 
-.deleteInputContainer .Select-menu-outer {
-    max-height: 8rem;
-    }
-    
-.deleteInputContainer .Select-menu {
-    max-height: 7rem;
-    }
-
-/* Amount select */
 .deleteAmountInputContainer > input, .deleteDateInputContainer input {
   margin-top: .3rem;
   font-size: 1rem;
@@ -75,6 +65,44 @@
   padding: .5rem;
   box-sizing: border-box;
 }
+
+.deleteInputContainer .Select-menu-outer {
+  max-height: 8rem;
+  }
+  
+.deleteInputContainer .Select-menu {
+  max-height: 7rem;
+  }
+
+/* this will make the last 2 dropdown boxes open up so we can always see them
+   -  Also fix border radius of corner of dropdowns
+*/
+.deleteInputContainer:nth-last-child(-n + 2) .Select-menu-outer {
+top: auto;
+bottom: 100%;
+border-top-right-radius: 4px;
+border-top-left-radius: 4px;
+border-bottom-right-radius: unset;
+border-bottom-left-radius: unset;
+}
+
+.Select-option:first-child {
+border-top-right-radius: 4px;
+border-top-left-radius: 4px;
+}
+
+.Select-option:last-child {
+border-bottom-right-radius: unset;
+border-bottom-left-radius: unset;
+}
+
+.Select.is-open > .Select-control {
+ border-top-right-radius: unset;
+ border-top-left-radius: unset;
+ border-bottom-right-radius: 4px;
+ border-bottom-left-radius: 4px;
+}
+
 
 .deleteButton {
     font-size: 1rem;
@@ -114,53 +142,3 @@
     color: #ff0000;
     text-align: center;
 }
-
-.checkmark__circle {
-    stroke-dasharray: 166;
-    stroke-dashoffset: 166;
-    stroke-width: 2;
-    stroke-miterlimit: 10;
-    stroke: #fff;
-    fill: none;
-    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
-  }
-  
-  .checkmark {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    display: block;
-    stroke-width: 2;
-    stroke: #ff0000;
-    stroke-miterlimit: 10;
-    margin: 0 auto;
-    box-shadow: inset 0px 0px 0px #fff;
-    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
-  }
-  
-  .checkmark__check {
-    transform-origin: 50% 50%;
-    stroke-dasharray: 48; 
-    stroke-dashoffset: 48;
-    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
-  }
-  
-  @keyframes stroke {
-    100% {
-      stroke-dashoffset: 0;
-    }
-  }
-  @keyframes scale {
-    0%, 100% {
-      transform: none;
-    }
-    50% {
-      transform: scale3d(1.1, 1.1, 1);
-    }
-  }
-  @keyframes fill {
-    100% {
-      box-shadow: inset 0px 0px 0px 30px #fff;
-      
-    }
-  }

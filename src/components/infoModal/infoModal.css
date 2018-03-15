@@ -8,15 +8,13 @@
   }
   
   .infoModalHeader {
-    /*position: fixed;
-    top: 0;
-    right: 0;*/
     color: #000;
     width: 75%;
     border-bottom: .2rem solid rgb(204, 204, 204);
     background-color: #fff;
     border-bottom: 2px solid #ff0000;
     padding-top: 1rem;
+    font-size: 1.3rem;
     padding-bottom: 1rem;
     margin: 0 auto;
   }
@@ -31,5 +29,15 @@
       background-color: #fff;
       -webkit-overflow-scrolling: touch;
       border-radius: 4px;
+      font-size: 1rem;
   }
 
+  @media screen and (min-width: 1000px) {
+    .infoModalHeader {
+      font-size: 2.5rem;
+    }
+
+    .infoModalContent {
+        font-size: 1.1rem;
+    }
+  }
