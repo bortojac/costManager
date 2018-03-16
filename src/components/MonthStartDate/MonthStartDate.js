@@ -80,7 +80,7 @@ class MonthStartDate extends React.Component {
                         max={28}
                         value={this.state.monthStartDay}
             ></input>
-                    <a className= {this.state.disableSubmit ? "monthStartSubmitButton disabled" : "monthStartSubmitButton"} onClick={this.handleMonthStartSubmit}>Submit</a>
+                    <button className= {this.state.disableSubmit ? "monthStartSubmitButton disabled" : "monthStartSubmitButton"} onClick={this.handleMonthStartSubmit}>Submit</button>
                 </div>
             );
         }

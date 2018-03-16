@@ -102,11 +102,27 @@ class Settings extends React.Component {
     }
 
     renderIcons(flag, handleFunc) {
+
         if (flag) {
-            return (<a className="editLink" onClick={handleFunc}><FontAwesomeIcon icon={faTimes} /></a>);
+            return (
+                <a
+                    className="editLink"
+                    onClick={handleFunc}
+                    onKeyDown={(event) => { if(event.keyCode == 13) { handleFunc() } }}
+                    tabIndex="0"
+                ><FontAwesomeIcon icon={faTimes} />
+                </a>
+                );
         }
         else {
-            return (<a className="editLink" onClick={handleFunc}><FontAwesomeIcon icon={faEdit} /></a>);
+            return (
+            <a 
+            className="editLink"
+             onClick={handleFunc}
+             onKeyDown={(event) => {if(event.keyCode == 13) { handleFunc() }}}
+             tabIndex="0"
+             ><FontAwesomeIcon icon={ faEdit } /></a>
+        );
         }
     }
 
@@ -134,7 +150,12 @@ class Settings extends React.Component {
                         <h2>Your Spending Categories</h2>
                         <div className="settingsRow2Col1Content">
                             {this.renderIcons(this.state.categoryEditFlag, this.handleCategoryEdit)}
-                            <a className="infoLink" onClick={this.handleCategorySettingsInfoClick}><FontAwesomeIcon icon={faInfo} /></a>
+                            <a className="infoLink"
+                              onClick={this.handleCategorySettingsInfoClick}
+                              onKeyDown={(event) => {if(event.keyCode == 13) {this.handleCategorySettingsInfoClick()}}}
+                              tabIndex="0">
+                              <FontAwesomeIcon icon={faInfo} />
+                              </a>
                             <CategorySettings handleCategoryEdit={this.handleCategoryEdit}
                                 categoryEditFlag={this.state.categoryEditFlag} />
                         </div>
@@ -143,7 +164,14 @@ class Settings extends React.Component {
                         <h2>Your Month Start Date</h2>
                         <div className="settingsRow2Col2Content">
                             {this.renderIcons(this.state.monthStartEditFlag, this.handleMonthStartEdit)}
-                            <a className="infoLink" onClick={this.handleMonthStartInfoClick}><FontAwesomeIcon icon={faInfo} /></a>
+                            <a 
+                            className="infoLink" 
+                            onClick={this.handleMonthStartInfoClick}
+                            onKeyDown={(event) => {if(event.keyCode == 13) {this.handleMonthStartInfoClick()}}}
+                            tabIndex="0"
+                            >
+                            <FontAwesomeIcon icon={faInfo} />
+                            </a>
                             <MonthStartDate handleMonthStartEdit={this.handleMonthStartEdit}
                                 monthStartEditFlag={this.state.monthStartEditFlag} />
                         </div>
@@ -151,7 +179,14 @@ class Settings extends React.Component {
                     <section className="settingsRow2Col3">
                         <h2>Delete Entries</h2>
                         <div className="settingsRow2Col3Content">
-                            <a className="infoLink" onClick={this.handleDeleteInfoClick}><FontAwesomeIcon icon={faInfo} /></a>
+                            <a
+                             className="infoLink"
+                             onClick={this.handleDeleteInfoClick}
+                             onKeyDown={(event) => {if(event.keyCode == 13) {this.handleDeleteInfoClick()}}}
+                             tabIndex="0"
+                             >
+                             <FontAwesomeIcon icon={faInfo} />
+                             </a>
                             <DeleteInputs />
                         </div>
                     </section>

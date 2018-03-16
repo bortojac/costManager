@@ -70,11 +70,16 @@ class Delete extends React.Component {
                 Number(this.state.amountInputValue),
                 this.state.notesInputValue
             );
-             // delete category from user database
-             this.props.deleteUserCategory(this.state.categoryInputValue);
+            
+            // delete category from user database if the cats in database = 1 (i.e. when we delete one, there will be none left)
+             const catsInDB = _.filter(_.map(_.get(this.props, "dbData", []), obj => obj.category), cat => cat === this.state.categoryInputValue);
+             if(catsInDB.length == 1) {
+                this.props.deleteUserCategory(this.state.categoryInputValue);
+             }
+            
             // reset state
             this.setState({
-                dateInputValue: undefined,
+                dateInputVlue: undefined,
                 categoryInputValue: undefined,
                 notesInputValue: undefined,
                 amountInputValue: undefined
@@ -153,11 +158,11 @@ class Delete extends React.Component {
             let formattedDateArr = _.map(this.props.dbData, obj => ({
                 date: obj.date.format("DD-MM-YYYY"),
                 category: obj.category,
-                note: obj.notes,
+                notes: obj.notes,
                 amount: obj.amount
             }));
             let formattedDateInput = this.state.dateInputValue.format('DD-MM-YYYY');
-            return _.uniqBy(_.map(_.filter(formattedDateArr, { date: formattedDateInput, category: this.state.categoryInputValue }), obj => ({
+            return _.uniqBy(_.map(_.filter(formattedDateArr, { date: formattedDateInput, category: this.state.categoryInputValue, notes: this.state.notesInputValue }), obj => ({
                 value: obj.amount,
                 label: obj.amount
             })), 'value');
@@ -228,11 +233,11 @@ class Delete extends React.Component {
                                 onChange={this.updateAmountValue}></Select>
                         </div>
                     </form>
-                    <a
+                    <button
                         className={this.state.categoryInputValue && this.state.dateInputValue && this.state.notesInputValue && this.state.amountInputValue ? "deleteButton" : "disabled deleteButton"}
-                        onClick={this.handleDeleteEntriesClick}>Delete Entry</a>
+                        onClick={this.handleDeleteEntriesClick}>Delete Entry</button>
                 </div>
-                <a className="deleteButton" onClick={this.handleDeleteAllClick}>Delete All</a>
+                <button className="deleteButton" onClick={this.handleDeleteAllClick}>Delete All</button>
             </div>
         )
     }

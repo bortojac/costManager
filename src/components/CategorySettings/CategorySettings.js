@@ -40,8 +40,6 @@ class CategorySettings extends React.Component {
             objToSubmit[this.props.categories[i]] = this.state.newCategories[i];
         }
 
-        //console.log(objToSubmit);
-        //console.log(this.state.newCategories);
         // update categories in both mongoose collections
         this.props.updateCategories(objToSubmit);
         this.props.updateUserCategories(objToSubmit);
@@ -89,7 +87,14 @@ class CategorySettings extends React.Component {
                                 <div className="categoryText">
                                     {item}
                                 </div>
-                                <a className="deleteLink" aria-label="Delete Category" onClick={() => this.handleDeleteClick(item)}><FontAwesomeIcon icon={faMinusCircle} /></a>
+                                <a
+                                 className="deleteLink"
+                                 aria-label="Delete Category"
+                                 onClick={() => this.handleDeleteClick(item)}
+                                 onKeyDown={(event) => { if(event.keyCode == 13) { this.handleDeleteClick(item) } }}
+                                 tabIndex="0"
+                                 ><FontAwesomeIcon icon={faMinusCircle} />
+                                 </a>
                             </li>
                         );
                     }
@@ -105,7 +110,7 @@ class CategorySettings extends React.Component {
                         return <input key={`catInput${index}`} type="text" name={item} defaultValue={categories[index]} onChange={this.handleChange}></input>;
                     })}
                     {this.renderDuplicateMessage()}
-                    <a className={this.state.duplicateMessage || this.state.disableSubmit ? "categorySubmitButton disabled" : "categorySubmitButton"} onClick={this.handleCategorySubmit}>Submit</a>
+                    <button className={this.state.duplicateMessage || this.state.disableSubmit ? "categorySubmitButton disabled" : "categorySubmitButton"} onClick={this.handleCategorySubmit}>Submit</button>
                 </div>
             );
         }

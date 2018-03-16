@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var Expenses = require('./model/expenses');
 var Users = require('./model/users');
 var _ = require('lodash');
+var devConfig = require('../webpack.dev.js');
 //set our port to either a predetermined port number if it is set up, or 3000
 //var port = process.env.API_PORT || 3000;
 
@@ -15,15 +16,15 @@ var _ = require('lodash');
 mongoose.connect('mongodb://jtest:!7janlk2iah@ds221148.mlab.com:21148/costmanager');
 
 var app = express();
-var config = require('../webpack.config.js');
-var compiler = webpack(config);
+//var config = require('../webpack.dev.js');
+var compiler = webpack(devConfig);
 
 
 //now we should configure the API to use bodyParser and look for JSON data in the request body
 // if extended: false, we cannot post nested objects. let's allow that for now and see what we need
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(webpackDevMiddleware(compiler, {publicPath: config.output.publicPath}));
+app.use(webpackDevMiddleware(compiler, {publicPath: devConfig.output.publicPath}));
 app.use(webpackHotMiddleware(compiler))
 
 app.use(function(req, res, next) {
@@ -98,7 +99,6 @@ app.delete('/expenseBase/:userId/deleteEntries', function(req, res) {
     var category = req.body.category;
     var amount = req.body.amount;
     var notes = req.body.notes;
-    console.log(notes);
     Expenses.remove(
         {
             userId: req.params.userId,
@@ -135,7 +135,6 @@ app.post('/expenseBase/:userId/monthlyGraph/', function (req, res) {
      //  var userMonthStartDay = userInfo.monthStartDay;
        // console.log(userInfo.monthStartDay);
        var userMonthStartDay = req.body.monthStartDay;
-       console.log(req.body.monthStartDay)
          Expenses.aggregate(
             [   
                 { $match : { userId : req.params.userId } },
@@ -204,7 +203,6 @@ app.post('/expenseBase/:userId/monthlyGraph/', function (req, res) {
                                                     '/',
                                                     { $substrBytes: [userMonthStartDay, 0, -1] },
                                                     '-',
-                                                    //{ $substrBytes: ['$month', 0, -1] },
                                                     '0',
                                                     '/',
                                                     { $substrBytes: [{ $subtract: [userMonthStartDay, 1] }, 0, -1] }
@@ -283,7 +281,6 @@ app.post('/expenseBase/:userId/monthlyGraph/', function (req, res) {
 app.put('/expenseBase/:userId/newCategories', function (req, res) {
     // property is the old category and req[property] is the new one
     for (var property in req.body.newCategories) {
-        //console.log(property);
         var query = { 
             category: property,
             userId: req.params.userId

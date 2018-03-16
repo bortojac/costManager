@@ -6,6 +6,7 @@ import {
 } from './types';
 import { fetchCategoryData } from './categoryActions';
 import { fetchMonthlyData } from './monthlyActions';
+import { fetchTableData } from './tableActions';
 import { apiURL, userId } from './userInfoActions';
 
 export const deleteAllRequested = () => {
@@ -73,6 +74,7 @@ export const deleteEntries = (date, category, amount, notes) => {
             .then(response => response.text())
             .then(textResponse => {
                 dispatch(deleteEntriesFinished(textResponse));
+                dispatch(fetchTableData());
                 dispatch(fetchCategoryData());
             })
     };
