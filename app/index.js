@@ -8,24 +8,42 @@ var bodyParser = require('body-parser');
 var Expenses = require('./model/expenses');
 var Users = require('./model/users');
 var _ = require('lodash');
-var devConfig = require('../webpack.dev.js');
-//set our port to either a predetermined port number if it is set up, or 3000
-//var port = process.env.API_PORT || 3000;
 
-// db config
-mongoose.connect('mongodb://jtest:!7janlk2iah@ds221148.mlab.com:21148/costmanager');
+//load creds from dotenv if in dev mode
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+}
+
+
+//set our port to either a predetermined port number if it is set up, or 3000
+var port = process.env.API_PORT || 3000;
 
 var app = express();
-//var config = require('../webpack.dev.js');
-var compiler = webpack(devConfig);
 
+// db config
+
+var dbUser = process.env.DB_USER;
+var dbPwd = process.env.DB_PWD;
+var dbHost = process.env.DB_HOST;
+var db ='mongodb://'+dbUser+':'+dbPwd+'@'+dbHost+'/costmanager';
+mongoose.connect(db);
+
+if (process.env.NODE_ENV !== 'production') {
+    var config = require('../webpack.dev.js');
+    var compiler = webpack(config);
+} 
 
 //now we should configure the API to use bodyParser and look for JSON data in the request body
 // if extended: false, we cannot post nested objects. let's allow that for now and see what we need
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(webpackDevMiddleware(compiler, {publicPath: devConfig.output.publicPath}));
-app.use(webpackHotMiddleware(compiler))
+
+if (process.env.NODE_ENV !== 'production') {
+    app.use(webpackDevMiddleware(compiler, {publicPath: config.output.publicPath}));
+    app.use(webpackHotMiddleware(compiler))
+} else {
+    app.use(express.static('public'))
+}
 
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -60,7 +78,7 @@ app.post('/expenseBase/:userId', function(req, res) {
     // create new expense document
     var expense = new Expenses();
     var date = new Date(req.body.date);
-    console.log(date);
+    //console.log(date);
     // body parser lets us use the req.body
     var month = date.getMonth();
     var day = date.getDate();
@@ -88,7 +106,7 @@ app.delete('/expenseBase/:userId/deleteAll', function(req, res) {
            }, 
            function(err) {
                if(err) res.send(err);
-               console.log('every entry has been deleted');
+               //console.log('every entry has been deleted');
                res.send('Every entry has been deleted');
            }
         )
@@ -116,7 +134,6 @@ app.delete('/expenseBase/:userId/deleteEntries', function(req, res) {
 
 // handle get requests for categoryGraph
 app.get('/expenseBase/:userId/categoryGraph', function (req, res) {
-    //console.log('in here');
         Expenses.aggregate([
             { $match : { userId : req.params.userId } },
             { $group: { _id: '$category', amount: { $sum: '$amount' }}},
@@ -130,10 +147,7 @@ app.get('/expenseBase/:userId/categoryGraph', function (req, res) {
 // handle post requests for monthlyGraph
 app.post('/expenseBase/:userId/monthlyGraph/', function (req, res) {
    
-        // create monthStartInterval from the users selected monthStartDay
-   // Users.findOne({userId: req.body.userId}, function (err, userInfo) {
-     //  var userMonthStartDay = userInfo.monthStartDay;
-       // console.log(userInfo.monthStartDay);
+        // create monthStartInterval from the users selected monthStartDay, then group by it and aggregate
        var userMonthStartDay = req.body.monthStartDay;
          Expenses.aggregate(
             [   
@@ -394,4 +408,4 @@ app.delete('/userBase/:userId', function (req, res) {
     );
 });
 
-app.listen(3000, () => console.log('Server is running'));
+app.listen(port, () => console.log('Server is running'));
