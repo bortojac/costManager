@@ -78,4 +78,4 @@ export const deleteEntries = (date, category, amount, notes) => {
                 dispatch(fetchCategoryData());
             })
     };
-        };
+};

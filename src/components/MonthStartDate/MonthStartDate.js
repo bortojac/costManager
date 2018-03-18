@@ -14,13 +14,13 @@ class MonthStartDate extends React.Component {
         this.handleMonthStartSubmit = this.handleMonthStartSubmit.bind(this)
         this.handleChange = this.handleChange.bind(this);
     }
-    
+
     componentDidMount() {
         this.props.fetchMonthStartDay();
     }
 
     handleMonthStartSubmit() {
-        if(this.state.disableSubmit) {
+        if (this.state.disableSubmit) {
             return
         }
         this.props.updateMonthStartDay(this.state.monthStartDay);
@@ -35,15 +35,15 @@ class MonthStartDate extends React.Component {
         })
 
         // disable the submit button if the value is greater than 28 or blank
-        if(e.target.value <= 28 && e.target.value) {
+        if (e.target.value <= 28 && e.target.value) {
             this.setState({
                 disableSubmit: false
-             });
-        } 
+            });
+        }
         else {
-           this.setState({
-               disableSubmit: true
-           })
+            this.setState({
+                disableSubmit: true
+            })
         }
     }
 
@@ -79,8 +79,8 @@ class MonthStartDate extends React.Component {
                         min={0}
                         max={28}
                         value={this.state.monthStartDay}
-            ></input>
-                    <button className= {this.state.disableSubmit ? "monthStartSubmitButton disabled" : "monthStartSubmitButton"} onClick={this.handleMonthStartSubmit}>Submit</button>
+                    ></input>
+                    <button className={this.state.disableSubmit ? "monthStartSubmitButton disabled" : "monthStartSubmitButton"} onClick={this.handleMonthStartSubmit}>Submit</button>
                 </div>
             );
         }

@@ -28,7 +28,7 @@ class Sidebar extends React.Component {
                 <Link to="/settings"><FontAwesomeIcon icon={faCog} size="2x" /></Link>
             </div>
         )
-}
+    }
 }
 
 Sidebar.propTypes = {

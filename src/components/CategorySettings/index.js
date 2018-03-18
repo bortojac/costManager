@@ -1,16 +1,17 @@
 import { connect } from 'react-redux';
 import CategorySettings from './CategorySettings';
 import { updateCategories, fetchCategoryData, updateUserCategories, fetchUserInfo, deleteUserCategory } from '@@store/actions';
-import { getCategoriesState
- } from '@@store/selectors';
- import _ from 'lodash';
+import {
+  getCategoriesState
+} from '@@store/selectors';
+import _ from 'lodash';
 
 
 const mapStateToProps = state => {
-    return {
+  return {
     categories: getCategoriesState(state)
-    }; 
- }
+  };
+}
 
 const mapDispatchToProps = dispatch => {
   return {

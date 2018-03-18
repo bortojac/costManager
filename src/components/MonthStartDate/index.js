@@ -1,16 +1,17 @@
 import { connect } from 'react-redux';
 import MonthStartDate from './MonthStartDate';
 import { updateMonthStartDay, fetchUserInfo } from '@@store/actions';
-import { getMonthStartDayState
- } from '@@store/selectors';
- import _ from 'lodash';
+import {
+  getMonthStartDayState
+} from '@@store/selectors';
+import _ from 'lodash';
 
 
 const mapStateToProps = state => {
-    return {
+  return {
     monthStartDay: getMonthStartDayState(state),
-    }; 
- }
+  };
+}
 
 const mapDispatchToProps = dispatch => {
   return {

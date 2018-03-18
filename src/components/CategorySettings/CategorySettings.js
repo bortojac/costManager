@@ -18,9 +18,9 @@ class CategorySettings extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    componentWillReceiveProps(){
+    componentWillReceiveProps() {
         //reset newCategories state
-        this.setState({newCategories: []});
+        this.setState({ newCategories: [] });
     }
 
     componentDidMount() {
@@ -88,13 +88,13 @@ class CategorySettings extends React.Component {
                                     {item}
                                 </div>
                                 <a
-                                 className="deleteLink"
-                                 aria-label="Delete Category"
-                                 onClick={() => this.handleDeleteClick(item)}
-                                 onKeyDown={(event) => { if(event.keyCode == 13) { this.handleDeleteClick(item) } }}
-                                 tabIndex="0"
-                                 ><FontAwesomeIcon icon={faMinusCircle} />
-                                 </a>
+                                    className="deleteLink"
+                                    aria-label="Delete Category"
+                                    onClick={() => this.handleDeleteClick(item)}
+                                    onKeyDown={(event) => { if (event.keyCode == 13) { this.handleDeleteClick(item) } }}
+                                    tabIndex="0"
+                                ><FontAwesomeIcon icon={faMinusCircle} />
+                                </a>
                             </li>
                         );
                     }

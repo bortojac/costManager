@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import NewExpense from './NewExpense';
 import { saveExpense, fetchUserInfo, addUserCategory } from '@@store/actions';
-import { 
+import {
     getCategoriesState,
     getUserCategoriesState,
     getMonthStartDayState

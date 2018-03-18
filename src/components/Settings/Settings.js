@@ -35,7 +35,7 @@ class Settings extends React.Component {
         this.handleDeleteInfoClick = this.handleDeleteInfoClick.bind(this);
         Modal.setAppElement('#root');
     }
-    
+
     handleCloseModal() {
         this.setState({ modalIsOpen: false });
     }
@@ -108,21 +108,21 @@ class Settings extends React.Component {
                 <a
                     className="editLink"
                     onClick={handleFunc}
-                    onKeyDown={(event) => { if(event.keyCode == 13) { handleFunc() } }}
+                    onKeyDown={(event) => { if (event.keyCode == 13) { handleFunc() } }}
                     tabIndex="0"
                 ><FontAwesomeIcon icon={faTimes} />
                 </a>
-                );
+            );
         }
         else {
             return (
-            <a 
-            className="editLink"
-             onClick={handleFunc}
-             onKeyDown={(event) => {if(event.keyCode == 13) { handleFunc() }}}
-             tabIndex="0"
-             ><FontAwesomeIcon icon={ faEdit } /></a>
-        );
+                <a
+                    className="editLink"
+                    onClick={handleFunc}
+                    onKeyDown={(event) => { if (event.keyCode == 13) { handleFunc() } }}
+                    tabIndex="0"
+                ><FontAwesomeIcon icon={faEdit} /></a>
+            );
         }
     }
 
@@ -151,11 +151,11 @@ class Settings extends React.Component {
                         <div className="settingsRow2Col1Content">
                             {this.renderIcons(this.state.categoryEditFlag, this.handleCategoryEdit)}
                             <a className="infoLink"
-                              onClick={this.handleCategorySettingsInfoClick}
-                              onKeyDown={(event) => {if(event.keyCode == 13) {this.handleCategorySettingsInfoClick()}}}
-                              tabIndex="0">
-                              <FontAwesomeIcon icon={faInfo} />
-                              </a>
+                                onClick={this.handleCategorySettingsInfoClick}
+                                onKeyDown={(event) => { if (event.keyCode == 13) { this.handleCategorySettingsInfoClick() } }}
+                                tabIndex="0">
+                                <FontAwesomeIcon icon={faInfo} />
+                            </a>
                             <CategorySettings handleCategoryEdit={this.handleCategoryEdit}
                                 categoryEditFlag={this.state.categoryEditFlag} />
                         </div>
@@ -164,13 +164,13 @@ class Settings extends React.Component {
                         <h2>Your Month Start Date</h2>
                         <div className="settingsRow2Col2Content">
                             {this.renderIcons(this.state.monthStartEditFlag, this.handleMonthStartEdit)}
-                            <a 
-                            className="infoLink" 
-                            onClick={this.handleMonthStartInfoClick}
-                            onKeyDown={(event) => {if(event.keyCode == 13) {this.handleMonthStartInfoClick()}}}
-                            tabIndex="0"
+                            <a
+                                className="infoLink"
+                                onClick={this.handleMonthStartInfoClick}
+                                onKeyDown={(event) => { if (event.keyCode == 13) { this.handleMonthStartInfoClick() } }}
+                                tabIndex="0"
                             >
-                            <FontAwesomeIcon icon={faInfo} />
+                                <FontAwesomeIcon icon={faInfo} />
                             </a>
                             <MonthStartDate handleMonthStartEdit={this.handleMonthStartEdit}
                                 monthStartEditFlag={this.state.monthStartEditFlag} />
@@ -180,13 +180,13 @@ class Settings extends React.Component {
                         <h2>Delete Entries</h2>
                         <div className="settingsRow2Col3Content">
                             <a
-                             className="infoLink"
-                             onClick={this.handleDeleteInfoClick}
-                             onKeyDown={(event) => {if(event.keyCode == 13) {this.handleDeleteInfoClick()}}}
-                             tabIndex="0"
-                             >
-                             <FontAwesomeIcon icon={faInfo} />
-                             </a>
+                                className="infoLink"
+                                onClick={this.handleDeleteInfoClick}
+                                onKeyDown={(event) => { if (event.keyCode == 13) { this.handleDeleteInfoClick() } }}
+                                tabIndex="0"
+                            >
+                                <FontAwesomeIcon icon={faInfo} />
+                            </a>
                             <DeleteInputs />
                         </div>
                     </section>

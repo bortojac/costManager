@@ -18,7 +18,7 @@ import {
     USER_INFO_REQUESTED,
     DELETE_ENTRIES_REQUESTED,
     DELETE_ENTRIES_FINISHED
- } from '../actions/types';
+} from '../actions/types';
 
 
 export const tableData = (

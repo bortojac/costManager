@@ -20,8 +20,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: [
-                    /node_modules/,
-                    path.resolve(__dirname, 'public/fontawesome-all.js')
+                    /node_modules/
                 ],
                 use: {
                     loader: 'babel-loader',
@@ -36,7 +35,7 @@ module.exports = {
                 use: ['style-loader', 'css-loader']
             },
             {
-                test: /\.(png|svg|jpg|gif)$/,
+                test: /\.(png|svg|ico|jpg|gif)$/,
                 use: [
                     'file-loader'
                 ]

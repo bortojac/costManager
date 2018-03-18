@@ -1,21 +1,21 @@
 import { connect } from 'react-redux';
 import Home from './Home';
 import { fetchUserInfo } from '@@store/actions';
-import { 
+import {
   getTotalSumState,
   getMonthStartDayState,
   getMonthlyLoadingFlag
- } from '@@store/selectors';
- import _ from 'lodash';
+} from '@@store/selectors';
+import _ from 'lodash';
 
 
 const mapStateToProps = state => {
-    return {
+  return {
     totalSum: getTotalSumState(state),
     loading: getMonthlyLoadingFlag(state),
     monthStartDay: getMonthStartDayState(state)
-    }; 
- }
+  };
+}
 
 const mapDispatchToProps = dispatch => {
   return {
