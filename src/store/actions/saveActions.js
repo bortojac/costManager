@@ -5,7 +5,7 @@ import {
 import { fetchCategoryData } from './categoryActions';
 import { fetchTableData } from './tableActions';
 import { fetchMonthlyData } from './monthlyActions';
-import { apiURL, userId, fetchUserInfo } from './userInfoActions';
+import { userId, fetchUserInfo } from './userInfoActions';
 
 
 export const saveNeeded = () => {
@@ -27,7 +27,7 @@ export const saveFinished = (responseMessage) => {
 export const saveExpense = (date, category, amount, notes, monthStartDay) => {
     return dispatch => {
         dispatch(saveNeeded());
-        return fetch(apiURL + '/' + userId, {
+        return fetch('/expenseBase/' + userId, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

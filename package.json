@@ -4,10 +4,9 @@
   "description": "This app will allow you to log your expenses and keep track of where and how you spend your money",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --config webpack.dev.js && node app",
-    "server": "node app",
-    "build": "webpack --config webpack.prod.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack --config webpack.dev.js && node app",
+    "start": "node app",
+    "build": "webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -28,7 +27,6 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "bable-loader": "0.0.1-security",
     "body": "^5.1.0",
     "body-parser": "^1.18.2",
     "css-loader": "^0.28.9",
@@ -63,6 +61,7 @@
   "devDependencies": {
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
+    "html-webpack-plugin": "^3.0.7",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "uglifyjs-webpack-plugin": "^1.2.3",

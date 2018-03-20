@@ -12,7 +12,7 @@ import {
 } from './types';
 import { fetchUserInfo } from './userInfoActions';
 import { fetchTableData } from './tableActions';
-import { apiURL, userId } from './userInfoActions';
+import { userId } from './userInfoActions';
 
 export const categoryDataRequested = () => {
     return {
@@ -32,7 +32,7 @@ export const categoryDataReceived = (jsonResponse) => {
 export const fetchCategoryData = () => {
     return dispatch => {
         dispatch(categoryDataRequested());
-        return fetch(apiURL + '/' + userId + '/categoryGraph',
+        return fetch('/expenseBase/' + userId + '/categoryGraph',
             {
                 method: 'GET'
             })
@@ -61,7 +61,7 @@ export const updateCategoriesFinished = (textResponse) => {
 export const updateCategories = (newCategories) => {
     return dispatch => {
         dispatch(updateCategoriesRequested(newCategories))
-        return fetch(apiURL + '/' + userId + '/newCategories', {
+        return fetch('/expenseBase/' + userId + '/newCategories', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

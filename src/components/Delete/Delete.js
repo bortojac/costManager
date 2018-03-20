@@ -70,13 +70,13 @@ class Delete extends React.Component {
                 Number(this.state.amountInputValue),
                 this.state.notesInputValue
             );
-            
+
             // delete category from user database if the cats in database = 1 (i.e. when we delete one, there will be none left)
-             const catsInDB = _.filter(_.map(_.get(this.props, "dbData", []), obj => obj.category), cat => cat === this.state.categoryInputValue);
-             if(catsInDB.length == 1) {
+            const catsInDB = _.filter(_.map(_.get(this.props, "dbData", []), obj => obj.category), cat => cat === this.state.categoryInputValue);
+            if (catsInDB.length == 1) {
                 this.props.deleteUserCategory(this.state.categoryInputValue);
-             }
-            
+            }
+
             // reset state
             this.setState({
                 dateInputVlue: undefined,
@@ -84,7 +84,7 @@ class Delete extends React.Component {
                 notesInputValue: undefined,
                 amountInputValue: undefined
             })
-           
+
         }
         return
     }

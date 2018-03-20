@@ -2,7 +2,7 @@ import {
     TABLE_DATA_REQUESTED,
     TABLE_DATA_RECEIVED
 } from './types';
-import { apiURL, userId } from './userInfoActions';
+import { userId } from './userInfoActions';
 
 
 export const tableDataRequested = () => {
@@ -23,7 +23,7 @@ export const tableDataReceived = (jsonResponse) => {
 export const fetchTableData = () => {
     return dispatch => {
         dispatch(tableDataRequested());
-        return fetch(apiURL + '/' + userId,
+        return fetch('/expenseBase/' + userId,
             {
                 method: 'GET'
             })

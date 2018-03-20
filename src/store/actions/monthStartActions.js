@@ -2,7 +2,7 @@ import {
     UPDATE_MONTH_START_DAY_FINISHED,
     UPDATE_MONTH_START_DAY_REQUESTED
 } from './types';
-import { apiURL, userId } from './userInfoActions';
+import { userId } from './userInfoActions';
 
 export const updateMonthStartDayRequested = (monthStartDay) => {
     return {

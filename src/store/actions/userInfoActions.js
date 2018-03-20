@@ -3,7 +3,6 @@ import {
     USER_INFO_RECEIVED
 } from './types';
 
-export const apiURL = 'http://localhost:3000/expenseBase';
 export const userId = 'bortojac';
 
 export const userInfoRequested = () => {

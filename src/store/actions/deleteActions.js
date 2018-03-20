@@ -7,7 +7,7 @@ import {
 import { fetchCategoryData } from './categoryActions';
 import { fetchMonthlyData } from './monthlyActions';
 import { fetchTableData } from './tableActions';
-import { apiURL, userId } from './userInfoActions';
+import { userId } from './userInfoActions';
 
 export const deleteAllRequested = () => {
     return {
@@ -27,7 +27,7 @@ export const deleteAllFinished = (textResponse) => {
 export const deleteAll = () => {
     return dispatch => {
         dispatch(deleteAllRequested())
-        return fetch(apiURL + '/' + userId + '/deleteAll', {
+        return fetch('/expenseBase/' + userId + '/deleteAll', {
             method: 'delete'
         })
             .then(response => response.text())
@@ -57,7 +57,7 @@ export const deleteEntriesFinished = (textResponse) => {
 export const deleteEntries = (date, category, amount, notes) => {
     return dispatch => {
         dispatch(deleteEntriesRequested())
-        return fetch(`${apiURL}/${userId}/deleteEntries/`,
+        return fetch(`/expenseBase/${userId}/deleteEntries`,
             {
                 method: 'delete',
                 headers: {

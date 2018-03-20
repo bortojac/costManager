@@ -2,7 +2,7 @@ import {
     MONTHLY_DATA_RECEIVED,
     MONTHLY_DATA_REQUESTED
 } from './types';
-import { apiURL, userId } from './userInfoActions';
+import { userId } from './userInfoActions';
 
 
 export const monthlyDataRequested = (userId) => {
@@ -30,7 +30,7 @@ export const fetchMonthlyData = () => {
             }
         ).then(res => res.json())
             .then(jsonResponse => {
-                return fetch(apiURL + '/' + userId + '/monthlyGraph',
+                return fetch('/expenseBase/' + userId + '/monthlyGraph',
                     {
                         method: 'POST',
                         headers: {

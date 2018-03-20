@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import Delete from './Delete';
 import { deleteEntries, deleteAll, deleteUserCategory, updateUserCategories } from '@@store/actions';
-import { 
+import {
     getDBDataState
 } from '@@store/selectors';
 

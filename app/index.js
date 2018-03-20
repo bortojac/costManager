@@ -40,9 +40,12 @@ app.use(bodyParser.json());
 // if in dev mode, use webpackDevMiddleware and webpackHotMiddleware
 if (process.env.NODE_ENV !== 'production') {
     app.use(webpackDevMiddleware(compiler, { publicPath: config.output.publicPath }));
-    app.use(webpackHotMiddleware(compiler))
+    app.use(webpackHotMiddleware(compiler));
+    var dir='public';
+
 } else {
-    app.use(express.static('public'))
+    app.use(express.static('dist'));
+    var dir='dist';
 }
 
 app.use(function (req, res, next) {
@@ -54,11 +57,11 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, '../public/index.html'));
+    res.sendFile(path.join(__dirname, '../'+dir+'/index.html'));
 });
 
 app.get('/settings', function (req, res) {
-    res.sendFile(path.join(__dirname, '../public/index.html'));
+    res.sendFile(path.join(__dirname, '../'+dir+'/index.html'));
 })
 
 // #### EXPENSE COLLECTION ROUTES ####

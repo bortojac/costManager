@@ -5,11 +5,6 @@ module.exports = {
     entry: [
         "./src/index.js"
     ],
-    output: {
-        path: path.resolve(__dirname, 'public'),
-        filename: 'bundle.js',
-        publicPath: '/'
-    },
     resolve: {
         alias: {
             '@@store': path.resolve(__dirname, 'src/store')
@@ -35,10 +30,8 @@ module.exports = {
                 use: ['style-loader', 'css-loader']
             },
             {
-                test: /\.(png|svg|ico|jpg|gif)$/,
-                use: [
-                    'file-loader'
-                ]
+                test: /\.jpe?g$|\.ico$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
+                loader: 'file-loader?name=[name].[ext]'  // <-- retain original file name
             }
         ]
     }
