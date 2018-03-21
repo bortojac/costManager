@@ -24,9 +24,9 @@
 
 .monthStartDayInput {
     font-size: 5rem;
-    flex: 1;
     text-align: center;
     margin: 1rem;
+    width: 10rem;
 }
 
 .monthStartSubmitButton {
