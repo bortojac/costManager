@@ -11,13 +11,14 @@ module.exports = merge(common, {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
         publicPath: '/'
-      },
+    },
     plugins: [
         new UglifyJSPlugin({
             sourceMap: true
         }),
-        new HtmlWebpackPlugin({   
-            favicon: './static/favicon.ico'
+        new HtmlWebpackPlugin({
+            favicon: './static/favicon.ico',
+            template: './public/index.html'
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')

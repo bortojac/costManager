@@ -13,7 +13,6 @@ var _ = require('lodash');
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
-
 //set our port to either a predetermined port number if it is set up, or 3000
 var port = process.env.API_PORT || 3000;
 
@@ -57,11 +56,11 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, '../'+dir+'/index.html'));
+    res.sendFile(path.join(__dirname, '..', dir, 'index.html'));
 });
 
 app.get('/settings', function (req, res) {
-    res.sendFile(path.join(__dirname, '../'+dir+'/index.html'));
+    res.sendFile(path.join(__dirname, '..', dir, 'index.html'));
 })
 
 // #### EXPENSE COLLECTION ROUTES ####
