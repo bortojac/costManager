@@ -67,7 +67,7 @@ class Delete extends React.Component {
             this.props.deleteEntries(
                 this.state.dateInputValue.format('YYYY-MM-DD'),
                 this.state.categoryInputValue,
-                Number(this.state.amountInputValue),
+                Number(this.state.amountInputValue.replace(/,/g, '')),
                 this.state.notesInputValue
             );
 
